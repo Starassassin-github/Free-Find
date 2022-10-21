@@ -1,11 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, AppState } from "react-native";
-
+import { AppStateService } from "../AppStateService";
 import TypeIcon from "./TypeIcon";
 const PostCard = (props) => {
 
-    const appState = useRef(AppState.currentState);
-    const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
 
     const { image, type_of_work, title, description } = props;
@@ -14,6 +12,8 @@ const PostCard = (props) => {
     const [statusChange, setStatusChange] = useState();
     const [token, setToken] = useState();
     const [cardColor, setCardColor] = useState();
+    
+    AppStateService.init();
 
     useEffect(() => {
 
@@ -22,20 +22,9 @@ const PostCard = (props) => {
         } else if (type_of_work == "parttime") {
             set_Chek_Type_of_work("P");
         }
-        const subscription = AppState.addEventListener("change", nextAppState => {
-            if (
-                appState.current.match(/inactive|background/) &&
-                nextAppState === "active"
-            ) {
-                console.log("App has come to the foreground!");
-            }
-
-            appState.current = nextAppState;
-            setAppStateVisible(appState.current);
-            console.log("AppState", appState.current);
-        });
+        AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
         return () => {
-            subscription.remove();
+            AppState.removeEventListener('change', AppStateService.getInstance().handleAppStateChange);
             set_Chek_Type_of_work();
 
         }

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState } from 'react-native';
 import { Container, NativeBaseProvider } from 'native-base';
 import PostWorkList from './PostWorkList';
+import { AppStateService } from "../../AppStateService";
 
 const post1 = [{
     _id: "5f15d5cdcb4a6642bddc0fe9",
@@ -18,30 +19,19 @@ const post1 = [{
 
 const WorkHistoryScreen = (props) => {
 
-    const appState = useRef(AppState.currentState);
-    const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
     const [worked, setWorked] = useState([]);
     const [loading, setLoading] = useState(true)
+
+    AppStateService.init();
 
     useEffect(() => {
 
         setWorked(post1);
         setLoading(false)
-        const subscription = AppState.addEventListener("change", nextAppState => {
-            if (
-                appState.current.match(/inactive|background/) &&
-                nextAppState === "active"
-            ) {
-                console.log("App has come to the foreground!");
-            }
-
-            appState.current = nextAppState;
-            setAppStateVisible(appState.current);
-            console.log("AppState", appState.current);
-        });
+        AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
         return () => {
-            subscription.remove();
+            AppState.removeEventListener('change', AppStateService.getInstance().handleAppStateChange);
             setWorked([]);
         }
     }, [])
