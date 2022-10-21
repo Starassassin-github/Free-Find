@@ -1,46 +1,63 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import { View, Text, StyleSheet, Image, Dimensions, AppState } from "react-native";
 
 import TypeIcon from "./TypeIcon";
 const PostCard = (props) => {
 
-    const [type_of_work, set_Type_of_work] = useState();
+    const appState = useRef(AppState.currentState);
+    const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+
+    const { image, type_of_work, title, description } = props;
+
+    const [check_type_of_work, set_Chek_Type_of_work] = useState();
     const [statusChange, setStatusChange] = useState();
     const [token, setToken] = useState();
     const [cardColor, setCardColor] = useState();
 
     useEffect(() => {
-        if (props.post.type_of_work == "fulltime") {
-            set_Type_of_work("F");
-        } else if (props.post.type_of_work == "parttime") {
-            set_Type_of_work("P");
+
+        if (type_of_work == "fulltime") {
+            set_Chek_Type_of_work("F");
+        } else if (type_of_work == "parttime") {
+            set_Chek_Type_of_work("P");
         }
-    })
+        const subscription = AppState.addEventListener("change", nextAppState => {
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === "active"
+            ) {
+                console.log("App has come to the foreground!");
+            }
+
+            appState.current = nextAppState;
+            setAppStateVisible(appState.current);
+            console.log("AppState", appState.current);
+        });
+        return () => {
+            subscription.remove();
+            set_Chek_Type_of_work();
+
+        }
+    }, [])
 
     return (
         <View>
-            <TouchableOpacity
-                style={{ width: '50%' }}
-                onPress={() =>
-                    props.navigation.navigate("DisplayPost", { post: props.post })
-                }
-            >
-                <View style={styles.container}>
-                    <View style={styles.cardContainer}>
-                        <View style={styles.blockImage}>
-                            <Image
-                                style={styles.imageStyle}
-                                source={{ uri: props.post.image ? props.post.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
-                            />
-                        </View>
-                        <View style={styles.infoStyle}>
-                            <Text style={styles.titleStyle}>{props.post.title.length >= 22 ? props.post.title.substring(0, 22) + '...' : props.post.title}</Text>
-                            <Text style={styles.descriptionStyle}>{props.post.description.length >= 120 ? props.post.description.substring(0, 120) + '...' : props.post.description}</Text>
-                        </View>
-                        <TypeIcon type_of_work={type_of_work} />
+            <View style={styles.container}>
+                <View style={styles.cardContainer}>
+                    <View style={styles.blockImage}>
+                        <Image
+                            style={styles.imageStyle}
+                            source={{ uri: image ? image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                        />
                     </View>
+                    <View style={styles.infoStyle}>
+                        <Text style={styles.titleStyle}>{title.length >= 22 ? title.substring(0, 22) + '...' : title}</Text>
+                        <Text style={styles.descriptionStyle}>{description.length >= 120 ? description.substring(0, 120) + '...' : description}</Text>
+                    </View>
+                    <TypeIcon type_of_work={check_type_of_work} />
                 </View>
-            </TouchableOpacity>
+            </View>
         </View>
     )
 }
