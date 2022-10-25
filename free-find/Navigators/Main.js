@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WorkHistoryScreen from "../Screens/WorkHistory/WorkHistoryScreen";
 import DisplayPostScreen from "../Screens/DisplayPost/DisplayPostScreen";
 import PostHistoryScreen from "../Screens/PostHistory/PostHistoryScreen";
+import ManagementScreen from "../Screens/Management/ManagementScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -21,6 +22,11 @@ function Main() {
                     name="DisplayPost" 
                     component={DisplayPostScreen} 
                     options={{ title: 'Post' }}
+                />
+                <Stack.Screen 
+                    name="Management" 
+                    component={ManagementScreen} 
+                    options={{ title: 'Management' }}
                 />
             </Stack.Navigator>
         </NavigationContainer>
