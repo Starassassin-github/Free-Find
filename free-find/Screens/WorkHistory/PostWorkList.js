@@ -9,7 +9,6 @@ const PostWorkList = (props) => {
     const { item } = props;
     return(
         <TouchableOpacity 
-        style={{ width: '50%' }}
         onPress={() => 
             props.navigation.navigate("DisplayPost", { item: item})
         }

@@ -12,7 +12,6 @@ const TypeIcon = (props) => {
                     <Text style={styles.text}>{type_of_work}</Text>
                 </Badge>
             </NativeBaseProvider>
-
         </>
     );
 };

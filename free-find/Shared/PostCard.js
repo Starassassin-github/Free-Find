@@ -1,9 +1,15 @@
+// import
 import React, { useRef, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, AppState } from "react-native";
-import { AppStateService } from "../AppStateService";
-import TypeIcon from "./TypeIcon";
-const PostCard = (props) => {
 
+// app state
+import { AppStateService } from "../AppStateService";
+
+// component
+import TypeIcon from "./TypeIcon";
+
+
+const PostCard = (props) => {
 
 
     const { image, type_of_work, title, description } = props;
