@@ -1,6 +1,6 @@
 // import
 import React, { useRef, useState, useEffect } from "react";
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState, Button } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState, Dimensions } from 'react-native';
 
 // UI
 import { Container, NativeBaseProvider } from 'native-base';
@@ -77,7 +77,7 @@ const PostHistoryScreen = (props) => {
                                     })}
                                 </View>
                             ) : (
-                                <View style={[styles.center, { height: height / 2 }]}>
+                                <View style={[styles.center, { height: deviceHeight / 2 }]}>
                                     <Text>No Post found</Text>
                                 </View>
                             )}
@@ -96,6 +96,8 @@ const PostHistoryScreen = (props) => {
         </>
     )
 };
+
+const deviceHeight = Math.round(Dimensions.get('window').height);
 
 const styles = StyleSheet.create({
     container: {

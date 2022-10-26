@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
         width: containerInfo,
         backgroundColor: '#ffffff',
         borderColor: '#000',
+        borderWidth: 0.8,
         borderRadius: radius,
-        borderWidth: 0.8
     },
     titleStyle: {
         fontSize: 20,
