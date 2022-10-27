@@ -10,7 +10,6 @@ import PostList from "./PostList";
 
 // app state
 import { AppStateService } from "../../AppStateService";
-import ManagementPost from "./ManagementPost";
 
 
 const post1 = [{
@@ -61,18 +60,11 @@ const PostHistoryScreen = (props) => {
                                 <View>
                                     {worked.map((item) => {
                                         return (
-                                            <View style={{ paddingBottom: 30 }}>
                                                 <PostList
                                                     navigation={props.navigation}
-                                                    key={item._id}
+                                                    key={item._id + "Post"}
                                                     item={item}
                                                 />
-                                                <ManagementPost
-                                                    navigation={props.navigation}
-                                                    key={item._id}
-                                                    item={item}
-                                                />
-                                            </View>
                                         )
                                     })}
                                 </View>

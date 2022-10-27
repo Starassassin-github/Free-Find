@@ -6,7 +6,8 @@ import ManagementList from './ManagementList';
 
 const ManagementScreen = (props) => {
 
-    const [item, setItem] = useState(props.route.params.item);
+    const [itemList, setItem] = useState(props.route.params.item);
+    console.log(itemList);
 
 
     // apply name
@@ -15,20 +16,22 @@ const ManagementScreen = (props) => {
     return (
         <SafeAreaView>
             <Text>Post History Screen</Text>
-            <Text>id: ${item._id}</Text>
-            <Text>id: ${item._id_apply}</Text>
+            <Text>id: ${itemList._id}</Text>
+            <Text>id: ${itemList._id_apply}</Text>
             <View style={styles.headerContainer}>
                 <Text style={styles.titleStyle}>หัวข้อโพสต์</Text>
-                <Text style={styles.titleStyle}>{item._id_apply.length} คน</Text>
+                <Text style={styles.titleStyle}>{itemList._id_apply.length} คน</Text>
             </View>
-            {item._id_apply.length > 0 ? (
+            {itemList._id_apply.length > 0 ? 
+                
+            (
                 <View>
                     <FlatList
-                        data={item._id_apply}
-                        renderItem={({ item }) => (
+                        data={itemList._id_apply}
+                        renderItem={({ item, index }) => (
                             <ManagementList navigation={props.navigation} item={item} />
                         )}
-                        keyExtractor={(item) => item._id_apply}
+                        keyExtractor={(item) => item.toString()}
                     />
                 </View>) : (
                 <View style={[styles.center, { height: deviceHeight / 2 }]}>
@@ -45,7 +48,7 @@ const ManagementScreen = (props) => {
             <View style={{ height: 15 }} />
             <View style={styles.headerContainer}>
                 <Text style={styles.titleStyle}>ที่ได้รับการอนุมัติ</Text>
-                <Text style={styles.titleStyle}>{item._id_offer.length} คน</Text>
+                <Text style={styles.titleStyle}>{itemList._id_offer.length} คน</Text>
             </View>
         </SafeAreaView>
     )
