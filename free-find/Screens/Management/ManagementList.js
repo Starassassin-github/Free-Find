@@ -5,16 +5,12 @@ import { View, Text, StyleSheet, Image, Dimensions, AppState, TouchableOpacity }
 // app state
 import { AppStateService } from "../../AppStateService";
 
-
 // component
-
 
 
 const ManagementList = (props) => {
 
-
     const { item } = props;
-    console.log(item);
 
 
     AppStateService.init();
@@ -32,12 +28,19 @@ const ManagementList = (props) => {
 
     return (
         <View>
-            <View style={styles.containerName}>
-                <Text>img</Text>
-                <Text style={styles.textInfo}>{item}</Text>
-            </View>
+            <TouchableOpacity>
+                <View style={styles.containerName}>
+                    <Text style={styles.img}>img</Text>
+                    {
+                        item.length > 25 ?
+                            <Text style={styles.textInfo}>{item.substring(0, 25) + '...'}</Text>
+                            :
+                            <Text style={styles.textInfo}>{item}</Text>
+                    }
+                </View>
+            </TouchableOpacity>
             <View style={styles.containerManage}>
-                <TouchableOpacity style={{ marginRight: 15}}>
+                <TouchableOpacity style={{ marginRight: 15 }}>
                     <View style={styles.containerOffer}>
                         <Text style={styles.textButton}>ยืนยัน</Text>
                     </View>
@@ -57,8 +60,6 @@ const ManagementList = (props) => {
 const deviceWidth = Math.round(Dimensions.get('window').width);
 
 const styles = StyleSheet.create({
-    // 60px
-    //EC8484
     containerName: {
         width: deviceWidth - 60,
         height: 56,
@@ -76,14 +77,15 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     textInfo: {
-        width: '100%',
+        fontSize: 16,
+        marginLeft: 30,
         textAlign: 'center',
     },
     textButton: {
         color: "#fff",
         width: '100%',
         textAlign: "center",
-        justifyContent: "center",
+        justifyContent: "space-around",
         alignItems: "center",
         marginTop: 4,
     },
@@ -104,8 +106,12 @@ const styles = StyleSheet.create({
         marginLeft: 30
     },
     img: {
-
-    }
+        marginLeft: 10,
+        height: 45,
+        width: 45,
+        backgroundColor: "red",
+        borderRadius: 30
+    },
 });
 
 export default ManagementList;

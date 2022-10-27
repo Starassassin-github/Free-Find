@@ -16,18 +16,21 @@ function Main() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                {/* <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} /> */}
-                <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
-                <Stack.Screen 
-                    name="DisplayPost" 
-                    component={DisplayPostScreen} 
-                    options={{ title: 'Post' }}
-                />
-                <Stack.Screen 
-                    name="Management" 
-                    component={ManagementScreen} 
-                    options={{ title: 'Management' }}
-                />
+
+                <Stack.Group>
+                    <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
+                    <Stack.Screen
+                        name="Management"
+                        component={ManagementScreen}
+                    />
+                    <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
+                    <Stack.Screen
+                        name="DisplayPost"
+                        component={DisplayPostScreen}
+                        options={{ title: 'Post' }}
+                    />
+                </Stack.Group>
+
             </Stack.Navigator>
         </NavigationContainer>
     );

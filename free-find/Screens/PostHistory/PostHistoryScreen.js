@@ -17,8 +17,8 @@ const post1 = [{
     type_of_work: "fulltime",
     title: "worker 1",
     description: "This is description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    _id_apply: ["315d8899dfd42bdd99300joe", "er5d88gfgfd42bdd9930uud", "dfjdkfijbj33899df"],
-    _id_offer: ["3434gfjgjkkejrkedf332353", "lfdkdj499299jgjrorogogo"],
+    _id_apply: ["315d8899dfd42bdd9942bdd99300300joe", "er5d88gfgfd42bdd9930uud", "dfjdkfijbj33899df", "lfdkdj4oobfpfrorogogo", "dferoeriweoreoruwpr33899df", "dffldskfjgrei303rfjkd"],
+    _id_offer: ["3434gfjgjkkejrkedf332353", "lfdkdj499299jgjfdfsfsdfrorogogo"],
     _id_reject: ["34hhkfgj434k59ggjfgk3gg", "kdlfiilgirilgjfij4ipgp0"]
 },
 {
@@ -27,7 +27,7 @@ const post1 = [{
     title: "worker 2 is so long title",
     description: "This is description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     _id_apply: ["315d8899dfd42bdd99300joe", "er5d88gfgfd42bdd9930uud", "dfjdkfijbj33899df"],
-    _id_offer: ["3434gfjgjkkejrkedf332353", "lfdkdj499299jgjrorogogo"],
+    _id_offer: ["34353", "lfdkdj ogogo"],
     _id_reject: ["34hhkfgj434k59ggjfgk3gg", "kdlfiilgirilgjfij4ipgp0"]
 }]
 
@@ -60,11 +60,11 @@ const PostHistoryScreen = (props) => {
                                 <View>
                                     {worked.map((item) => {
                                         return (
-                                                <PostList
-                                                    navigation={props.navigation}
-                                                    key={item._id + "Post"}
-                                                    item={item}
-                                                />
+                                            <PostList
+                                                navigation={props.navigation}
+                                                key={item._id + "Post"}
+                                                item={item}
+                                            />
                                         )
                                     })}
                                 </View>
