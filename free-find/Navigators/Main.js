@@ -9,7 +9,7 @@ import DisplayPostScreen from "../Screens/DisplayPost/DisplayPostScreen";
 import PostHistoryScreen from "../Screens/PostHistory/PostHistoryScreen";
 import ManagementScreen from "../Screens/Management/ManagementScreen";
 import WorkStatusScreen from "../Screens/WorkStatus/WorkStatusScreen";
-
+import MainPage from "../Screens/Main/MainScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +30,7 @@ function Main() {
                         component={DisplayPostScreen}
                         options={{ title: 'Post' }}
                     />
+                    <Stack.Screen name = "HomePage" component={MainPage}/>
                 </Stack.Group>
             </Stack.Navigator>
         </NavigationContainer>
