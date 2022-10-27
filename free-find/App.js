@@ -11,19 +11,12 @@ import Main from './Navigators/Main';
 
 // ignore logbox don't do this in production
 LogBox.ignoreAllLogs(true);
-
+// deprecated use is happening in a dependency
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 
 export default function App() {
 
-   // Listen to app state
-   AppStateService.init();
-   useEffect(() => {
-       AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
-       return (() => {
-           AppState.removeEventListener('change', AppStateService.getInstance().handleAppStateChange);
-       })
-   }, []);
 
   return (
     // <UserPersonaScreen />

@@ -8,6 +8,7 @@ import WorkHistoryScreen from "../Screens/WorkHistory/WorkHistoryScreen";
 import DisplayPostScreen from "../Screens/DisplayPost/DisplayPostScreen";
 import PostHistoryScreen from "../Screens/PostHistory/PostHistoryScreen";
 import ManagementScreen from "../Screens/Management/ManagementScreen";
+import WorkStatusScreen from "../Screens/WorkStatus/WorkStatusScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -16,8 +17,8 @@ function Main() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-
                 <Stack.Group>
+                    <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
                     <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
                     <Stack.Screen
                         name="Management"
@@ -30,7 +31,6 @@ function Main() {
                         options={{ title: 'Post' }}
                     />
                 </Stack.Group>
-
             </Stack.Navigator>
         </NavigationContainer>
     );

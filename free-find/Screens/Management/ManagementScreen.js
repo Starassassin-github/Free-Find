@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 import { Divider, NativeBaseProvider } from 'native-base';
 
 import ManagementList from './ManagementList';
@@ -14,57 +14,58 @@ const ManagementScreen = (props) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-                <View style={styles.headerContainer}>
-                    <Text style={styles.titleStyle}>หัวข้อโพสต์</Text>
-                    <Text style={styles.titleStyle}>{itemList._id_apply.length} คน</Text>
-                </View>
-                {itemList._id_apply.length > 0 ?
-                    (
-                        <SafeAreaView style={{ flex: 1 }}>
-                            <FlatList
-                                data={itemList._id_apply}
-                                renderItem={({ item }) => (
-                                    <ManagementList navigation={props.navigation} item={item} />
-                                )}
-                                keyExtractor={(item) => item}
-                                alwaysBounceVertical={false}
+            <View style={styles.headerContainer}>
+                <Text style={styles.titleStyle}>หัวข้อโพสต์</Text>
+                <Text style={styles.titleStyle}>{itemList._id_apply.length} คน</Text>
+            </View>
+            {itemList._id_apply.length > 0 ?
+                (
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <FlatList
+                            data={itemList._id_apply}
+                            renderItem={({ item }) => (
+                                <ManagementList navigation={props.navigation} item={item} />
+                            )}
+                            keyExtractor={(item) => item}
+                            alwaysBounceVertical={false}
+                            horizontal={false}
+                        />
+                    </SafeAreaView>) : (
+                    <View style={[styles.center, { height: deviceHeight / 2 }]}>
+                        <Text>No Post found</Text>
+                    </View>
+                )
+            }
 
-                            />
-                        </SafeAreaView>) : (
-                        <View style={[styles.center, { height: deviceHeight / 2 }]}>
-                            <Text>No Post found</Text>
-                        </View>
-                    )
-                }
-                
-                <View>
-                    <NativeBaseProvider>
-                        <Divider />
-                    </NativeBaseProvider>
-                </View>
-                <View style={{ height: 15 }} />
-                <View style={styles.headerContainer}>
-                    <Text style={styles.titleStyle}>ที่ได้รับการอนุมัติ</Text>
-                    <Text style={styles.titleStyle}>{itemList._id_offer.length} คน</Text>
-                </View>
-                {itemList._id_offer.length > 0 ?
-                    (
-                        <SafeAreaView style={{ flex: 1 }}>
-                            <FlatList
-                                data={itemList._id_offer}
-                                renderItem={({ item }) => (
-                                    <OfferList navigation={props.navigation} item={item} />
-                                )}
-                                keyExtractor={(item) => item}
-                                horizontal={false}
-                            />
-                        </SafeAreaView>
-                    ) : (
-                        <View style={[styles.center, { height: deviceHeight / 2 }]}>
-                            <Text>No Offer found</Text>
-                        </View>
-                    )
-                }
+            <View>
+                <NativeBaseProvider>
+                    <Divider />
+                </NativeBaseProvider>
+            </View>
+            <View style={{ height: 15 }} />
+            <View style={styles.headerContainer}>
+                <Text style={styles.titleStyle}>ที่ได้รับการอนุมัติ</Text>
+                <Text style={styles.titleStyle}>{itemList._id_offer.length} คน</Text>
+            </View>
+            {itemList._id_offer.length > 0 ?
+                (
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <FlatList
+                            data={itemList._id_offer}
+                            renderItem={({ item }) => (
+                                <OfferList navigation={props.navigation} item={item} />
+                            )}
+                            keyExtractor={(item) => item}
+                            alwaysBounceVertical={false}
+                            horizontal={false}
+                        />
+                    </SafeAreaView>
+                ) : (
+                    <View style={[styles.center, { height: deviceHeight / 2 }]}>
+                        <Text>No Offer found</Text>
+                    </View>
+                )
+            }
         </SafeAreaView>
     )
 };
