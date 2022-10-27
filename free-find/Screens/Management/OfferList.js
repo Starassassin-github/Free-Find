@@ -30,7 +30,7 @@ const OfferList = (props) => {
     }, [])
 
     return (
-        <View style={{ marginTop: 20 }}>
+        <View style={{ marginTop: 16, marginBottom: 5 }}>
             <TouchableOpacity>
                 <View style={styles.containerName}>
                     <Text style={styles.img}>img</Text>

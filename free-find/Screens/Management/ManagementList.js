@@ -64,17 +64,14 @@ const styles = StyleSheet.create({
         width: deviceWidth - 60,
         height: 56,
         marginHorizontal: 30,
-        marginTop: 20,
-        marginBottom: 7,
+        marginTop: 15,
+        marginBottom: 5,
         borderRadius: 30,
         backgroundColor: "#fff",
         alignItems: "center",
         flexDirection: "row",
         borderColor: "#c1c1c1",
         borderWidth: 0.8
-    },
-    containerButton: {
-        flexDirection: "row"
     },
     textInfo: {
         fontSize: 16,
@@ -103,7 +100,8 @@ const styles = StyleSheet.create({
     },
     containerManage: {
         flexDirection: "row",
-        marginLeft: 30
+        marginLeft: 30,
+        marginBottom: 5
     },
     img: {
         marginLeft: 10,
