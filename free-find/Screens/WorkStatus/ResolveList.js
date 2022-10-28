@@ -31,7 +31,10 @@ const ResolveList = (props) => {
         <View style={{ flexDirection: "row" }}>
             <TouchableOpacity>
                 <View style={styles.containerName}>
-                    <Text style={styles.img}>img</Text>
+                    <Image
+                        style={styles.imageStyle}
+                        source={{ uri: item.image ? item.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                    />
                     {
                         item.title.length > 20 ?
                             <Text style={styles.textInfo}>{item.title.substring(0, 20) + '...'}</Text>
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginBottom: 5
     },
-    img: {
+    imageStyle: {
         marginLeft: 10,
         height: 45,
         width: 45,

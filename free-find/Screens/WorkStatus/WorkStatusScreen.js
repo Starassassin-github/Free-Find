@@ -62,7 +62,7 @@ const WorkStatusScreen = (props) => {
             {loading == false ? (
                 <SafeAreaView style={{ flex: 1 }}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.titleStyle}>กำลังรอดำเนินการ</Text>
+                        <Text style={styles.titleStyle}>กำลังรอการดำเนินการ</Text>
                         <Text style={styles.titleStyle}>{itemList.work_pending.length} รายการ</Text>
                     </View>
                     {itemList.work_pending.length > 0 ?
