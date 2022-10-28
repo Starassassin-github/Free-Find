@@ -10,6 +10,11 @@ import PostHistoryScreen from "../Screens/PostHistory/PostHistoryScreen";
 import ManagementScreen from "../Screens/Management/ManagementScreen";
 import WorkStatusScreen from "../Screens/WorkStatus/WorkStatusScreen";
 import MainPage from "../Screens/Main/MainScreen";
+import LoadingScreen from "../Screens/Loading/LoadingScreen";
+import LoginScreen from "../Screens/Login/LoginScreen";
+import RegisterScreen from "../Screens/Register/RegisterScreen";
+import ValidationBusinessScreen from "../Screens/ValidationBusiness/ValidationBusinessScreen";
+import ValidationPersonaScreen from "../Screens/ValidationPersona/ValidationPersonaScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +36,11 @@ function Main() {
                         options={{ title: 'Post' }}
                     />
                     <Stack.Screen name = "HomePage" component={MainPage}/>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Register" component={RegisterScreen} />
+                    <Stack.Screen name="ValidationBusiness" component={ValidationBusinessScreen} />
+                    <Stack.Screen name="ValidationPersona" component={ValidationPersonaScreen} />
+                    <Stack.Screen name="Loading" component={LoadingScreen} />
                 </Stack.Group>
             </Stack.Navigator>
         </NavigationContainer>
