@@ -30,7 +30,7 @@ app.use(`${api}/companies`, companyRouter);
 // connect Database
 mongoose.connect(process.env.CONNECTION_STRING)
 .then(() => {
-    console.log('Database Connection is Already');
+    console.log('Database Connection is ready');
 })
 .catch((err) => {
     console.log(err);
