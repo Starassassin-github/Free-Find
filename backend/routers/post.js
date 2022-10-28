@@ -9,23 +9,41 @@ router.get(`/`, async (req, res) => {
     if (!postList) {
         res.status(500).json({ success: false })
     }
-    res.send(postList);
+    res.status(200).send(postList);
 });
 
-router.post(`/`, (req, res) => {
-    const post = new Post({
+router.get(`/:id`, async (req, res) =>{
+    const post = await Post.findById(req.params.id)
+
+    if(!post) {
+        res.status(500).json({message: 'The post with the given ID was not found.'})
+    } 
+    res.status(200).send(post);
+})
+
+router.post(`/`, async (req, res) => {
+
+    let post = new Post({
         name: req.body.name,
+        title: req.body.title,
+        type_of_work: req.body.type_of_work,
+        description: req.body.description,
         image: req.body.image,
-        title: req.body.title
+        images: req.body.images,
+        work_pending: req.body.work_pending,
+        work_resolve: req.body.work_resolve,
+        company: req.body.company,
+        user: req.body.user,
+        jobs: req.body.jobs,
+        keyword: req.body.keyword
     })
-    post.save().then((createdPost => {
-        res.status(201).json(createdPost)
-    })).catch((err) => {
-        res.status(500).json({
-            error: err,
-            success: false
-        })
-    })
+
+    post = await post.save();
+
+    if(!post)
+    return res.status(400).send('the post cannot be created!')
+
+    res.send(post);
 });
 
 module.exports = router;

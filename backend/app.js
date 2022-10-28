@@ -12,14 +12,19 @@ app.options('*', cors())
 const api = process.env.API_URL
 
 const postsRouter = require('./routers/post');
+const usersRouter = require('./routers/user');
+const usersCompanyRouter = require('./routers/user_company');
+const companyRouter = require('./routers/company');
 
 // middleware
 app.use(express.json());
 app.use(morgan('tiny'));
 
 // router
-app.use(`${api}/posts`, postsRouter)
-
+app.use(`${api}/posts`, postsRouter);
+app.use(`${api}/userscompanies`, usersCompanyRouter);
+app.use(`${api}/users`, usersRouter);
+app.use(`${api}/companies`, companyRouter);
 
 
 // connect Database
