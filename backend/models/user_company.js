@@ -17,9 +17,17 @@ const userCompanySchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    isComp: {
+        type: Boolean,
+        default: true,
+    },
     company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'company',
+    },
+    date: {
+        type: Date,
+        default: Date.now,
     },
 })
 

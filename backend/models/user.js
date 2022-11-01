@@ -62,7 +62,11 @@ const userSchema = mongoose.Schema({
     ability: {
         type: String,
     },
-    datePosted: {
+    isComp: {
+        type: Boolean,
+        default: false,
+    },
+    date: {
         type: Date,
         default: Date.now,
     },
