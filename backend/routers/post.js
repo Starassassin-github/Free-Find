@@ -47,4 +47,50 @@ router.post(`/`, async (req, res) => {
     res.send(post);
 });
 
+router.put('/offer/:id/:userid', async (req, res) => {
+
+    const post = await Post.findOneAndUpdate(
+        {
+            _id: req.params.id,
+        },
+        {
+            $pull: {
+                _id_apply: userid
+            },
+            $push: {
+                _id_offer: userid
+            }
+
+        }
+    )
+
+    if (!post)
+        return res.status(400).send('the post cannot be created!')
+
+    res.send(post);
+});
+
+router.put('/reject/:id/:userid', async (req, res) => {
+
+    const post = await Post.findOneAndUpdate(
+        {
+            _id: req.params.id,
+        },
+        {
+            $pull: {
+                _id_apply: userid
+            },
+            $push: {
+                _id_reject: userid
+            }
+
+        }
+    )
+
+    if (!post)
+        return res.status(400).send('the post cannot be created!')
+
+    res.send(post);
+});
+
 module.exports = router;

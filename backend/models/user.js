@@ -21,8 +21,7 @@ const userSchema = mongoose.Schema({
         ref: 'posts',
     }],
     work_resolve: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'posts',
+        type: Object
     }],
     posts: [{
         type: mongoose.Schema.Types.ObjectId,
