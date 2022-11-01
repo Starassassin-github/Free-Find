@@ -12,6 +12,15 @@ router.get(`/`, async (req, res) => {
     res.status(200).send(userList);
 });
 
+router.get(`/:id`, async (req, res) =>{
+    const user = await User.findById(req.params.id)
+
+    if(!user) {
+        res.status(500).json({message: 'The user with the given ID was not found.'})
+    } 
+    res.status(200).send(user);
+})
+
 router.post(`/`, async (req, res) => {
 
     let user = new User({

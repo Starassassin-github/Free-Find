@@ -12,6 +12,15 @@ router.get(`/`, async (req, res) => {
     res.status(200).send(companyList);
 });
 
+router.get(`/:id`, async (req, res) =>{
+    const company = await Company.findById(req.params.id)
+
+    if(!company) {
+        res.status(500).json({message: 'The company with the given ID was not found.'})
+    } 
+    res.status(200).send(company);
+})
+
 router.post(`/`, async (req, res) => {
 
     let company = new Company({

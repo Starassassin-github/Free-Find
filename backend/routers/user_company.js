@@ -13,6 +13,15 @@ router.get(`/`, async (req, res) => {
     res.status(200).send(userCommpanyList);
 });
 
+router.get(`/:id`, async (req, res) =>{
+    const userComp = await UserCompany.findById(req.params.id)
+
+    if(!userComp) {
+        res.status(500).json({message: 'The user company with the given ID was not found.'})
+    } 
+    res.status(200).send(userComp);
+})
+
 router.post(`/`, async (req, res) => {
 
     let userCompany = new UserCompany({
