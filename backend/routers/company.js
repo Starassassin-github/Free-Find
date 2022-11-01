@@ -12,4 +12,28 @@ router.get(`/`, async (req, res) => {
     res.status(200).send(companyList);
 });
 
+router.post(`/`, async (req, res) => {
+
+    let company = new Company({
+        name: req.body.name_comp,
+        email: req.body.email_comp,
+        address: req.body.address,
+        city: req.body.city,
+        phone: req.body.phone_comp,
+        owner: req.body.owner,
+        images: req.body.images,
+        posts: req.body.posts,
+        website: req.body.website,
+        bussiness_type: req.body.bussiness_type,
+        founding_date: req.body.founding_date,
+    })
+
+    company = await company.save();
+
+    if(!company)
+    return res.status(400).send('the Company cannot be created!')
+
+    res.send(company);
+});
+
 module.exports = router;

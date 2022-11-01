@@ -28,7 +28,7 @@ const companySchema = mongoose.Schema({
     images: [{
         type: String,
     }],
-    post: [{
+    posts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'posts',
     }],
