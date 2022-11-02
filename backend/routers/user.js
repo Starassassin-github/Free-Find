@@ -22,6 +22,12 @@ router.get(`/:id`, async (req, res) => {
     res.status(200).send(user);
 });
 
+router.get(`/work_history/:id`, async (req, res) => {
+    const user = await User.findById(req.params.id)
+
+    res.status(200).send(user.work_resolve)
+})
+
 router.post(`/`, async (req, res) => {
 
     let user = new User({
@@ -59,7 +65,6 @@ router.put('/:id', async (req, res) => {
             address: req.body.address,
             city: req.body.city,
             image: req.body.image,
-            posts: req.body.posts,
             phone: req.body.phone,
             sex: req.body.sex,
             id_card: req.body.id_card,
@@ -78,7 +83,7 @@ router.put('/:id', async (req, res) => {
 });
 
 router.patch('/work_pending/:id/:postid', async (req, res) => {
-    
+
     const user = await User.findOneAndUpdate(
         {
             _id: req.params.id,
@@ -92,8 +97,6 @@ router.patch('/work_pending/:id/:postid', async (req, res) => {
 
     if (!user)
         return res.status(400).send('the user cannot be created!')
-
-
 
     res.status(200).json({ message: "Work Status Done!" })
 });
@@ -122,9 +125,49 @@ router.patch('/work_resolve/:id/:postid', async (req, res) => {
     if (!user)
         return res.status(400).send('the user cannot be created!')
 
-
-
     res.status(200).json({ message: "Work Status Done!" })
 });
+
+router.patch('/posts/:id/:postid', async (req, res) => {
+
+    const user = await User.findOneAndUpdate(
+        {
+            _id: req.params.id,
+        },
+        {
+            $push: {
+                posts: req.params.postid
+            }
+        }
+    )
+
+    if (!user)
+        return res.status(400).send('the user cannot be created!')
+
+    res.status(200).json({ message: "Posts has been Added!" })
+});
+
+router.put(`/work_resolve/clear/:id/`, async (req, res) => {
+
+    const user = await User.findOneAndUpdate(
+        {
+            _id: req.params.id,
+        },
+        {
+            $set: {
+                work_resolve: []
+            }
+        }
+    )
+
+    if (!user)
+        return res.status(400).send('the work cannot be deleted!')
+
+    res.status(200).json({ message: "Work has been clear!" })
+
+
+
+});
+
 
 module.exports = router;
