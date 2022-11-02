@@ -25,8 +25,7 @@ const postSchema = mongoose.Schema({
         ref: 'users'
     }],
     _id_offer: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
+        type: Object
     }],
     _id_reject: [{
         type: mongoose.Schema.Types.ObjectId,

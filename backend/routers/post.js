@@ -1,4 +1,6 @@
 const express = require('express');
+const mongo = require('mongodb');
+
 const { Post } = require('../models/post');
 
 const router = express.Router();
@@ -49,6 +51,8 @@ router.post(`/`, async (req, res) => {
 
 router.put('/offer/:id/:userid', async (req, res) => {
 
+    const contract_id = req.query.contract_id
+
     const post = await Post.findOneAndUpdate(
         {
             _id: req.params.id,
@@ -58,7 +62,10 @@ router.put('/offer/:id/:userid', async (req, res) => {
                 _id_apply: userid
             },
             $push: {
-                _id_offer: userid
+                _id_offer: {
+                    _id_offer: new mongo.ObjectId(userid),
+                    contract_id: new mongo.ObjectId(contract_id)
+                }
             }
 
         }
