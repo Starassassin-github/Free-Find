@@ -20,6 +20,7 @@ const contractsRouter = require('./routers/contract');
 // middleware
 app.use(express.json());
 app.use(morgan('tiny'));
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 
 // router
 app.use(`${api}/posts`, postsRouter);

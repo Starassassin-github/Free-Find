@@ -1,8 +1,36 @@
 const express = require('express');
 const mongo = require('mongodb');
+const multer = require('multer');
+
 const { User } = require('../models/user');
 
 const router = express.Router();
+
+const FILE_TYPE_MAP = {
+    'image/png': 'png',
+    'image/jpeg': 'jpeg',
+    'image/jpg': 'jpg',
+};
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const isValid = FILE_TYPE_MAP[file.mimetype];
+        let uploadError = new Error('invalid image type');
+
+        if (isValid) {
+            uploadError = null;
+        }
+        cb(uploadError, 'public/uploads');
+    },
+    filename: function (req, file, cb) {
+        const fileName = file.originalname.split(' ').join('-');
+        const extension = FILE_TYPE_MAP[file.mimetype];
+        cb(null, `${fileName}-${Date.now()}.${extension}`);
+    },
+});
+
+const uploadOptions = multer({ storage: storage });
+
 
 router.get(`/`, async (req, res) => {
     const userList = await User.find();
@@ -28,7 +56,7 @@ router.get(`/work_history/:id`, async (req, res) => {
     res.status(200).send(user.work_resolve)
 })
 
-router.post(`/`, async (req, res) => {
+router.post(`/register`, async (req, res) => {
 
     let user = new User({
         name: req.body.name,
@@ -54,7 +82,21 @@ router.post(`/`, async (req, res) => {
     res.send(user);
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', uploadOptions.single('image'), async (req, res) => {
+
+    const userQuery = await User.findById(req.params.id)
+    if (!userQuery) return res.status(400).send('Invalid User')
+
+    const file = req.file;
+    let imagepath;
+
+    if (file) {
+        const fileName = file.filename;
+        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+        imagepath = `${basePath}${fileName}`
+    } else {
+        imagepath = userQuery.image;
+    }
 
     const user = await User.findByIdAndUpdate(
         req.params.id,
@@ -64,7 +106,7 @@ router.put('/:id', async (req, res) => {
             password: req.body.password,
             address: req.body.address,
             city: req.body.city,
-            image: req.body.image,
+            image: imagepath,
             phone: req.body.phone,
             sex: req.body.sex,
             id_card: req.body.id_card,
