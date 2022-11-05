@@ -22,6 +22,21 @@ router.get(`/:id`, async (req, res) =>{
     res.status(200).send(userComp);
 })
 
+router.post('/login', async (req, res) => {
+    const userComp = await UserCompany.findOne({ email: req.body.email })
+
+    if (!userComp) {
+        return res.status(400).send('The user not found');
+    }
+
+    if (userComp && (req.body.password.localeCompare(userComp.password) === 0 )) {
+        res.status(200).send(userComp)
+    } else {
+        res.status(400).send('password is wrong!');
+    }
+
+})
+
 router.post(`/`, async (req, res) => {
 
     let userCompany = new UserCompany({

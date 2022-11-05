@@ -55,6 +55,27 @@ router.get(`/work_history/:id`, async (req, res) => {
 
     res.status(200).send(user.work_resolve)
 })
+router.get(`/work_status/:id`, async (req, res) => {
+    const user = await User.findById(req.params.id)
+
+    res.status(200).send({ work_pending: user.work_pending, work_resolve: user.work_resolve })
+})
+
+
+router.post('/login', async (req, res) => {
+    const user = await User.findOne({ email: req.body.email })
+
+    if (!user) {
+        return res.status(400).send('The user not found');
+    }
+
+    if (user && (req.body.password.localeCompare(user.password) === 0 )) {
+        res.status(200).send(user)
+    } else {
+        res.status(400).send('password is wrong!');
+    }
+
+})
 
 router.post(`/register`, async (req, res) => {
 

@@ -11,7 +11,6 @@ import { AppStateService } from "../../AppStateService";
 const PendingList = (props) => {
 
     const { item } = props;
-    // item {title, type_resolve}
 
 
     AppStateService.init();

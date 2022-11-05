@@ -11,7 +11,6 @@ import { AppStateService } from "../../AppStateService";
 const ResolveList = (props) => {
 
     const { item } = props;
-    // item {title, type_resolve}
 
 
     AppStateService.init();
@@ -33,13 +32,13 @@ const ResolveList = (props) => {
                 <View style={styles.containerName}>
                     <Image
                         style={styles.imageStyle}
-                        source={{ uri: item.image ? item.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                        source={{ uri: item.data.image ? item.data.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
                     />
                     {
-                        item.title.length > 20 ?
-                            <Text style={styles.textInfo}>{item.title.substring(0, 20) + '...'}</Text>
+                        item.data.title.length > 20 ?
+                            <Text style={styles.textInfo}>{item.data.title.substring(0, 20) + '...'}</Text>
                             :
-                            <Text style={styles.textInfo}>{item.title}</Text>
+                            <Text style={styles.textInfo}>{item.data.title}</Text>
                     }
                 </View>
             </TouchableOpacity>
