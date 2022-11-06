@@ -28,6 +28,7 @@ const ResolveList = (props) => {
 
     return (
         <View style={{ flexDirection: "row" }}>
+
             <TouchableOpacity>
                 <View style={styles.containerName}>
                     <Image
@@ -52,7 +53,7 @@ const ResolveList = (props) => {
                         <Text style={styles.textButton}>ปฏิเสธ</Text>
                     </View>
             }
-
+            
         </View>
     )
 }

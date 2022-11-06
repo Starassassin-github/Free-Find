@@ -1,7 +1,7 @@
 // import
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView, ActivityIndicator, AppState, Button, TouchableOpacity } from 'react-native';
-import { Divider, NativeBaseProvider, Container, Badge, } from 'native-base';
+import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView, ActivityIndicator, AppState, TouchableOpacity } from 'react-native';
+import { Divider, NativeBaseProvider, Container,  } from 'native-base';
 import axios from 'axios';
 
 // component

@@ -1,6 +1,7 @@
 // import
 import React, { useRef, useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState, Dimensions } from 'react-native';
+import axios from 'axios';
 
 // UI
 import { Container, NativeBaseProvider } from 'native-base';
@@ -12,41 +13,51 @@ import PostList from "./PostList";
 import { AppStateService } from "../../AppStateService";
 
 
-const post1 = [{
-    _id: "5f15d5cdcb4a6642bddc0fe9",
-    type_of_work: "fulltime",
-    title: "worker 1",
-    description: "This is description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    _id_apply: ["315d8899dfd42bdd9942bdd99300300joe", "er5d88gfgfd42bdd9930uud", "dfjdkfijbj33899df", "lfdkdj4oobfpfrorogogo", "dferoeriweoreoruwpr33899df", "dffldskfjgrei303rfjkd"],
-    _id_offer: ["3434gfjgjkkejrkedf332353", "lfdkdj499299jgjfdfsfsdfrorogogo","lfdksdfsdfdtyrty5o","fksdhfo230fidjka920"],
-    _id_reject: ["34hhkfgj434k59ggjfgk3gg", "kdlfiilgirilgjfij4ipgp0"]
-},
-{
-    _id: "5f15d5b7cb4a6642bddc0fe8",
-    type_of_work: "parttime",
-    title: "worker 2 is so long title",
-    description: "This is description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    _id_apply: ["315d8899dfd42bdd99300joe", "er5d88gfgfd42bdd9930uud", "dfjdkfijbj33899df"],
-    _id_offer: ["34353", "lfdkdj ogogo"],
-    _id_reject: ["34hhkfgj434k59ggjfgk3gg", "kdlfiilgirilgjfij4ipgp0"]
-}]
+
 
 const PostHistoryScreen = (props) => {
 
 
-    const [worked, setWorked] = useState([]);
-    const [loading, setLoading] = useState(true)
+    const [arrayPostsData, setArrayPostsData] = useState([])
+
+    const [loading, setLoading] = useState(false)
 
     AppStateService.init();
 
     useEffect(() => {
 
-        setWorked(post1);
-        setLoading(false)
+        const url = `http://172.20.10.4:3333/api/v1/users/post_history/635bada594fd32514b9c60be`
+
+        const fetchPostHistory = async () => {
+            try {
+                setLoading(true)
+                const response = await axios.get(url)
+                if (response.status === 200) {
+
+                    for (let index = 0; index < response.data.length; index++) {
+                        const element = response.data[index];
+                        let resdata = await axios.get(`http://172.20.10.4:3333/api/v1/posts/${element}`)
+                        setArrayPostsData( arrayPostsData  => [...arrayPostsData, resdata.data])
+                    }
+
+                    setLoading(false);
+                    return;
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+
+        fetchPostHistory();
+
+
         AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
         return () => {
             AppState.removeEventListener('change', AppStateService.getInstance().handleAppStateChange);
-            setWorked([]);
+            setArrayPostsData([]);
         }
     }, [])
 
@@ -56,9 +67,9 @@ const PostHistoryScreen = (props) => {
                 <SafeAreaView>
                     <ScrollView>
                         <View>
-                            {worked.length > 0 ? (
+                            {arrayPostsData.length > 0 ? (
                                 <View>
-                                    {worked.map((item) => {
+                                    {arrayPostsData.map((item) => {
                                         return (
                                             <PostList
                                                 navigation={props.navigation}

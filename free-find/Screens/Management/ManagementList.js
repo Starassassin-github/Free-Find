@@ -10,7 +10,9 @@ import { AppStateService } from "../../AppStateService";
 
 const ManagementList = (props) => {
 
-    const { item } = props;
+    const { _id, name, image } = props;
+
+    console.log(_id, name, image);
 
 
     AppStateService.init();
@@ -30,12 +32,15 @@ const ManagementList = (props) => {
         <View>
             <TouchableOpacity>
                 <View style={styles.containerName}>
-                    <Text style={styles.img}>img</Text>
+                    <Image
+                        style={styles.img}
+                        source={{ uri: image ? image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                    />
                     {
-                        item.length > 25 ?
-                            <Text style={styles.textInfo}>{item.substring(0, 25) + '...'}</Text>
+                        name.length > 25 ?
+                            <Text style={styles.textInfo}>{name.substring(0, 25) + '...'}</Text>
                             :
-                            <Text style={styles.textInfo}>{item}</Text>
+                            <Text style={styles.textInfo}>{name}</Text>
                     }
                 </View>
             </TouchableOpacity>

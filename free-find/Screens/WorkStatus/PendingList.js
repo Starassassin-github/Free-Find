@@ -28,7 +28,11 @@ const PendingList = (props) => {
 
     return (
         <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={() =>
+                    props.navigation.navigate("DisplayPost", { item: item })
+                }
+            >
                 <View style={styles.containerName}>
                     <Image
                         style={styles.imageStyle}

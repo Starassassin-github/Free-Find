@@ -55,12 +55,18 @@ router.get(`/work_history/:id`, async (req, res) => {
 
     res.status(200).send(user.work_resolve)
 })
+
 router.get(`/work_status/:id`, async (req, res) => {
     const user = await User.findById(req.params.id)
 
     res.status(200).send({ work_pending: user.work_pending, work_resolve: user.work_resolve })
 })
 
+router.get(`/post_history/:id`, async (req, res) => {
+    const user = await User.findById(req.params.id)
+
+    res.status(200).send(user.posts)
+})
 
 router.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email })
