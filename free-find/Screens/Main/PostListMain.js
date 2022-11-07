@@ -7,7 +7,6 @@ import PostCard from '../../Shared/PostCard';
 
 
 
-
 const PostListMain = (props) => {
 
     const { item } = props;
