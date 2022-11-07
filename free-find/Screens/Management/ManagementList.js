@@ -1,6 +1,8 @@
 // import
 import React, { useRef, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, AppState, TouchableOpacity } from "react-native";
+import axios from "axios";
+import config from "../../config";
 
 // app state
 import { AppStateService } from "../../AppStateService";
@@ -10,9 +12,22 @@ import { AppStateService } from "../../AppStateService";
 
 const ManagementList = (props) => {
 
-    const { _id, name, image } = props;
+    const { _id_user, name, image, _id_post } = props;
 
-    console.log(_id, name, image);
+
+
+    const handleOffer = async () => {
+
+        let createContract =  await axios.post(`${config.REACT_APP_API_URL}/contracts`);
+        let postOffer = await axios.put(`${config.REACT_APP_API_URL}/posts/offer/${_id_post}/${_id_user}?contract_id=${createContract.data._id}`)
+        let workResolve = await axios.patch(`${config.REACT_APP_API_URL}/users/work_resolve/${_id_user}/${_id_post}?type_resolve=o`)
+
+    }
+
+    const handleReject = async () => {
+        let postReject = await axios.put(`${config.REACT_APP_API_URL}/posts/reject/${_id_post}/${_id_user}`)
+        let workResolve = await axios.patch(`${config.REACT_APP_API_URL}/users/work_resolve/${_id_user}/${_id_post}?type_resolve=r`)
+    }   
 
 
     AppStateService.init();
@@ -44,8 +59,12 @@ const ManagementList = (props) => {
                     }
                 </View>
             </TouchableOpacity>
+
             <View style={styles.containerManage}>
-                <TouchableOpacity style={{ marginRight: 15 }}>
+                <TouchableOpacity
+                    onPress={() => handleOffer()}
+                    style={{ marginRight: 15 }}
+                >
                     <View style={styles.containerOffer}>
                         <Text style={styles.textButton}>ยืนยัน</Text>
                     </View>

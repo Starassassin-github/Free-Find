@@ -24,12 +24,12 @@ function Main() {
             <Stack.Navigator>
                 <Stack.Group>
                     <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
+                    <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
+                    <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
                     <Stack.Screen
                         name="Management"
                         component={ManagementScreen}
                     />
-                    <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
-                    <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
                     <Stack.Screen
                         name="DisplayPost"
                         component={DisplayPostScreen}

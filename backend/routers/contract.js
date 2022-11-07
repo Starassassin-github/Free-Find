@@ -36,7 +36,7 @@ router.post(`/`, async (req, res) => {
     if(!contract)
     return res.status(400).send('the contract cannot be created!')
 
-    res.send(contract);
+    res.status(200).send(contract);
 });
 
 module.exports = router;

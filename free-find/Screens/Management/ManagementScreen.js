@@ -1,8 +1,9 @@
 // import
 import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView, AppState, ActivityIndicator } from 'react-native';
-import { Divider, NativeBaseProvider, Container,  } from 'native-base';
+import { Divider, NativeBaseProvider, Container, } from 'native-base';
 import axios from 'axios';
+import config from '../../config';
 
 // component
 import ManagementList from './ManagementList';
@@ -22,7 +23,6 @@ const ManagementScreen = (props) => {
     AppStateService.init();
 
 
-
     useEffect(() => {
 
         const fetchDataUser = async () => {
@@ -31,8 +31,8 @@ const ManagementScreen = (props) => {
 
                 for (let index = 0; index < itemList._id_apply.length; index++) {
                     const element = itemList._id_apply[index];
-                    let resdata = await axios.get(`http://172.20.10.4:3333/api/v1/users/${element}`)
-                    setArrayUserApplyData( arrayUserApplyData => [...arrayUserApplyData, resdata.data])
+                    let resdata = await axios.get(`${config.REACT_APP_API_URL}/users/${element}`)
+                    setArrayUserApplyData(arrayUserApplyData => [...arrayUserApplyData, resdata.data])
                 }
 
                 setLoading(false);
@@ -65,7 +65,6 @@ const ManagementScreen = (props) => {
                         <Text style={styles.titleStyle}>หัวข้อโพสต์</Text>
                         <Text style={styles.titleStyle}>{arrayUserApplyData.length} คน</Text>
                     </View>
-                    <Text>{arrayUserApplyData.length}</Text>
                     {arrayUserApplyData.length > 0 ?
                         (
                             <SafeAreaView style={{ flex: 1 }}>
@@ -73,21 +72,22 @@ const ManagementScreen = (props) => {
                                     data={arrayUserApplyData}
                                     renderItem={({ item }) => (
                                         // <Text>{item._id}</Text>
-                                        <ManagementList 
-                                        navigation={props.navigation} 
-                                        _id={item._id}  
-                                        name={item.name}
-                                        image={item.image}
+                                        <ManagementList
+                                            navigation={props.navigation}
+                                            _id_user={item._id}
+                                            name={item.name}
+                                            image={item.image}
+                                            _id_post={itemList._id}
                                         />
                                     )}
-                                    
+
                                     keyExtractor={(item) => item._id}
                                     alwaysBounceVertical={false}
                                     horizontal={false}
                                 />
                             </SafeAreaView>) : (
                             <View style={[styles.center, { height: deviceHeight / 2 }]}>
-                                <Text>No Post found</Text>
+                                <Text>No Applicant</Text>
                             </View>
                         )
                     }

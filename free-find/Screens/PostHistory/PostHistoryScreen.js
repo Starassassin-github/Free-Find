@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState, Dimensions } from 'react-native';
 import axios from 'axios';
+import config from "../../config";
 
 // UI
 import { Container, NativeBaseProvider } from 'native-base';
@@ -26,7 +27,7 @@ const PostHistoryScreen = (props) => {
 
     useEffect(() => {
 
-        const url = `http://172.20.10.4:3333/api/v1/users/post_history/635bada594fd32514b9c60be`
+        const url = `${config.REACT_APP_API_URL}/users/post_history/635bada594fd32514b9c60be`
 
         const fetchPostHistory = async () => {
             try {
@@ -36,7 +37,7 @@ const PostHistoryScreen = (props) => {
 
                     for (let index = 0; index < response.data.length; index++) {
                         const element = response.data[index];
-                        let resdata = await axios.get(`http://172.20.10.4:3333/api/v1/posts/${element}`)
+                        let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
                         setArrayPostsData( arrayPostsData  => [...arrayPostsData, resdata.data])
                     }
 

@@ -78,7 +78,7 @@ router.post('/login', async (req, res) => {
     if (user && (req.body.password.localeCompare(user.password) === 0 )) {
         res.status(200).send(user)
     } else {
-        res.status(400).send('password is wrong!');
+        res.status(400).send({ message: 'password is wrong!' });
     }
 
 })
@@ -106,7 +106,7 @@ router.post(`/register`, async (req, res) => {
     if (!user)
         return res.status(400).send('the User cannot be created!')
 
-    res.send(user);
+    res.status(200).send(user);
 });
 
 router.put('/:id', uploadOptions.single('image'), async (req, res) => {
@@ -148,7 +148,7 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
     if (!user)
         return res.status(400).send('the user cannot be created!')
 
-    res.send(user);
+    res.status(200).send(user);
 });
 
 router.patch('/work_pending/:id/:postid', async (req, res) => {

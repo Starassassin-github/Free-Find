@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView, ActivityIndicator, AppState, TouchableOpacity } from 'react-native';
 import { Divider, NativeBaseProvider, Container,  } from 'native-base';
 import axios from 'axios';
+import config from '../../config';
 
 // component
 import PendingList from './PendingList';
@@ -24,7 +25,7 @@ const WorkStatusScreen = (props) => {
 
     useEffect(() => {
 
-        const url = `http://172.20.10.4:3333/api/v1/users/work_status/635bada594fd32514b9c60be`
+        const url = `${config.REACT_APP_API_URL}/users/work_status/635bada594fd32514b9c60be`
         const fetchWorkStatus = async () => {
             try {
                 setLoading(true)
@@ -32,16 +33,16 @@ const WorkStatusScreen = (props) => {
                 if (response.status === 200) {
                     for (let index = 0; index < response.data.work_pending.length; index++) {
                         const element = response.data.work_pending[index];
-                        let resdata = await axios.get(`http://172.20.10.4:3333/api/v1/posts/${element}`)
+                        let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
                         setArrayPendingData( arrayPendingData =>  [...arrayPendingData, resdata.data])
                     }
                     for (let index = 0; index < response.data.work_resolve.length; index++) {
                         const element = response.data.work_resolve[index].postid;
-                        let resdata = await axios.get(`http://172.20.10.4:3333/api/v1/posts/${element}`)
+                        let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
                         setArrayResolveData( arrayResolveData =>  [...arrayResolveData, { data: resdata.data, type_resolve: response.data.work_resolve[index].type_resolve}])
 
                     }
-                    // console.log(response.data.work_resolve);
+
                     setLoading(false);
                     return;
                 }

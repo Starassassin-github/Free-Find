@@ -82,7 +82,7 @@ router.post(`/`, uploadOptions.array('images', 15), async (req, res) => {
         if (!post)
             return res.status(400).send('the post cannot be created!')
 
-        res.send(post);
+        res.status(200).send(post);
     
     }
 
@@ -106,7 +106,7 @@ router.post(`/`, uploadOptions.array('images', 15), async (req, res) => {
         if (!post)
             return res.status(400).send('the post cannot be created!')
 
-        res.send(post);
+        res.status(200).send(post);
     }
 });
 
@@ -120,11 +120,11 @@ router.put('/offer/:id/:userid', async (req, res) => {
         },
         {
             $pull: {
-                _id_apply: userid
+                _id_apply: req.params.userid
             },
             $push: {
                 _id_offer: {
-                    _id_offer: new mongo.ObjectId(userid),
+                    _id_offer: new mongo.ObjectId(req.params.userid),
                     contract_id: new mongo.ObjectId(contract_id)
                 }
             }
@@ -135,7 +135,7 @@ router.put('/offer/:id/:userid', async (req, res) => {
     if (!post)
         return res.status(400).send('the post cannot be created!')
 
-    res.send(post);
+    res.status(200).send(post);
 });
 
 router.put('/reject/:id/:userid', async (req, res) => {
@@ -146,10 +146,10 @@ router.put('/reject/:id/:userid', async (req, res) => {
         },
         {
             $pull: {
-                _id_apply: userid
+                _id_apply: req.params.userid
             },
             $push: {
-                _id_reject: userid
+                _id_reject: req.params.userid
             }
 
         }
@@ -158,7 +158,7 @@ router.put('/reject/:id/:userid', async (req, res) => {
     if (!post)
         return res.status(400).send('the post cannot be created!')
 
-    res.send(post);
+    res.status(200).send(post);
 });
 
 module.exports = router;
