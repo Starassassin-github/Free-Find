@@ -23,6 +23,7 @@ function Main() {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Group>
+                    <Stack.Screen name="Main" component={MainPage} />
                     <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
                     <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
                     <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
