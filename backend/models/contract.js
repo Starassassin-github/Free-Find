@@ -7,6 +7,12 @@ const contractSchema = mongoose.Schema({
     offer_name: {
         type: mongoose.Schema.Types.ObjectId,
     },
+    image_apply: {
+        type: String
+    },
+    image_offer: {
+        type: String
+    },
     post: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'posts',

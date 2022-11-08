@@ -16,6 +16,7 @@ import RegisterScreen from "../Screens/Register/RegisterScreen";
 import ValidationBusinessScreen from "../Screens/ValidationBusiness/ValidationBusinessScreen";
 import ValidationPersonaScreen from "../Screens/ValidationPersona/ValidationPersonaScreen";
 import SearchPage from "../Screens/Search/searchScreen";
+import ContractScreen from "../Screens/Contract/ContractScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ function Main() {
                     <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
                     <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
                     <Stack.Screen name="Main" component={MainPage} />
+                    <Stack.Screen name="Contract" component={ContractScreen} />
                     <Stack.Screen name="Search" component={SearchPage} />
                     <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
                     <Stack.Screen

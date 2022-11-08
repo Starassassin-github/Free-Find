@@ -14,13 +14,13 @@ import { AppStateService } from "../../AppStateService";
 const OfferList = (props) => {
 
 
-    const { item } = props;
-    console.log(item);
+    const { item, postData } = props;
+
+
 
     AppStateService.init();
 
     useEffect(() => {
-
 
         AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
         return () => {
@@ -30,11 +30,15 @@ const OfferList = (props) => {
 
     return (
         <View style={{ marginTop: 16, marginBottom: 5 }}>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={() =>
+                    props.navigation.navigate("Contract", { item: item.contract_data, postData: postData })
+                }
+            >
                 <View style={styles.containerName}>
                     <Image
                         style={styles.img}
-                        source={{ uri: item.user_data.image ? item.user_data.image  : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                        source={{ uri: item.user_data.image ? item.user_data.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
                     />
                     {
                         item.user_data.name.length > 23 ?

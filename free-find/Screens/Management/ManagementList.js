@@ -18,10 +18,16 @@ const ManagementList = (props) => {
 
     const handleOffer = async () => {
 
-        let createContract =  await axios.post(`${config.REACT_APP_API_URL}/contracts`);
+        let createContract =  await axios.post(`${config.REACT_APP_API_URL}/contracts`, {
+            apply_name: _id_user,
+            image_apply: image,
+            // offer name is for test
+            offer_name: "6361511a20ee94c958f9ce27",
+            image_offer: "someurl for need to fetch from redux",
+            post: _id_post
+        });
         let postOffer = await axios.put(`${config.REACT_APP_API_URL}/posts/offer/${_id_post}/${_id_user}?contract_id=${createContract.data._id}`)
         let workResolve = await axios.patch(`${config.REACT_APP_API_URL}/users/work_resolve/${_id_user}/${_id_post}?type_resolve=o`)
-
     }
 
     const handleReject = async () => {

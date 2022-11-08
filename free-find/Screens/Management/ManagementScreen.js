@@ -118,7 +118,7 @@ const ManagementScreen = (props) => {
                                 <FlatList
                                     data={arrayOfferData}
                                     renderItem={({ item }) => (
-                                        <OfferList navigation={props.navigation} item={item} />
+                                        <OfferList navigation={props.navigation} item={item} postData={itemList} />
                                     )}
                                     keyExtractor={(item) => item.user_data._id}
                                     alwaysBounceVertical={false}
