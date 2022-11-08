@@ -24,10 +24,10 @@ function Main() {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Group>
-                    <Stack.Screen name="Main" component={MainPage} />
-                    <Stack.Screen name="Search" component={SearchPage} />
                     <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
                     <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
+                    <Stack.Screen name="Main" component={MainPage} />
+                    <Stack.Screen name="Search" component={SearchPage} />
                     <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
                     <Stack.Screen
                         name="Management"

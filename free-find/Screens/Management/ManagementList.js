@@ -69,7 +69,9 @@ const ManagementList = (props) => {
                         <Text style={styles.textButton}>ยืนยัน</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => handleReject()}
+                >
                     <View style={styles.containerReject}>
                         <Text style={styles.textButton}>ปฏิเสธ</Text>
                     </View>

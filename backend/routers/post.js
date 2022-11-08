@@ -110,6 +110,25 @@ router.post(`/`, uploadOptions.array('images', 15), async (req, res) => {
     }
 });
 
+router.put('/apply/:id/:userid', async (req, res) => {
+
+    const post = await Post.findOneAndUpdate(
+        {
+            _id: req.params.id,
+        },
+        {
+            $push: {
+                _id_apply: req.params.userid
+            }
+        }
+    )
+
+    if (!post)
+        return res.status(400).send('the post cannot be created!')
+
+    res.status(200).send(post);
+});
+
 router.put('/offer/:id/:userid', async (req, res) => {
 
     const contract_id = req.query.contract_id

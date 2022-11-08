@@ -15,6 +15,7 @@ const OfferList = (props) => {
 
 
     const { item } = props;
+    console.log(item);
 
     AppStateService.init();
 
@@ -24,8 +25,6 @@ const OfferList = (props) => {
         AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
         return () => {
             AppState.removeEventListener('change', AppStateService.getInstance().handleAppStateChange);
-
-
         }
     }, [])
 
@@ -33,12 +32,15 @@ const OfferList = (props) => {
         <View style={{ marginTop: 16, marginBottom: 5 }}>
             <TouchableOpacity>
                 <View style={styles.containerName}>
-                    <Text style={styles.img}>img</Text>
+                    <Image
+                        style={styles.img}
+                        source={{ uri: item.user_data.image ? item.user_data.image  : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                    />
                     {
-                    item.length > 23 ?
-                        <Text style={styles.textInfo}>{item.substring(0, 23) + '...'}</Text>
-                        :
-                        <Text style={styles.textInfo}>{item}</Text>
+                        item.user_data.name.length > 23 ?
+                            <Text style={styles.textInfo}>{item.user_data.name.substring(0, 23) + '...'}</Text>
+                            :
+                            <Text style={styles.textInfo}>{item.user_data.name}</Text>
                     }
                     <FontAwesome style={styles.icon} name='check-circle' size={45} color='#7BE885' />
                 </View>

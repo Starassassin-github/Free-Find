@@ -1,38 +1,56 @@
 import React, { useRef, useState, useEffect } from "react";
-import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState, Dimensions } from 'react-native';
 import { Container, NativeBaseProvider } from 'native-base';
 import PostWorkList from './PostWorkList';
 import { AppStateService } from "../../AppStateService";
-
-const post1 = [{
-    _id: "5f15d5cdcb4a6642bddc0fe9",
-    type_of_work: "fulltime",
-    title: "worker 1",
-    description: "This is description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-},
-{
-    _id: "5f15d5b7cb4a6642bddc0fe8",
-    type_of_work: "parttime",
-    title: "worker 2 is so long title",
-    description: "This is description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-}]
+import axios from 'axios';
+import config from '../../config';
 
 const WorkHistoryScreen = (props) => {
 
 
-    const [worked, setWorked] = useState([]);
-    const [loading, setLoading] = useState(true)
+    const [arrayPostData, setArrayPostData] = useState([])
+
+
+    const [loading, setLoading] = useState(false)
 
     AppStateService.init();
 
+
     useEffect(() => {
 
-        setWorked(post1);
-        setLoading(false)
+        const url = `${config.REACT_APP_API_URL}/users/work_history/635bada594fd32514b9c60be`
+        const fetchDataUser = async () => {
+            try {
+                setLoading(true)
+                const response = await axios.get(url);
+                for (let index = 0; index < response.data.length; index++) {
+                    if (response.data[index].type_resolve == "o") {
+                        const element = response.data[index].postid;
+                        console.log(element);
+                        let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
+                        setArrayPostData(arrayPostData => [...arrayPostData, resdata.data])
+                    }
+
+                }
+
+                setLoading(false);
+                return;
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+
+        fetchDataUser();
+
+
         AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
         return () => {
             AppState.removeEventListener('change', AppStateService.getInstance().handleAppStateChange);
-            setWorked([]);
+            setArrayPostData([]);
         }
     }, [])
 
@@ -42,9 +60,9 @@ const WorkHistoryScreen = (props) => {
                 <SafeAreaView>
                     <ScrollView>
                         <View>
-                            {worked.length > 0 ? (
+                            {arrayPostData.length > 0 ? (
                                 <View>
-                                    {worked.map((item) => {
+                                    {arrayPostData.map((item) => {
                                         return (
                                             <PostWorkList
                                                 navigation={props.navigation}
@@ -55,7 +73,7 @@ const WorkHistoryScreen = (props) => {
                                     })}
                                 </View>
                             ) : (
-                                <View style={[styles.center, { height: height / 2 }]}>
+                                <View style={[styles.center, { height: deviceHeight / 2 }]}>
                                     <Text>No Post found</Text>
                                 </View>
                             )}
@@ -74,6 +92,8 @@ const WorkHistoryScreen = (props) => {
         </>
     )
 };
+
+const deviceHeight = Math.round(Dimensions.get('window').height);
 
 const styles = StyleSheet.create({
     container: {

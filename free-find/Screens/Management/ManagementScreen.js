@@ -14,9 +14,11 @@ import { AppStateService } from "../../AppStateService";
 
 const ManagementScreen = (props) => {
 
-    const [arrayUserApplyData, setArrayUserApplyData] = useState([])
-
     const [itemList] = useState(props.route.params.item);
+
+    const [arrayUserApplyData, setArrayUserApplyData] = useState([])
+    const [arrayOfferData, setArrayOfferData] = useState([])
+
 
     const [loading, setLoading] = useState(false)
 
@@ -33,6 +35,14 @@ const ManagementScreen = (props) => {
                     const element = itemList._id_apply[index];
                     let resdata = await axios.get(`${config.REACT_APP_API_URL}/users/${element}`)
                     setArrayUserApplyData(arrayUserApplyData => [...arrayUserApplyData, resdata.data])
+                }
+
+                for (let index = 0; index < itemList._id_offer.length; index++) {
+                    const elementUser = itemList._id_offer[index]._id_offer;
+                    const elementContract = itemList._id_offer[index].contract_id;
+                    let res_user_data = await axios.get(`${config.REACT_APP_API_URL}/users/${elementUser}`)
+                    let res_contract_data = await axios.get(`${config.REACT_APP_API_URL}/contracts/${elementContract}`)
+                    setArrayOfferData(arrayOfferData => [...arrayOfferData, { user_data: res_user_data.data, contract_data: res_contract_data.data }])
                 }
 
                 setLoading(false);
@@ -102,15 +112,15 @@ const ManagementScreen = (props) => {
                         <Text style={styles.titleStyle}>ที่ได้รับการอนุมัติ</Text>
                         <Text style={styles.titleStyle}>{itemList._id_offer.length} คน</Text>
                     </View>
-                    {/* {itemList._id_offer.length > 0 ?
+                    {arrayOfferData.length > 0 ?
                         (
                             <SafeAreaView style={{ flex: 1 }}>
                                 <FlatList
-                                    data={itemList._id_offer}
+                                    data={arrayOfferData}
                                     renderItem={({ item }) => (
                                         <OfferList navigation={props.navigation} item={item} />
                                     )}
-                                    keyExtractor={(item) => item}
+                                    keyExtractor={(item) => item.user_data._id}
                                     alwaysBounceVertical={false}
                                     horizontal={false}
                                 />
@@ -120,7 +130,7 @@ const ManagementScreen = (props) => {
                                 <Text>No Offer found</Text>
                             </View>
                         )
-                    } */}
+                    }
                 </SafeAreaView>
             ) : (
                 // Loading
