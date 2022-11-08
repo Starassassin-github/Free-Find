@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
 import {SafeAreaView, ScrollView, View, StyleSheet,Image,Text,TextInput,TouchableOpacity,Button,Picker, Alert } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
+import axios from 'axios'
+import Constants from "expo-constants"
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const ValidationPersona = (props) => {
     const [selected, setSelected] = React.useState("");
     const [item, setItem] = useState(props.route.params.item)
 
+    const name = item.username
+    const phone = item.phone
+    const email = item.email
+    const password = item.password
+
     const [address, setAddress] = useState("")
-    const [useProvince, setProvince] = useState("")
-    const [useGender, setGender] = useState("")
-    const [identificationNumber, setIdentificationNumber] = useState("")
-    const [birthday, setBirthday] = useState("")
-    const [useNationality, setNationality] = useState("")
-    const [education, setEducation] = useState("")
-    const [skill, setSkill] = useState("")
+    const [city, setProvince] = useState("")
+    const [sex, setGender] = useState("")
+    const [id_card, setIdentificationNumber] = useState("")
+    const [birthdate, setBirthday] = useState("")
+    const [nationality, setNationality] = useState("")
+    const [education_level, setEducation] = useState("")
+    const [ability, setSkill] = useState("")
 
     const [useDay, setDay] = useState("")
     const [useMonth, setMonth] = useState("")
@@ -21,7 +30,25 @@ const ValidationPersona = (props) => {
 
     function birthdaySet(){
         setBirthday(useDay + "/" + useMonth + "/" + useYear);
-    }  
+    } 
+    
+    const createPersonaAccount = async (event) => {
+        const response = await axios.post('http://localhost:3333/api/v1/users/register',{
+            name : name,
+            email : email,
+            password : password,
+            address : address,
+            city : city,
+            phone : phone,
+            sex : sex,
+            id_card : id_card,
+            birthdate : birthdate,
+            nationality : nationality,
+            education_level : education_level,
+            ability : ability
+        })
+    }
+
 
     return (
         <View style={styles.container}>
@@ -105,7 +132,7 @@ const ValidationPersona = (props) => {
 
                         <View style={{flexDirection:"row", marginTop:16,alignItems:'center'}}>
                             <Text style={{fontSize:16,color:'#4F6C93',flex:2,marginLeft:20,fontWeight:'bold'}}>สัญชาติ</Text>
-                            <SelectList setSelected={setNationality} data={nationality} 
+                            <SelectList setSelected={setNationality} data={useNationality} 
                             boxStyles={{width:285,backgroundColor:'#F2F2F2',borderRadius:6, marginRight:20, borderWidth:0 }}
                             dropdownStyles={{marginRight:20 }}
                             placeholder="กรุณาเลือกสัญชาติ"/>
@@ -131,9 +158,12 @@ const ValidationPersona = (props) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.button,{backgroundColor:'#4F6C93'}]} 
-                onPress={() => props.navigation.navigate("Loading",{item : {direction:item.direction, username:item.username, phone:item.phone, 
-                email:item.email, password:item.password, address:address, province:useProvince, gender:useGender, identificationNumber:identificationNumber, 
-                birthday:birthday, nationality:useNationality, education:education, skill:skill}})}>
+                // onPress={() => props.navigation.navigate("Loading",{item : {direction:item.direction, name:item.username, phone:item.phone, 
+                // email:item.email, password:item.password, address:address, city:city, sex:sex, id_card:id_card, 
+                // birthdate:birthdate, nationality:nationality, education_level:education_level, ability:ability, image:image}})}
+              // onPress={createPersonaAccount}
+               onPress={createPersonaAccount}
+                >
                     <Text style={{color:'#FFFFFF',fontWeight:'bold',fontSize:20}}>ถัดไป</Text>
                 </TouchableOpacity>
             </View>    
@@ -208,7 +238,7 @@ const gender = [
     {value:'ชาย'}, {value:'หญิง'}, {value:'อื่นๆ'}, 
 ];
 
-const nationality = [
+const useNationality = [
     {value:'ไทย'},
     {value:'จีน'},
     {value:'อังกฤษ'},
@@ -232,9 +262,15 @@ const month = [
 ];
 
 const year = [
-    {value:'2022'},
-    {value:'2021'},
-    {value:'2020'},
+    {value:'2004'}, {value:'2003'}, {value:'2002'}, {value:'2001'}, {value:'2000'},
+    {value:'1999'}, {value:'1998'}, {value:'1997'}, {value:'1996'}, {value:'1995'},
+    {value:'1994'}, {value:'1993'}, {value:'1992'}, {value:'1991'}, {value:'1990'},
+    {value:'1989'}, {value:'1988'}, {value:'1987'}, {value:'1986'}, {value:'1985'},
+    {value:'1984'}, {value:'1983'}, {value:'1982'}, {value:'1981'}, {value:'1980'},
+    {value:'1979'}, {value:'1978'}, {value:'1977'}, {value:'1976'}, {value:'1975'},
+    {value:'1974'}, {value:'1973'}, {value:'1972'}, {value:'1971'}, {value:'1970'},
+    {value:'1969'}, {value:'1968'}, {value:'1967'}, {value:'1966'}, {value:'1965'},
+    {value:'1964'}, {value:'1963'}, {value:'1962'}
 ];
 
 export default ValidationPersona;

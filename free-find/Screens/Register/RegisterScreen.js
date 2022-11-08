@@ -5,41 +5,30 @@ import { AppStateService } from "../../AppStateService";
 const RegisterScreen = (props) => {
     const [item, setItem] = useState(props.route.params.item)
     
-    const [direction, setDirection] = useState("Business");
+    const [direction, setDirection] = useState("Persona");
     const [username, setUsername] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const createThreeButtonAlert = () =>
-    Alert.alert(
-      username,
-      "โทรศัพท์ : " + phone + "\n" + "อีเมล : " + email,
-      [
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
+    // useEffect(() => {
 
 
-    useEffect(() => {
-
-
-        AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
+    //     AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
         
-        return () => {
-            setItem()
-            AppState.removeEventListener('change', AppStateService.getInstance().handleAppStateChange);
+    //     return () => {
+    //         setItem()
+    //         AppState.removeEventListener('change', AppStateService.getInstance().handleAppStateChange);
 
-
-        }
-    }, [])
+    //     }
+    // }, [])
     
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={{alignItems: 'flex-start', flex:1}}>
-                    <Text style={{fontSize:20,color:'#4F6C93'}} onPress={createThreeButtonAlert}>FreeFind</Text>
+                    <Text style={{fontSize:20,color:'#4F6C93'}}>FreeFind</Text>
                 </View>
                 <View style={{alignItems: 'flex-end', flex:2}}>
                     <PreviewLayout
@@ -49,7 +38,7 @@ const RegisterScreen = (props) => {
                 </View> 
             </View>
             <View style={styles.label}>
-            <Text style={{color:'#305D9A',fontWeight:'bold',fontSize:24}}>สร้างบัญชีผู้ใช้</Text>
+                <Text style={{color:'#305D9A',fontWeight:'bold',fontSize:24}}>สร้างบัญชีผู้ใช้</Text>
             </View>
 
             <View style={styles.icon}>     

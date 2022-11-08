@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {SafeAreaView, ScrollView, View, StyleSheet,Image,Text,TextInput,TouchableOpacity,Button,Picker } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
 
@@ -6,14 +6,21 @@ const ValidationBusiness = (props) => {
     const [selected, setSelected] = React.useState("");
     const [item, setItem] = useState(props.route.params.item)
 
+    const name = item.username
+    const email = item.email
+    const password = item.password
+    const phone = item.phone
+    const [company, setCompany] = useState("")
+
+    const [name_comp, setName_comp] = useState("")
     const [address, setAddress] = useState("")
-    const [useProvince, setProvince] = useState("")
-    const [useBusinessType, setBusinessType] = useState("")
+    const [city, setProvince] = useState("")
+    const [business_type, setBusinessType] = useState("")
     const [owner, setOwner] = useState("")
-    const [foundingDate, setFoundingDate] = useState("")
+    const [founding_date, setFoundingDate] = useState("")
     const [website, setWebsite] = useState("")
-    const [companyPhone, setCompanyPhone] = useState("")
-    const [companyEmail, setCompanyEmail] = useState("")
+    const [phone_comp, setCompanyPhone] = useState("")
+    const [email_comp, setCompanyEmail] = useState("")
 
     const [useDay, setDay] = useState("")
     const [useMonth, setMonth] = useState("")
@@ -22,6 +29,59 @@ const ValidationBusiness = (props) => {
     function birthdaySet(){
         setFoundingDate(useDay + "/" + useMonth + "/" + useYear);
     }
+
+    const addCompanyData = async () => {
+        const responseToCompany = await axios.post('http://localhost:3333/api/v1/companies',{
+            name_comp : name_comp,
+            email_comp : email_comp,
+            phone_comp : phone_comp,
+            address : address,
+            city : city,
+            owner : owner,
+            website : website,
+            business_type : business_type,
+            founding_date : founding_date
+        })
+        if (responseToCompany.status === 200 || responseToCompany === 201) {
+            console.log(responseToCompany.data)
+            setCompany(responseToCompany.data._id)
+        } else if (responseToCompany.status === 400){
+            console.log("fail login")
+        }
+    }
+
+    // const setCompanyID = async () => {
+    //     const response = await axios.get('http://localhost:3333/api/v1/companies')
+    //     console.log(response._id)
+    //     setCompany(response._id)
+    // }
+    
+    useEffect(() => {
+        const addCompanyAccount = async (event) => {
+            const responseToAccount = await axios.post('http://localhost:3333/api/v1/userscompanies',{
+                name : name,
+                email : email,
+                password : password,
+                phone : phone,
+                company : company
+            })
+        }
+        if(company === ""){
+            console.log("1234")
+        }else{
+            addCompanyAccount();
+            console.log("5678")
+        }
+
+    },[company])
+
+    
+
+    // async function createCompanyAccount(){           
+    //     addCompanyData();
+    //     setCompanyID();
+    //     addCompanyAccount();         
+    // }
 
     return (
         <View style={styles.container}>
@@ -62,9 +122,14 @@ const ValidationBusiness = (props) => {
                 <ScrollView>
                     <View >
                         <View style={{flexDirection:"row", marginTop:20,alignItems:'center'}}>
+                            <Text style={{fontSize:16,color:'#4F6C93',flex:2,marginLeft:20,fontWeight:'bold'}}>ชื่อบริษัท</Text>
+                        <TextInput style={[styles.input,{flex:7}]} onChangeText={(text) => setName_comp(text)}></TextInput>
+                        </View>
+
+                        <View style={{flexDirection:"row", marginTop:20,alignItems:'center'}}>
                             <Text style={{fontSize:16,color:'#4F6C93',flex:2,marginLeft:20,fontWeight:'bold'}}>ที่อยู่</Text>
                         <TextInput style={[styles.input,{flex:8}]} onChangeText={(text) => setAddress(text)}></TextInput>
-                    </View>
+                        </View>
 
                         <View style={{flexDirection:"row", marginTop:10,alignItems:'center'}}>
                             <Text style={{flex:2,marginLeft:20}}></Text>
@@ -113,7 +178,7 @@ const ValidationBusiness = (props) => {
                             <TextInput style={[styles.input,{flex:8}]} onChangeText={(text) => setCompanyPhone(text)}></TextInput>
                         </View>
 
-                        <View style={{flexDirection:"row", marginTop:20,alignItems:'center'}}>
+                        <View style={{flexDirection:"row", marginTop:20,alignItems:'center',marginBottom:20}}>
                             <Text style={{fontSize:16,color:'#4F6C93',flex:2,marginLeft:20,fontWeight:'bold'}}>อีเมล</Text>
                             <TextInput style={[styles.input,{flex:8}]} onChangeText={(text) => setCompanyEmail(text)}></TextInput>
                         </View>
@@ -129,9 +194,11 @@ const ValidationBusiness = (props) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.button,{backgroundColor:'#4F6C93'}]}
-                onPress={() => props.navigation.navigate("Loading",{item : {direction:item.direction, username:item.username, phone:item.phone, 
-                email:item.email, password:item.password, address:address, province:useProvince, businessType:useBusinessType, owner:owner, 
-                foundingDate:foundingDate, website:website, companyPhone:companyPhone, companyEmail:companyEmail}})}>
+                // onPress={() => props.navigation.navigate("Loading",{item : {direction:item.direction, username:name, phone:phone, 
+                // email:email, password:password, address:address, province:city, businessType:business_type, owner:owner, 
+                // foundingDate:founding_date, website:website, companyPhone:phone_comp, companyEmail:email_comp}})}
+                onPress={addCompanyData}
+                >
                     <Text style={{color:'#FFFFFF',fontWeight:'bold',fontSize:20}}>ถัดไป</Text>
                 </TouchableOpacity>
             </View>    
@@ -228,9 +295,15 @@ const month = [
 ];
 
 const year = [
-    {value:'2022'},
-    {value:'2021'},
-    {value:'2020'},
+    {value:'2004'}, {value:'2003'}, {value:'2002'}, {value:'2001'}, {value:'2000'},
+    {value:'1999'}, {value:'1998'}, {value:'1997'}, {value:'1996'}, {value:'1995'},
+    {value:'1994'}, {value:'1993'}, {value:'1992'}, {value:'1991'}, {value:'1990'},
+    {value:'1989'}, {value:'1988'}, {value:'1987'}, {value:'1986'}, {value:'1985'},
+    {value:'1984'}, {value:'1983'}, {value:'1982'}, {value:'1981'}, {value:'1980'},
+    {value:'1979'}, {value:'1978'}, {value:'1977'}, {value:'1976'}, {value:'1975'},
+    {value:'1974'}, {value:'1973'}, {value:'1972'}, {value:'1971'}, {value:'1970'},
+    {value:'1969'}, {value:'1968'}, {value:'1967'}, {value:'1966'}, {value:'1965'},
+    {value:'1964'}, {value:'1963'}, {value:'1962'}
 ];
 
 export default ValidationBusiness;
