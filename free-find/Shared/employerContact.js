@@ -4,14 +4,12 @@ import React from 'react'
 
 const EmployerContact = (props) => {
 
-  
-  console.log(props);
+  const { name, image } = props;
 
-  const name = "ABCDE   EFGHI"
   return (
     <View style={styles.container}>
-      {/* <Image style={styles.stretch}
-        source={{ uri: item.user_data.image ? item.user_data.image : require('../Screens/Picture/userIcon.png') }} /> */}
+      <Image style={styles.img}
+        source={{ uri: image ? image : require('../Screens/Picture/userIcon.png') }} />
       <View style={styles.employerContactBox}>
         <Text style={styles.employerContactText}>{name}</Text>
       </View>
@@ -24,17 +22,17 @@ export default EmployerContact
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    marginLeft: 20,
-    // backgroundColor:'#C5CFE3',
+    backgroundColor:'#fff',
     borderRadius: 30,
+    marginLeft: 20,
     borderWidth: 1,
-    borderColor: '#B3B5CB'
-
+    borderColor: '#B3B5CB',
+    height: 45,
+    marginBottom: 5,
   },
   employerContactBox: {
-    width: 200,
+    width: 190,
     height: 40,
-
   },
   employerContactText: {
     paddingLeft: 10,
@@ -43,11 +41,13 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     color: '#4F5475'
   },
-  stretch: {
-    width: 35,
-    height: 35,
+  img: {
+    marginTop: 2,
     marginLeft: 5,
-    marginTop: 2
-  }
+    height: 40,
+    width: 40,
+    backgroundColor: "red",
+    borderRadius: 30
+},
 
 });

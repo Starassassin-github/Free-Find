@@ -2,9 +2,15 @@ const mongoose = require('mongoose');
 
 const contractSchema = mongoose.Schema({
     apply_name: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
     },
     offer_name: {
+        type: String,
+    },
+    apply_id: {
+        type: mongoose.Schema.Types.ObjectId,
+    },
+    offer_id: {
         type: mongoose.Schema.Types.ObjectId,
     },
     image_apply: {

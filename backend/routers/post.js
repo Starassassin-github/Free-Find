@@ -74,7 +74,10 @@ router.post(`/`, uploadOptions.array('images', 15), async (req, res) => {
             company: req.body.company,
             user: req.body.user,
             jobs: req.body.jobs,
-            keyword: req.body.keyword
+            keyword: req.body.keyword,
+            name_who_post: req.body.name_who_post,
+            image_who_post: req.body.image_who_post,
+            count_recruit: req.body.count_recruit,
         })
 
         post = await post.save();
@@ -98,7 +101,10 @@ router.post(`/`, uploadOptions.array('images', 15), async (req, res) => {
             company: req.body.company,
             user: req.body.user,
             jobs: req.body.jobs,
-            keyword: req.body.keyword
+            keyword: req.body.keyword,
+            name_who_post: req.body.name_who_post,
+            image_who_post: req.body.image_who_post,
+            count_recruit: req.body.count_recruit,
         })
 
         post = await post.save();

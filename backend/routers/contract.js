@@ -28,6 +28,8 @@ router.post(`/`, async (req, res) => {
     let contract = new Contract({
         apply_name: req.body.apply_name,
         offer_name: req.body.offer_name,
+        apply_id: req.body.apply_id,
+        offer_id: req.body.offer_id,
         image_apply: req.body.image_apply,
         image_offer: req.body.image_offer,
         post: req.body.post,

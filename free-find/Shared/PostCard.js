@@ -15,9 +15,7 @@ const PostCard = (props) => {
     const { image, type_of_work, title, description } = props;
 
     const [check_type_of_work, set_Chek_Type_of_work] = useState();
-    const [statusChange, setStatusChange] = useState();
-    const [token, setToken] = useState();
-    const [cardColor, setCardColor] = useState();
+
     
     AppStateService.init();
 

@@ -1,16 +1,26 @@
 // import
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView, AppState, ActivityIndicator } from 'react-native';
+import { 
+    View, 
+    Text, 
+    Dimensions, 
+    FlatList, 
+    StyleSheet, 
+    SafeAreaView, 
+    AppState, 
+    ActivityIndicator, 
+    TouchableOpacity,
+    Image,
+} from 'react-native';
 import { Divider, NativeBaseProvider, Container, } from 'native-base';
+import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import config from '../../config';
 
-// component
-import ManagementList from './ManagementList';
-import OfferList from './OfferList';
 
 // app state
 import { AppStateService } from "../../AppStateService";
+
 
 const ManagementScreen = (props) => {
 
@@ -65,6 +75,132 @@ const ManagementScreen = (props) => {
         }
     }, [])
 
+    const ManagementList = (props) => {
+
+        const { _id_user, name, image, _id_post } = props;
+
+
+        const handleOffer = async (id) => {
+
+            let createContract = await axios.post(`${config.REACT_APP_API_URL}/contracts`, {
+                apply_id: _id_user,
+                image_apply: image,
+                // offer id, name, image is for test
+                offer_id: "6361511a20ee94c958f9ce27",
+                apply_name: name,
+                offer_name: "test for redux",
+                image_offer: "someurl for need to fetch from redux",
+                post: _id_post
+            });
+            let postOffer = await axios.put(`${config.REACT_APP_API_URL}/posts/offer/${_id_post}/${_id_user}?contract_id=${createContract.data._id}`)
+            let workResolve = await axios.patch(`${config.REACT_APP_API_URL}/users/work_resolve/${_id_user}/${_id_post}?type_resolve=o`)
+
+            let filterArrayUser =  arrayUserApplyData.filter((value, index)=> {
+                if (value._id !== id) {
+                    return value
+                }
+            })
+
+            let filterArrayOffer = arrayUserApplyData.filter((value, index) => {
+                if (value._id == id) {
+                    return value
+                }
+            })
+
+            setArrayUserApplyData(filterArrayUser);
+            setArrayOfferData(arrayOfferData => [...arrayOfferData, { user_data: filterArrayOffer[0], contract_data: createContract.data }])
+        }
+
+        const handleReject = async (id) => {
+            let postReject = await axios.put(`${config.REACT_APP_API_URL}/posts/reject/${_id_post}/${_id_user}`)
+            let workResolve = await axios.patch(`${config.REACT_APP_API_URL}/users/work_resolve/${_id_user}/${_id_post}?type_resolve=r`)
+
+            let filterArrayUser =  arrayUserApplyData.filter((value, index)=> {
+                if (value._id !== id) {
+                    return value
+                }
+            })
+            
+            setArrayUserApplyData(filterArrayUser);
+        }
+
+
+        return (
+            <View>
+                <TouchableOpacity>
+                    <View style={styles.containerName}>
+                        <Image
+                            style={styles.img}
+                            source={{ uri: image ? image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                        />
+                        {
+                            name.length > 25 ?
+                                <Text style={styles.textInfo}>{name.substring(0, 25) + '...'}</Text>
+                                :
+                                <Text style={styles.textInfo}>{name}</Text>
+                        }
+                    </View>
+                </TouchableOpacity>
+
+                <View style={styles.containerManage}>
+                    <TouchableOpacity
+                        onPress={() => handleOffer(_id_user)}
+                        style={{ marginRight: 15 }}
+                    >
+                        <View style={styles.containerOffer}>
+                            <Text style={styles.textButton}>ยืนยัน</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => handleReject(_id_user)}
+                    >
+                        <View style={styles.containerReject}>
+                            <Text style={styles.textButton}>ปฏิเสธ</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+        )
+    }
+
+    const OfferList = (props) => {
+
+
+        const { item, postData } = props;
+    
+        return (
+            <View style={{ marginTop: 16, marginBottom: 5 }}>
+                <TouchableOpacity
+                    onPress={() =>
+                        props.navigation.navigate("Contract", { item: item.contract_data, postData: postData })
+                    }
+                >
+                    <View style={styles.containerName}>
+                        <Image
+                            style={styles.img}
+                            source={{ uri: item.user_data.image ? item.user_data.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                        />
+                        {
+                            item.user_data.name.length > 23 ?
+                                <Text style={styles.textInfo}>{item.user_data.name.substring(0, 23) + '...'}</Text>
+                                :
+                                <Text style={styles.textInfo}>{item.user_data.name}</Text>
+                        }
+                        <FontAwesome style={styles.icon} name='check-circle' size={45} color='#7BE885' />
+                    </View>
+                    <View style={styles.containerManage}>
+                        <Text style={styles.textContract}>
+                            กดเพื่อดูใบสัญญา...
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
+
+
 
     return (
         <>
@@ -81,7 +217,7 @@ const ManagementScreen = (props) => {
                                 <FlatList
                                     data={arrayUserApplyData}
                                     renderItem={({ item }) => (
-                                        // <Text>{item._id}</Text>
+
                                         <ManagementList
                                             navigation={props.navigation}
                                             _id_user={item._id}
@@ -89,6 +225,7 @@ const ManagementScreen = (props) => {
                                             image={item.image}
                                             _id_post={itemList._id}
                                         />
+
                                     )}
 
                                     keyExtractor={(item) => item._id}
@@ -110,7 +247,7 @@ const ManagementScreen = (props) => {
                     <View style={{ height: 15 }} />
                     <View style={styles.headerContainer}>
                         <Text style={styles.titleStyle}>ที่ได้รับการอนุมัติ</Text>
-                        <Text style={styles.titleStyle}>{itemList._id_offer.length} คน</Text>
+                        <Text style={styles.titleStyle}>{arrayOfferData.length} คน</Text>
                     </View>
                     {arrayOfferData.length > 0 ?
                         (
@@ -120,7 +257,7 @@ const ManagementScreen = (props) => {
                                     renderItem={({ item }) => (
                                         <OfferList navigation={props.navigation} item={item} postData={itemList} />
                                     )}
-                                    keyExtractor={(item) => item.user_data._id}
+                                    keyExtractor={(item) => Date.now() + item.user_data._id}
                                     alwaysBounceVertical={false}
                                     horizontal={false}
                                 />
@@ -135,7 +272,7 @@ const ManagementScreen = (props) => {
             ) : (
                 // Loading
                 <NativeBaseProvider>
-                    <Container style={[styles.center, { backgroundColor: "#f2f2f2" }]}>
+                    <Container style={[styles.center, { backgroundColor: "#f2f2f2", height: deviceHeight / 2 }]}>
                         <ActivityIndicator size="large" color="red" />
                     </Container>
                 </NativeBaseProvider>
@@ -146,6 +283,7 @@ const ManagementScreen = (props) => {
 };
 
 const deviceHeight = Math.round(Dimensions.get('window').height);
+const deviceWidth = Math.round(Dimensions.get('window').width);
 
 const styles = StyleSheet.create({
     headerContainer: {
@@ -159,7 +297,67 @@ const styles = StyleSheet.create({
     },
     center: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: deviceHeight / 2
+    },
+    containerName: {
+        width: deviceWidth - 60,
+        height: 56,
+        marginHorizontal: 30,
+        marginTop: 15,
+        marginBottom: 5,
+        borderRadius: 30,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        flexDirection: "row",
+        borderColor: "#c1c1c1",
+        borderWidth: 0.8
+    },
+    textInfo: {
+        fontSize: 16,
+        marginLeft: 30,
+        textAlign: 'center',
+    },
+    textButton: {
+        color: "#fff",
+        width: '100%',
+        textAlign: "center",
+        justifyContent: "space-around",
+        alignItems: "center",
+        marginTop: 4,
+    },
+    containerOffer: {
+        backgroundColor: "#7BE885",
+        height: 32,
+        width: 73,
+        borderRadius: 30,
+    },
+    containerReject: {
+        backgroundColor: "#EC8484",
+        height: 32,
+        width: 73,
+        borderRadius: 30,
+    },
+    containerManage: {
+        flexDirection: "row",
+        marginLeft: 30,
+        marginBottom: 5
+    },
+    img: {
+        marginLeft: 10,
+        height: 45,
+        width: 45,
+        backgroundColor: "red",
+        borderRadius: 30
+    },
+    textContract: {
+        color: '#8C8C8C',
+        fontSize: 12,
+        marginLeft: 10,
+    },
+    icon: {
+        marginRight: 10,
+        marginLeft: 100
     }
 });
 

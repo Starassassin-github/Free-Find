@@ -1,20 +1,14 @@
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar';
 import EmployerContact from '../../Shared/employerContact'
 
 const ContractScreen = (props) => {
 
     const  { item, postData } = props.route.params;
-    console.log(item, postData);
 
     return (
         <View style={styles.container}>
             <SafeAreaView style={styles.container}>
                 <ScrollView style={styles.scrollView}>
-                    <View style={styles.HeadContract}>
-                        <Text style={styles.textSearchPage}>freelance app</Text>
-                    </View>
 
                     <View style={styles.contractTextBox}>
                         <Text style={styles.contractText}>ใบสัญญา</Text>
@@ -22,34 +16,34 @@ const ContractScreen = (props) => {
 
                     <View style={styles.contractnumberBox}>
                         <Text style={styles.contractnumber}>หมายเลขใบสัญญา </Text>
-                        <Text style={styles.contractnumber}>{item._id}</Text>
+                        <Text style={styles.idTextStyle}>{"    " + item._id}</Text>
                     </View>
 
                     <View style={styles.employerBox}>
                         <Text style={styles.employertext}>ผู้ว่าจ้าง</Text>
                         <View >
-                            <EmployerContact item={item} />
+                            <EmployerContact name={item.offer_name} image={item.image_offer}/>
                         </View>
                     </View>
 
                     <View style={styles.PostnumberBox}>
                         <Text style={styles.PostNumbertext}>หมายเลขโพสต์  </Text>
-                        <Text style={styles.PostNumbertext}>{postData._id}</Text>
+                        <Text style={styles.idTextStyle}>{ "    " + postData._id}</Text>
                     </View>
 
                     <View style={styles.jobTitleBox}>
                         <Text style={styles.jobTitleBoxtext}>รับสมัคร  </Text>
-                        <Text style={styles.jobTitleBoxtext}>{postData.title}</Text>
+                        <Text style={styles.jobTitleBoxtextStyle}>{postData.title}</Text>
                     </View>
 
                     <View style={styles.jobTitleBoxC}>
                         <Text style={styles.jobTitleBoxtext}>รายละเอียด  </Text>
-                        <Text style={styles.jobTitleBoxContent}>{postData.description}</Text>
+                        <Text style={styles.jobTitleBoxContent}>{ "    " +postData.description}</Text>
                     </View>
 
                     <View style={styles.employeeBox}>
                         <Text style={styles.employeetext}>ผู้ถูกจ้าง  </Text>
-                        <EmployerContact item={item} />
+                        <EmployerContact name={item.apply_name} image={item.image_apply} />
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -62,7 +56,9 @@ export default ContractScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginRight: 10
+        marginRight: 10,
+        backgroundColor:'#C5CFE3',
+        margin: 10,
     },
     HeadContract: {
         height: 40
@@ -76,9 +72,8 @@ const styles = StyleSheet.create({
     },
     contractTextBox: {
         backgroundColor: "#305D9A",
-        marginTop: 40,
-        marginLeft: 30,
-        marginRight: 30,
+        marginLeft: 10,
+        marginRight: 10,
         height: 59,
         borderRadius: 30,
         marginBottom: 20
@@ -91,9 +86,8 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
     },
     contractnumberBox: {
-        marginTop: 20,
-        marginLeft: 30,
-        flexDirection: "row"
+        marginTop: 5,
+        marginLeft: 10,
     },
     contractnumber: {
         fontSize: 20,
@@ -101,17 +95,17 @@ const styles = StyleSheet.create({
     },
     employerBox: {
         marginTop: 18,
-        marginLeft: 30,
+        marginLeft: 10,
         flexDirection: "row"
     },
     employertext: {
         fontSize: 20,
-        fontWeight: '400'
+        fontWeight: '400',
+        marginTop: 8,
     },
     PostnumberBox: {
         marginTop: 25,
-        marginLeft: 30,
-        flexDirection: "row"
+        marginLeft: 10,
     },
     PostNumbertext: {
         fontSize: 20,
@@ -119,7 +113,7 @@ const styles = StyleSheet.create({
     },
     jobTitleBox: {
         marginTop: 25,
-        marginLeft: 30,
+        marginLeft: 10,
         flexDirection: "row",
 
     },
@@ -131,16 +125,23 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         fontSize: 20,
         fontWeight: '400',
-        marginRight: 30,
+        marginRight: 10,
+        color: "#525354",
+    },
+    jobTitleBoxtextStyle: {
+        color: "#525354",
+        fontSize: 20,
+        fontWeight: '400',
     },
     employeeBox: {
         marginTop: 25,
-        marginLeft: 30,
+        marginLeft: 10,
         flexDirection: "row"
     },
     employeetext: {
         fontSize: 20,
-        fontWeight: '400'
+        fontWeight: '200',
+        marginTop: 8,
     },
     textSearchPage: {
         color: '#5383DD',
@@ -151,10 +152,12 @@ const styles = StyleSheet.create({
     },
     jobTitleBoxC: {
         marginTop: 25,
-        marginLeft: 30,
+        marginLeft: 10,
         marginBottom: 20
-
-
+    },
+    idTextStyle: {
+        fontSize: 14,
+        color: "#525354",
     }
 
 });

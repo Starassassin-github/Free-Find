@@ -50,6 +50,15 @@ const postSchema = mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    name_who_post: {
+        type: String
+    },
+    image_who_post: {
+        type: String
+    },
+    count_recruit: {
+        type: Number
+    }
 })
 
 exports.Post = mongoose.model('posts', postSchema);

@@ -92,8 +92,8 @@ const PostHistoryScreen = (props) => {
             ) : (
                 // Loading
                 <NativeBaseProvider>
-                    <Container style={[styles.center, { backgroundColor: "#f2f2f2", height: deviceHeight / 2 }]}>
-                        <ActivityIndicator size="large" color="red" />
+                    <Container style={[styles.center, { backgroundColor: "#f2f2f2" }]}>
+                        <ActivityIndicator size="large" color="red"  />
                     </Container>
                 </NativeBaseProvider>
             )}
@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
     },
     center: {
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: deviceHeight / 2
     }
 });
 
