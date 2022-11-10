@@ -9,16 +9,26 @@ import {
   Dimensions,
   ActivityIndicator,
   TouchableOpacity,
+  StatusBar
 } from "react-native";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AppStateService } from "../../AppStateService";
 import PostListMain from "./PostListMain";
 import { Container, NativeBaseProvider } from "native-base";
+
+// context
+import AuthGlobal from '../../Context/store/AuthGlobal';
 
 import axios from "axios";
 import config from "../../config";
 
 const MainPage = (props) => {
+
+  const context = useContext(AuthGlobal);
+
+  const isComp = context.stateUser.user.isComp
+
+  
 
   const [worked, setWorked] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,10 +67,10 @@ const MainPage = (props) => {
         if (response.status === 200) {
 
           await handleAddPost(response).then(() => {
-             listPostShowMain(arrayPostData);
+            listPostShowMain(arrayPostData);
           }).then(() => {
-              setLoading(false);
-              return;
+            setLoading(false);
+            return;
           })
         }
 
@@ -100,21 +110,34 @@ const MainPage = (props) => {
     <>
       {loading == false ? (
         <SafeAreaView style={styles.container}>
+          <StatusBar
+        animated={true}
+        backgroundColor="#61dafb"
+        // barStyle={statusBarStyle}
+        // showHideTransition={statusBarTransition}
+        // hidden={hidden}
+        />
           <ScrollView style={styles.scrollView}>
             <View style={styles.HeadMainPage}>
               <Text style={styles.textHeadMainPage}>freelance app</Text>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate("Search", {})}
+                onPress={() =>  props.navigation.navigate("Search", {})}
               >
                 <Image
                   style={styles.stretchSearch}
                   source={require("../Picture/Search.png")}
                 />
               </TouchableOpacity>
-              <Image
-                style={styles.stretchIcon}
-                source={require("../Picture/UserIconGroup.png")}
-              />
+              <TouchableOpacity
+                onPress={() => isComp ? props.navigation.navigate("UserCompany", { item: context.stateUser.user.compId }) 
+                : props.navigation.navigate("UserPersona", { item: context.stateUser.user.userId})}
+              >
+                <Image
+                  style={styles.stretchIcon}
+                  source={require("../Picture/UserIconGroup.png")}
+                />
+              </TouchableOpacity>
+
             </View>
 
             <View style={styles.newPostBox}>
@@ -175,7 +198,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   HeadMainPage: {
-    backgroundColor: "#97A2F7",
+    backgroundColor: "#133158",
     flexDirection: "row",
   },
   textHeadMainPage: {

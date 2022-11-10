@@ -40,6 +40,7 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign(
             {
                 userCompId: userComp.id,
+                compId: Comp._id,
                 isComp: userComp.isComp,
                 compdata: Comp
             },

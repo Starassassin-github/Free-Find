@@ -2,34 +2,49 @@ import React,{ useState, useEffect, useContext } from 'react';
 import { View, Text, ScrollView, Button, StyleSheet, FlatList , SafeAreaView ,container,Image, TouchableOpacity,Alert,TextInput} from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
 
+// context
 import AuthGlobal from '../../Context/store/AuthGlobal';
 
 const SettingCompanyScreen = (props) => {
 
     const context = useContext(AuthGlobal);
-    const [ userProfile, setUserProfile] = useState();
 
-    const { _id } = context.stateUser.user.compdata
 
-    console.log(context.stateUser.user);
-    console.log(_id);
-
-    const companynameSet = "โอมมีเดีย จำกัด"
-    const phoneSet = "081-180-0081"
-    const emailSet = "ABCD@gmail.com"
-    const citySet = "กรุงเทพมหานคร"
-    const addressSet = "203 ถ. สวนสยาม แขวง คันนายาว เขตคันนายาว"
-
-    const [companyname ,setCompanyname] = useState(companynameSet);
-    const [phone ,setPhone] = useState(phoneSet)
-    const [email ,setEmail] = useState(emailSet)
-    const [address,setAddress] = useState(addressSet)
-    const [city, setCity] = useState(citySet)
+    const [companyname ,setCompanyname] = useState(context.stateUser.user.compdata.name);
+    const [phone ,setPhone] = useState(context.stateUser.user.compdata.phone)
+    const [email ,setEmail] = useState(context.stateUser.user.compdata.email)
+    const [address,setAddress] = useState(context.stateUser.user.compdata.address)
+    const [city, setCity] = useState(context.stateUser.user.compdata.city)
+    const [image, setImage] = useState(context.stateUser.user.compdata.image)
 
     const [checkEmail,setCheckEmail] = useState(0)
     const [checkPhone,setCheckPhone] = useState(0)
     const [checkAddress,setCheckAddress] = useState(0)
     const [checkCity, setCheckCity] = useState(0)
+
+    useEffect(() => {
+        if (
+            context.stateUser.isAuthenticated === false ||
+            context.stateUser.isAuthenticated === null
+        ) {
+            props.navigation.navigate("Login")
+        }
+
+        return () => {
+            if (
+                context.stateUser.isAuthenticated === false ||
+                context.stateUser.isAuthenticated === null
+            ) {
+                setCompanyname();
+                setPhone();
+                setEmail();
+                setAddress();
+                setCity();
+                setImage();
+            }
+        }
+
+    }, [context.stateUser.isAuthenticated])
 
     return (
         <View style={styles.container}>
@@ -43,11 +58,7 @@ const SettingCompanyScreen = (props) => {
 
                 <View style={styles.pageTopBox}>
                     <View style={styles.imageUserBox}>
-                    <Image style={{height:90,width:90,borderRadius:50,marginBottom:10}} source={require('../Picture/Logocom.jpg') } />
-                    <TouchableOpacity >
-                        <Text style={{color:'#95FCFF',fontWeight:'400',fontSize:16,marginBottom:9,textDecorationLine:'underline'}}>แก้ไขLogo</Text>
-                    </TouchableOpacity>
-                    <Image style={styles.imageUser} source={require('../Picture/Companypic.png') } />
+                    <Image style={styles.imageUser} source={{ uri: image ? image : require('../Picture/Companypic.png') }} />
                     <TouchableOpacity >
                         <Text style={{color:'#95FCFF',fontWeight:'400',fontSize:16,marginTop:10,textDecorationLine:'underline'}}>แก้ไขรูปโปรไฟล์</Text>
                     </TouchableOpacity>

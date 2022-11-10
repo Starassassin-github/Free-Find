@@ -19,6 +19,8 @@ import SearchPage from "../Screens/Search/searchScreen";
 import ContractScreen from "../Screens/Contract/ContractScreen";
 import SettingPersonaScreen from "../Screens/SettingPersona/SettingPersonaScreen";
 import SettingCompanyScreen from "../Screens/SettingCompany/SettingCompanyScreen";
+import UserPersonaScreen from '../Screens/UserPersona/UserPersonaScreen';
+import UserCompanyScreen from "../Screens/UserCompany/UserCompanyScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,53 +32,55 @@ function Main() {
         <NavigationContainer>
             <Stack.Navigator>
                 {/* {isLoggedIn ? ( */}
-                    <Stack.Group>
-                        <Stack.Screen
-                            name="Login"
-                            component={LoginScreen}
-                            options={{
-                                headerShown: false
-                            }}
-                        />
-                        <Stack.Screen name="Main" component={MainPage} />
-                        <Stack.Screen name="Search" component={SearchPage} />
-                        <Stack.Screen name="SettingPersona" component={SettingPersonaScreen} />
-                        <Stack.Screen name="SettingCompany" component={SettingCompanyScreen} />
-                        <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
-                        <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
-                        <Stack.Screen name="Contract" component={ContractScreen} />
-                        <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
-                        <Stack.Screen
-                            name="Management"
-                            component={ManagementScreen}
-                        />
-                        <Stack.Screen
-                            name="DisplayPost"
-                            component={DisplayPostScreen}
-                            options={{ title: 'Post' }}
-                        />
-                        <Stack.Screen name="Loading" component={LoadingScreen} />
-                        <Stack.Screen
-                            name="Register"
-                            component={RegisterScreen}
-                            
-                        />
-                        <Stack.Screen
-                            name="ValidationBusiness"
-                            component={ValidationBusinessScreen}
-                            
-                        />
-                        <Stack.Screen
-                            name="ValidationPersona"
-                            component={ValidationPersonaScreen}
-                            
-                        />
-                    </Stack.Group>
-                    
-                    
-                    
+                <Stack.Group>
+                    <Stack.Screen
+                        name="Login"
+                        component={LoginScreen}
+                        options={{
+                            headerShown: false
+                        }}
+                    />
+                    <Stack.Screen name="Main" component={MainPage} options={{headerShown: false}} />
+                    <Stack.Screen name="Search" component={SearchPage} />
+                    <Stack.Screen name="SettingPersona" component={SettingPersonaScreen} />
+                    <Stack.Screen name="SettingCompany" component={SettingCompanyScreen} />
+                    <Stack.Screen name="UserPersona" component={UserPersonaScreen} />
+                    <Stack.Screen name="UserCompany" component={UserCompanyScreen} />
+                    <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
+                    <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
+                    <Stack.Screen name="Contract" component={ContractScreen} />
+                    <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
+                    <Stack.Screen
+                        name="Management"
+                        component={ManagementScreen}
+                    />
+                    <Stack.Screen
+                        name="DisplayPost"
+                        component={DisplayPostScreen}
+                        options={{ title: 'Post' }}
+                    />
+                    <Stack.Screen name="Loading" component={LoadingScreen} />
+                    <Stack.Screen
+                        name="Register"
+                        component={RegisterScreen}
+
+                    />
+                    <Stack.Screen
+                        name="ValidationBusiness"
+                        component={ValidationBusinessScreen}
+
+                    />
+                    <Stack.Screen
+                        name="ValidationPersona"
+                        component={ValidationPersonaScreen}
+
+                    />
+                </Stack.Group>
+
+
+
                 {/* ) : ( */}
-                    
+
 
 
 

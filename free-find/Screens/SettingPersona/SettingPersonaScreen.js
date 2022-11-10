@@ -1,11 +1,7 @@
-import React,{ useState, useEffect, useContext } from 'react';
-import { View, Text, ScrollView, Button, StyleSheet, FlatList , SafeAreaView ,container,Image, TouchableOpacity,Alert,TextInput} from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, ScrollView, Button, StyleSheet, FlatList, SafeAreaView, container, Image, TouchableOpacity, Alert, TextInput } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
 import { useFocusEffect } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import axios from 'axios';
-import config from '../../config';
 
 import AuthGlobal from '../../Context/store/AuthGlobal';
 
@@ -13,44 +9,23 @@ import AuthGlobal from '../../Context/store/AuthGlobal';
 const SettingPersonaScreen = (props) => {
 
     const context = useContext(AuthGlobal);
-    const [ userProfile, setUserProfile] = useState();
 
-    const { _id } = context.stateUser.user
+    const [username, setUsername] = useState(context.stateUser.user.userdata.name)
+    const [phone, setPhone] = useState(context.stateUser.user.userdata.phone)
+    const [email, setEmail] = useState(context.stateUser.user.userdata.email)
+    const [image, setImage] = useState(context.stateUser.user.userdata.image)
+    const [address, setAddress] = useState(context.stateUser.user.userdata.address)
+    const [city, setCity] = useState(context.stateUser.user.userdata.city)
+    const [education_level, setEducation_level] = useState(context.stateUser.user.userdata.education_level)
+    const [ability, setAbility] = useState(context.stateUser.user.userdata.ability)
 
-    console.log(_id);
 
-
-    // context id user persona
-    console.log(context.stateUser.user.userdata);
-
-    const usernameSet = "โอมมีเดีย จำกัด"
-    const phoneSet = "081-180-0081"
-    const emailSet = "ABCD@gmail.com"
-    const citySet = "กรุงเทพมหานคร"
-    const addressSet = "203 ถ. สวนสยาม แขวง คันนายาว เขตคันนายาว"
-    const education_levelSet = "มหาวิทยาลัยหัวหอก"
-    const abilitySet = "ตบยุง"
-    const sex = "หญิง"
-    const id_card = "11111111111111"
-    const birthdate = "1-1-2539"
-    const nationality = "ไทย"
-    
-    const [username ,setUsername] = useState(usernameSet)
-    const [phone ,setPhone] = useState(phoneSet)
-    const [email ,setEmail] = useState(emailSet)
-    const [address,setAddress] = useState(addressSet)
-    const [city, setCity] = useState(citySet)
-    
-    const [education_level,setEducation_level] = useState(education_levelSet) 
-    const [ability,setAbility] = useState(abilitySet)
-  
-
-    const [checkEmail,setCheckEmail] = useState(0)
-    const [checkPhone,setCheckPhone] = useState(0)
-    const [checkAddress,setCheckAddress] = useState(0)
+    const [checkEmail, setCheckEmail] = useState(0)
+    const [checkPhone, setCheckPhone] = useState(0)
+    const [checkAddress, setCheckAddress] = useState(0)
     const [checkCity, setCheckCity] = useState(0)
     const [checkEducation, setCheckEducation] = useState(0)
-    const [checkAbility,setCheckAbility] = useState(0)
+    const [checkAbility, setCheckAbility] = useState(0)
 
 
     useEffect(() => {
@@ -61,182 +36,180 @@ const SettingPersonaScreen = (props) => {
             props.navigation.navigate("Login")
         }
 
-        
-
-        // AsyncStorage.getItem("jwt") 
-        //     .then((res) => {
-        //         axios
-        //             .get(`${config.REACT_APP_API_URL}/users/${context.stateUser.user.sub}`, {
-        //                 headers: { Authorization: `Bearer ${res}`}
-        //             })
-        //             .then((user) => console.log(user.data))
-        //     }).catch((error) => console.log(error))
-
         return () => {
-            setUserProfile();
+            if (
+                context.stateUser.isAuthenticated === false ||
+                context.stateUser.isAuthenticated === null
+            ) {
+                setUsername();
+                setPhone();
+                setEmail();
+                setAddress();
+                setCity();
+                setEducation_level();
+                setAbility();
+            }
         }
 
     }, [context.stateUser.isAuthenticated])
 
     const userInformation = () =>
-    Alert.alert(
-      username,
-      "ที่อยู่ : " + address + "/" + city + "\n" + "ประเภทธุรกิจ : " + type + "\n" + "เจ้าของ : " + ower + "\n" + "วันก่อตั้ง : " + date + "\n" + "เว็บไซต์ : " + website ,
-      [
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
+        Alert.alert(
+            username,
+            "ที่อยู่ : " + address + "/" + city + "\n" + "ประเภทธุรกิจ : " + type + "\n" + "เจ้าของ : " + ower + "\n" + "วันก่อตั้ง : " + date + "\n" + "เว็บไซต์ : " + website,
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        );
 
     const userContract = () =>
-    Alert.alert(
-      username,
-      "โทรศัพท์ : " + phone + "\n" + "อีเมล : " + email,
-      [
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
+        Alert.alert(
+            username,
+            "โทรศัพท์ : " + phone + "\n" + "อีเมล : " + email,
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        );
 
     return (
         <View style={styles.container}>
-             <SafeAreaView style={styles.container}>
-               <ScrollView style={styles.scrollView}>
-            
-                <View style={styles.HeadSearchPage}>
-                    <Text>
-                        {userProfile ? userProfile.name : ""}
-                    </Text>
-                <Text style={styles.textSearchPage}>แก้ไขโปรไฟส์</Text>
+            <SafeAreaView style={styles.container}>
+                <ScrollView style={styles.scrollView}>
 
-                </View>
+                    <View style={styles.HeadSearchPage}>
+                        
+                        <Text style={styles.textSearchPage}>แก้ไขโปรไฟล์</Text>
 
-                <View style={styles.pageTopBox}>
-                    <View style={styles.imageUserBox}>
-                    
-                    <Image style={styles.imageUser} source={require('../Picture/admin.png') } />
-                    <TouchableOpacity >
-                        <Text style={{color:'#08A6FF',fontWeight:'400',fontSize:16,marginTop:10,textDecorationLine:'underline'}}>แก้ไขรูปโปรไฟล์</Text>
-                    </TouchableOpacity>
                     </View>
-                </View>
+
+                    <View style={styles.pageTopBox}>
+                        <View style={styles.imageUserBox}>
+
+                            <Image style={styles.imageUser} source={{ uri : image ? image :require('../Picture/admin.png')}} />
+                            <TouchableOpacity >
+                                <Text style={{ color: '#08A6FF', fontWeight: '400', fontSize: 16, marginTop: 10, textDecorationLine: 'underline' }}>แก้ไขรูปโปรไฟล์</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
 
 
-                <View style={styles.pageButtomBox}>
+                    <View style={styles.pageButtomBox}>
 
-                <View style={styles.AboutUserBox}>
-                </View>
-
-                
-                <View style={styles.NameBox}>
-                    <Text style={styles.TextOne}>ชื่อ</Text>
-                    <TextInput
-                        style={[styles.input,{width:318}]}
-                        // placeholder={usernameSet}
-                        // onChangeText={(text) => setUsername(text)}
-                        onChangeText={setUsername}
-                        value={username}
-              />
-                    {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
-                </View>
-
-                <View style={styles.NameBox}>
-                    <Text style={styles.TextOne}>อีเมล</Text>
-                    <TextInput
-                        style={[styles.input,{width:300}]}
-                        // placeholder={emailSet}
-                        // onChangeText={(text) => setEmail(text)}
-                        onChangeText={setEmail}
-                        value={email}
-              />
-                        {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
-                </View>
-
-                <View style={styles.NameBox}>
-                    <Text style={styles.TextOne}>เบอร์มือถือ</Text>
-                    <TextInput
-                        style={[styles.input,{width:251}]}
-                        // placeholder={phoneSet}
-                        // onChangeText={(text) => setPhone(text)}
-                        onChangeText={setPhone}
-                        value={phone}
-              />
-                    {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
-                </View>
-
-                <View style={styles.NameBox}>
-                    <Text style={styles.TextOne}>ที่อยู่</Text>
-                    <TextInput
-                        style={[styles.input,{width:305}]}
-                        // placeholder={addressSet}
-                        // onChangeText={(text) => setAddress(text)}
-                        onChangeText={setAddress}
-                        value={address}
-              />
-                    {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
-                </View>
-               
-                <View style={{flexDirection:"row", marginBottom:18,alignItems:'center'}}>
-                            <Text style={{flex:2,marginLeft:20}}></Text>
-                            <SelectList setSelected={setCity} data={province} 
-                            boxStyles={{width:285,backgroundColor:'#F2F2F2',borderRadius:6, marginRight:20, borderWidth:0 }}
-                            dropdownStyles={{marginRight:20 }}
-                            defaultOption={{ key:"1", value:city }}/>
+                        <View style={styles.AboutUserBox}>
                         </View>
 
-                <View style={styles.NameBox}>
-                    <Text style={styles.TextOne}>ความสามารถ</Text>
-                    <TextInput
-                        style={[styles.input,{width:226}]}
-                        // placeholder={abilitySet}
-                        // onChangeText={(text) => setAbility(text)}
-                        onChangeText={setAbility}
-                        value={ability}
-              />
-                    {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
-                </View>
-                <View style={styles.NameBox}>
-                    <Text style={styles.TextOne}>การศึกษา</Text>
-                    <TextInput
-                        style={[styles.input,{width:258}]}
-                        // placeholder={education_levelSet}
-                        // onChangeText={(text) => setEducation_level(text)}
-                        onChangeText={setEducation_level}
-                        value={education_level}
-              />
-                    {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
-                </View>
-                </View>
 
-                <View style={styles.ButtomBox}>
-                <TouchableOpacity 
-                style={[styles.button,{backgroundColor:'#B4D4FF',marginLeft:123,marginBottom:40,marginTop:20}]}>
-                    <Text style={{color:'#4F6C93',fontWeight:'bold',fontSize:16}}>ยืนยัน</Text>
-                </TouchableOpacity>
-                </View>
-                
+                        <View style={styles.NameBox}>
+                            <Text style={styles.TextOne}>ชื่อ</Text>
+                            <TextInput
+                                style={[styles.input, { width: 318 }]}
+                                // placeholder={usernameSet}
+                                // onChangeText={(text) => setUsername(text)}
+                                onChangeText={setUsername}
+                                value={username}
+                            />
+                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
+                        </View>
+
+                        <View style={styles.NameBox}>
+                            <Text style={styles.TextOne}>อีเมล</Text>
+                            <TextInput
+                                style={[styles.input, { width: 300 }]}
+                                // placeholder={emailSet}
+                                // onChangeText={(text) => setEmail(text)}
+                                onChangeText={setEmail}
+                                value={email}
+                            />
+                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
+                        </View>
+
+                        <View style={styles.NameBox}>
+                            <Text style={styles.TextOne}>เบอร์มือถือ</Text>
+                            <TextInput
+                                style={[styles.input, { width: 251 }]}
+                                // placeholder={phoneSet}
+                                // onChangeText={(text) => setPhone(text)}
+                                onChangeText={setPhone}
+                                value={phone}
+                            />
+                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
+                        </View>
+
+                        <View style={styles.NameBox}>
+                            <Text style={styles.TextOne}>ที่อยู่</Text>
+                            <TextInput
+                                style={[styles.input, { width: 305 }]}
+                                // placeholder={addressSet}
+                                // onChangeText={(text) => setAddress(text)}
+                                onChangeText={setAddress}
+                                value={address}
+                            />
+                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
+                        </View>
+
+                        <View style={{ flexDirection: "row", marginBottom: 18, alignItems: 'center' }}>
+                            <Text style={{ flex: 2, marginLeft: 20 }}></Text>
+                            <SelectList setSelected={setCity} data={province}
+                                boxStyles={{ width: 285, backgroundColor: '#F2F2F2', borderRadius: 6, marginRight: 20, borderWidth: 0 }}
+                                dropdownStyles={{ marginRight: 20 }}
+                                defaultOption={{ key: "1", value: city }} />
+                        </View>
+
+                        <View style={styles.NameBox}>
+                            <Text style={styles.TextOne}>ความสามารถ</Text>
+                            <TextInput
+                                style={[styles.input, { width: 226 }]}
+                                // placeholder={abilitySet}
+                                // onChangeText={(text) => setAbility(text)}
+                                onChangeText={setAbility}
+                                value={ability}
+                            />
+                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
+                        </View>
+                        <View style={styles.NameBox}>
+                            <Text style={styles.TextOne}>การศึกษา</Text>
+                            <TextInput
+                                style={[styles.input, { width: 258 }]}
+                                // placeholder={education_levelSet}
+                                // onChangeText={(text) => setEducation_level(text)}
+                                onChangeText={setEducation_level}
+                                value={education_level}
+                            />
+                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
+                        </View>
+                    </View>
+
+                    <View style={styles.ButtomBox}>
+                        <TouchableOpacity
+                            style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 123, marginBottom: 40, marginTop: 20 }]}>
+                            <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ยืนยัน</Text>
+                        </TouchableOpacity>
+                    </View>
+
 
                 </ScrollView>
             </SafeAreaView>
-            
+
         </View>
     )
 };
 const province = [
-    {value:'กรุงเทพมหานคร'}, {value:'กระบี่'}, {value:'กาญจนบุรี'}, {value:'กาฬสินธุ์'}, {value:'กำแพงเพชร'},
-    {value:'ขอนแก่น'}, {value:'จันทบุรี'}, {value:'ฉะเชิงเทรา'}, {value:'ชลบุรี'}, {value:'ชัยนาท'},
-    {value:'ชัยภูมิ'}, {value:'ชุมพร'}, {value:'เชียงราย'}, {value:'เชียงใหม่'}, {value:'ตรัง'},
-    {value:'ตราด'}, {value:'ตาก'}, {value:'นครนายก'}, {value:'นครปฐม'}, {value:'นครพนม'},
-    {value:'นครราชสีมา'}, {value:'นครศรีธรรมราช'}, {value:'นครสวรรค์'}, {value:'นนทบุรี'}, {value:'นราธิวาส'},
-    {value:'น่าน'}, {value:'บึงกาฬ'}, {value:'บุรีรัมย์'}, {value:'ปทุมธานี'}, {value:'ประจวบคีรีขันธ์'},
-    {value:'ปราจีนบุรี'}, {value:'ปัตตานี'}, {value:'พระนครศรีอยุธยา'}, {value:'พังงา'}, {value:'พัทลุง'},
-    {value:'พิจิตร'}, {value:'พิษณุโลก'}, {value:'เพชรบุรี'}, {value:'เพชรบูรณ์'}, {value:'แพร่'},
-    {value:'พะเยา'}, {value:'ภูเก็ต'}, {value:'มหาสารคาม'}, {value:'มุกดาหาร'}, {value:'แม่ฮ่องสอน'},
-    {value:'ยะลา'}, {value:'ยโสธร'}, {value:'ร้อยเอ็ด'}, {value:'ระนอง'}, {value:'ระยอง'},
-    {value:'ราชบุรี'}, {value:'ลพบุรี'}, {value:'ลำปาง'}, {value:'ลำพูน'}, {value:'เลย'},
-    {value:'ศรีสะเกษ'}, {value:'สกลนคร'}, {value:'สงขลา'}, {value:'สตูล'}, {value:'สมุทรปราการ'},
-    {value:'สมุทรสงคราม'}, {value:'สมุทรสาคร'}, {value:'สระแก้ว'}, {value:'สระบุรี'}, {value:'สิงห์บุรี'},
-    {value:'สุโขทัย'}, {value:'สุพรรณบุรี'}, {value:'สุราษฎร์ธานี'}, {value:'สุรินทร์'}, {value:'หนองคาย'},
-    {value:'หนองบัวลำภู'}, {value:'อ่างทอง'}, {value:'อุดรธานี'}, {value:'อุทัยธานี'}, {value:'อุตรดิตถ์'},
-    {value:'อุบลราชธานี'}, {value:'อำนาจเจริญ'} 
+    { value: 'กรุงเทพมหานคร' }, { value: 'กระบี่' }, { value: 'กาญจนบุรี' }, { value: 'กาฬสินธุ์' }, { value: 'กำแพงเพชร' },
+    { value: 'ขอนแก่น' }, { value: 'จันทบุรี' }, { value: 'ฉะเชิงเทรา' }, { value: 'ชลบุรี' }, { value: 'ชัยนาท' },
+    { value: 'ชัยภูมิ' }, { value: 'ชุมพร' }, { value: 'เชียงราย' }, { value: 'เชียงใหม่' }, { value: 'ตรัง' },
+    { value: 'ตราด' }, { value: 'ตาก' }, { value: 'นครนายก' }, { value: 'นครปฐม' }, { value: 'นครพนม' },
+    { value: 'นครราชสีมา' }, { value: 'นครศรีธรรมราช' }, { value: 'นครสวรรค์' }, { value: 'นนทบุรี' }, { value: 'นราธิวาส' },
+    { value: 'น่าน' }, { value: 'บึงกาฬ' }, { value: 'บุรีรัมย์' }, { value: 'ปทุมธานี' }, { value: 'ประจวบคีรีขันธ์' },
+    { value: 'ปราจีนบุรี' }, { value: 'ปัตตานี' }, { value: 'พระนครศรีอยุธยา' }, { value: 'พังงา' }, { value: 'พัทลุง' },
+    { value: 'พิจิตร' }, { value: 'พิษณุโลก' }, { value: 'เพชรบุรี' }, { value: 'เพชรบูรณ์' }, { value: 'แพร่' },
+    { value: 'พะเยา' }, { value: 'ภูเก็ต' }, { value: 'มหาสารคาม' }, { value: 'มุกดาหาร' }, { value: 'แม่ฮ่องสอน' },
+    { value: 'ยะลา' }, { value: 'ยโสธร' }, { value: 'ร้อยเอ็ด' }, { value: 'ระนอง' }, { value: 'ระยอง' },
+    { value: 'ราชบุรี' }, { value: 'ลพบุรี' }, { value: 'ลำปาง' }, { value: 'ลำพูน' }, { value: 'เลย' },
+    { value: 'ศรีสะเกษ' }, { value: 'สกลนคร' }, { value: 'สงขลา' }, { value: 'สตูล' }, { value: 'สมุทรปราการ' },
+    { value: 'สมุทรสงคราม' }, { value: 'สมุทรสาคร' }, { value: 'สระแก้ว' }, { value: 'สระบุรี' }, { value: 'สิงห์บุรี' },
+    { value: 'สุโขทัย' }, { value: 'สุพรรณบุรี' }, { value: 'สุราษฎร์ธานี' }, { value: 'สุรินทร์' }, { value: 'หนองคาย' },
+    { value: 'หนองบัวลำภู' }, { value: 'อ่างทอง' }, { value: 'อุดรธานี' }, { value: 'อุทัยธานี' }, { value: 'อุตรดิตถ์' },
+    { value: 'อุบลราชธานี' }, { value: 'อำนาจเจริญ' }
 ];
 export default SettingPersonaScreen;
 
@@ -244,102 +217,102 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    HeadSearchPage:{
+    HeadSearchPage: {
         backgroundColor: "#DAE9FE",
-        height:70,
-        flexDirection:"row"
+        height: 70,
+        flexDirection: "row"
 
     },
-    textSearchPage:{
-        color:'#38475B',
-        marginTop:35,
-        paddingLeft:30,
-        fontSize:20,
-        fontWeight:'400',
+    textSearchPage: {
+        color: '#38475B',
+        marginTop: 35,
+        paddingLeft: 30,
+        fontSize: 20,
+        fontWeight: '400',
     },
-    textHeadPerson:{
-        fontSize:40,
-        color:"#ffffff",
-        marginLeft:40,
-        fontWeight:'700'
+    textHeadPerson: {
+        fontSize: 40,
+        color: "#ffffff",
+        marginLeft: 40,
+        fontWeight: '700'
     },
-    pageTopBox:{
+    pageTopBox: {
         backgroundColor: "#ffffff",
-        borderBottomLeftRadius:20,
-        borderBottomRightRadius:20
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
 
     },
-    imageUser:{
-        height:200,
-        width:200,
-        borderWidth:10,
-        borderColor:"#D6E2F3"
+    imageUser: {
+        height: 200,
+        width: 200,
+        borderWidth: 10,
+        borderColor: "#D6E2F3"
 
     },
-    imageUserBox:{
+    imageUserBox: {
         backgroundColor: "#ffffff",
-        alignItems:'center',
-        marginTop:17,
-        marginBottom:17,
-     
+        alignItems: 'center',
+        marginTop: 17,
+        marginBottom: 17,
+
     },
-    pageMediamBox:{
+    pageMediamBox: {
         backgroundColor: "#BECEE3",
-        height:20,
-        borderBottomLeftRadius:20,
-        borderBottomRightRadius:20
+        height: 20,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
     },
-    NameBox:{
+    NameBox: {
         flexDirection: "row",
-        marginBottom:18,
-        marginLeft:20,
-        marginRight:20,
-        alignItems:'center',
+        marginBottom: 18,
+        marginLeft: 20,
+        marginRight: 20,
+        alignItems: 'center',
     },
-    TextOne:{
-        fontSize:20,
-        fontWeight:'600',
-        color:"#433B3B",
-        
+    TextOne: {
+        fontSize: 20,
+        fontWeight: '600',
+        color: "#433B3B",
+
     },
-    TextTwo:{
-        fontSize:18,
-        marginLeft:20,
-        flex:1,
-        marginTop:2
-        
+    TextTwo: {
+        fontSize: 18,
+        marginLeft: 20,
+        flex: 1,
+        marginTop: 2
+
     },
-    pageButtomBox:{
+    pageButtomBox: {
     },
-    ButtomBox:{
-        flexDirection:"row",
-        marginLeft:20
-    },
-    button:{
-        height:40,
-        width:135,
-        alignItems:'center',
-        justifyContent:'center',
-        borderRadius:6,
-        borderWidth:1,
-        borderColor:"#4F6C93"
-       
-    },
-    AboutUserBox:{
+    ButtomBox: {
         flexDirection: "row",
-    }, 
+        marginLeft: 20
+    },
+    button: {
+        height: 40,
+        width: 135,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 6,
+        borderWidth: 1,
+        borderColor: "#4F6C93"
+
+    },
+    AboutUserBox: {
+        flexDirection: "row",
+    },
     input: {
         fontSize: 20,
         marginLeft: 10,
-        backgroundColor:'#ffffff',
-        marginBottom:2,
-        height:35,
-        borderRadius:15,
+        backgroundColor: '#ffffff',
+        marginBottom: 2,
+        height: 35,
+        borderRadius: 15,
         borderWidth: 1,
         paddingLeft: 10,
-        height:40,
-      }
-  
+        height: 40,
+    }
 
-    
+
+
 });

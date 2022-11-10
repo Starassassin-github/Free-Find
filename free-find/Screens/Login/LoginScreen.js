@@ -34,7 +34,7 @@ const LoginScreen = (props) => {
   useEffect(() => {
     if (context.stateUser.isAuthenticated === true) {
       props.navigation.dispatch(
-        StackActions.replace('SettingCompany')
+        StackActions.replace('Main')
       );
     }
   }, [context.stateUser.isAuthenticated])

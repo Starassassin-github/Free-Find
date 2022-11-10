@@ -32,9 +32,9 @@ const companySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'posts',
     }],
-    website: [{
+    website: {
         type: String,
-    }],
+    },
     bussiness_type: {
         type: String,
     },

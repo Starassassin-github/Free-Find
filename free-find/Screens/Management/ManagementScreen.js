@@ -127,7 +127,9 @@ const ManagementScreen = (props) => {
 
         return (
             <View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => props.navigation.navigate("UserPersona", { item: _id_user })}
+                >
                     <View style={styles.containerName}>
                         <Image
                             style={styles.img}
