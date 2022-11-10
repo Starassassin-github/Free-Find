@@ -69,7 +69,11 @@ const ValidationBusiness = (props) => {
         if(company === ""){
             console.log("1234")
         }else{
-            addCompanyAccount();
+            addCompanyAccount().then(() => {
+                setTimeout(() => {
+                    props.navigation.navigate("Login")
+                })
+            })
             console.log("5678")
         }
 

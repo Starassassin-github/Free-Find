@@ -1,6 +1,7 @@
 const express = require('express');
 const mongo = require('mongodb');
 const multer = require('multer');
+const jwt = require('jsonwebtoken');
 
 const { User } = require('../models/user');
 
@@ -70,13 +71,24 @@ router.get(`/post_history/:id`, async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email })
+    const secret = process.env.secret;
 
     if (!user) {
         return res.status(400).send('The user not found');
     }
 
     if (user && (req.body.password.localeCompare(user.password) === 0 )) {
-        res.status(200).send(user)
+        const token = jwt.sign(
+            {
+                userId: user.id,
+                isComp: user.isComp,
+                userdata: user
+            },
+            secret,
+            {expiresIn : '7d'}
+        )
+
+        res.status(200).send({user: user, token: token})
     } else {
         res.status(400).send({ message: 'password is wrong!' });
     }

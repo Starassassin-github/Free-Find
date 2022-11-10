@@ -6,6 +6,10 @@ import { LogBox, AppState } from "react-native";
 // app state
 import { AppStateService } from './AppStateService';
 
+// Context API
+import Auth from './Context/store/Auth';
+
+
 // navigator
 import Main from './Navigators/Main';
 
@@ -21,7 +25,9 @@ export default function App() {
   return (
     // <UserPersonaScreen />
     // <WorkHistoryScreen />
+    <Auth>
       <Main />
+    </Auth>
 
   );
 }

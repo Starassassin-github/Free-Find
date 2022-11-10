@@ -17,35 +17,71 @@ import ValidationBusinessScreen from "../Screens/ValidationBusiness/ValidationBu
 import ValidationPersonaScreen from "../Screens/ValidationPersona/ValidationPersonaScreen";
 import SearchPage from "../Screens/Search/searchScreen";
 import ContractScreen from "../Screens/Contract/ContractScreen";
+import SettingPersonaScreen from "../Screens/SettingPersona/SettingPersonaScreen";
+import SettingCompanyScreen from "../Screens/SettingCompany/SettingCompanyScreen";
 
 const Stack = createNativeStackNavigator();
 
 function Main() {
+
+    // let isLoggedIn = false
+
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Group>
-                    <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
-                    <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
-                    <Stack.Screen name="Main" component={MainPage} />
-                    <Stack.Screen name="Contract" component={ContractScreen} />
-                    <Stack.Screen name="Search" component={SearchPage} />
-                    <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
-                    <Stack.Screen
-                        name="Management"
-                        component={ManagementScreen}
-                    />
-                    <Stack.Screen
-                        name="DisplayPost"
-                        component={DisplayPostScreen}
-                        options={{ title: 'Post' }}
-                    />
-                    <Stack.Screen name="Login" component={LoginScreen} />
-                    <Stack.Screen name="Register" component={RegisterScreen} />
-                    <Stack.Screen name="ValidationBusiness" component={ValidationBusinessScreen} />
-                    <Stack.Screen name="ValidationPersona" component={ValidationPersonaScreen} />
-                    <Stack.Screen name="Loading" component={LoadingScreen} />
-                </Stack.Group>
+                {/* {isLoggedIn ? ( */}
+                    <Stack.Group>
+                        <Stack.Screen
+                            name="Login"
+                            component={LoginScreen}
+                            options={{
+                                headerShown: false
+                            }}
+                        />
+                        <Stack.Screen name="Main" component={MainPage} />
+                        <Stack.Screen name="Search" component={SearchPage} />
+                        <Stack.Screen name="SettingPersona" component={SettingPersonaScreen} />
+                        <Stack.Screen name="SettingCompany" component={SettingCompanyScreen} />
+                        <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
+                        <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
+                        <Stack.Screen name="Contract" component={ContractScreen} />
+                        <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
+                        <Stack.Screen
+                            name="Management"
+                            component={ManagementScreen}
+                        />
+                        <Stack.Screen
+                            name="DisplayPost"
+                            component={DisplayPostScreen}
+                            options={{ title: 'Post' }}
+                        />
+                        <Stack.Screen name="Loading" component={LoadingScreen} />
+                        <Stack.Screen
+                            name="Register"
+                            component={RegisterScreen}
+                            
+                        />
+                        <Stack.Screen
+                            name="ValidationBusiness"
+                            component={ValidationBusinessScreen}
+                            
+                        />
+                        <Stack.Screen
+                            name="ValidationPersona"
+                            component={ValidationPersonaScreen}
+                            
+                        />
+                    </Stack.Group>
+                    
+                    
+                    
+                {/* ) : ( */}
+                    
+
+
+
+                {/* )} */}
+
             </Stack.Navigator>
         </NavigationContainer>
     );

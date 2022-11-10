@@ -1,5 +1,7 @@
 const express = require('express');
 const { UserCompany } = require('../models/user_company');
+const jwt = require('jsonwebtoken');
+const { Company } = require('../models/company');
 
 
 const router = express.Router();
@@ -24,13 +26,27 @@ router.get(`/:id`, async (req, res) =>{
 
 router.post('/login', async (req, res) => {
     const userComp = await UserCompany.findOne({ email: req.body.email })
+    const secret = process.env.secret;
+    
 
     if (!userComp) {
         return res.status(400).send('The user not found');
     }
 
     if (userComp && (req.body.password.localeCompare(userComp.password) === 0 )) {
-        res.status(200).send(userComp)
+
+        const Comp = await Company.findById(userComp.company)
+
+        const token = jwt.sign(
+            {
+                userCompId: userComp.id,
+                isComp: userComp.isComp,
+                compdata: Comp
+            },
+            secret,
+            {expiresIn : '7d'}
+        )
+        res.status(200).send({user: userComp, token: token})
     } else {
         res.status(400).send('password is wrong!');
     }

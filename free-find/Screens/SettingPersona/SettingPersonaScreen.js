@@ -1,8 +1,28 @@
-import React,{ useState, useEffect } from 'react';
+import React,{ useState, useEffect, useContext } from 'react';
 import { View, Text, ScrollView, Button, StyleSheet, FlatList , SafeAreaView ,container,Image, TouchableOpacity,Alert,TextInput} from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SettingPersonaScreen = () => {
+import axios from 'axios';
+import config from '../../config';
+
+import AuthGlobal from '../../Context/store/AuthGlobal';
+
+
+const SettingPersonaScreen = (props) => {
+
+    const context = useContext(AuthGlobal);
+    const [ userProfile, setUserProfile] = useState();
+
+    const { _id } = context.stateUser.user
+
+    console.log(_id);
+
+
+    // context id user persona
+    console.log(context.stateUser.user.userdata);
+
     const usernameSet = "โอมมีเดีย จำกัด"
     const phoneSet = "081-180-0081"
     const emailSet = "ABCD@gmail.com"
@@ -32,134 +52,31 @@ const SettingPersonaScreen = () => {
     const [checkEducation, setCheckEducation] = useState(0)
     const [checkAbility,setCheckAbility] = useState(0)
 
-    
-    
-    // const checkData = () => {
-    //     try {
-    //         if(username.length <= 0){
-    //             console.log("username invalid")
-    //         }
-    //         else{
-    //             console.log("username complete")
-    //             console.log(username)
-    //             setCheckEmail(checkEmail + 1)
-    //         }
-    //     } catch (error) {
-    //         console.log("username invalid fail")
-    //     }
-    // }
 
-    // useEffect(() => {
-    //     console.log(checkEmail)
-    //     if(checkEmail > 0){
-    //         try {
-    //             if(email.length <= 0){
-    //                 console.log("email invalid")
-    //             }
-    //             else{
-    //                 console.log("email complete")
-    //                 console.log(email)
-    //                 setCheckPhone(checkPhone + 1)
-    //             }
-    //         } catch (error) {
-    //             console.log("email invalid fail")
-    //         }
-    //     }  
-    // }, [checkEmail])
+    useEffect(() => {
+        if (
+            context.stateUser.isAuthenticated === false ||
+            context.stateUser.isAuthenticated === null
+        ) {
+            props.navigation.navigate("Login")
+        }
 
-    // useEffect(() => {
-    //     console.log(checkPhone)
-    //     if(checkPhone > 0){
-    //         try {
-    //             if(phone.length <= 0){
-    //                 console.log("phone invalid")
-    //             }
-    //             else{
-    //                 console.log("phone complete")
-    //                 console.log(phone)
-    //                 setCheckAddress(checkAddress + 1)
-    //             }
-    //         } catch (error) {
-    //             console.log("phone invalid fail")
-    //         }
-    //     }  
-    // }, [checkPhone])
+        
 
-    // useEffect(() => {
-    //     console.log(checkAddress)
-    //     if(checkAddress > 0){
-    //         try {
-    //             if(address.length <= 0){
-    //                 console.log("address invalid")
-    //             }
-    //             else{
-    //                 console.log("address complete")
-    //                 console.log(address)
-    //                 setCheckCity(checkCity + 1)
-    //             }
-    //         } catch (error) {
-    //             console.log("address invalid fail")
-    //         }
-    //     }  
-    // }, [checkAddress])
+        // AsyncStorage.getItem("jwt") 
+        //     .then((res) => {
+        //         axios
+        //             .get(`${config.REACT_APP_API_URL}/users/${context.stateUser.user.sub}`, {
+        //                 headers: { Authorization: `Bearer ${res}`}
+        //             })
+        //             .then((user) => console.log(user.data))
+        //     }).catch((error) => console.log(error))
 
-    // useEffect(() => {
-    //     console.log(checkCity)
-    //     if(checkCity > 0){
-    //         try {
-    //             if(city.length <= 0){
-    //                 console.log("city invalid")
-    //             }
-    //             else{
-    //                 console.log("city complete")
-    //                 console.log(city)
-    //                 setCheckEducation(checkEducation + 1)
-    //             }
-    //         } catch (error) {
-    //             console.log("city invalid fail")
-    //         }
-    //     }  
-    // }, [checkCity])
+        return () => {
+            setUserProfile();
+        }
 
-    // useEffect(() => {
-    //     console.log(checkAbility)
-    //     if(checkAbility > 0){
-    //         try {
-    //             if(Ability.length <= 0){
-    //                 console.log("Ability invalid")
-    //             }
-    //             else{
-    //                 console.log("Ability complete")
-    //                 console.log(ability)
-    //                 setCheckEducation(checkEducation + 1)
-                    
-    //             }
-    //         } catch (error) {
-    //             console.log("Ability invalid fail")
-    //         }
-    //     }  
-    // }, [checkAbility])
-    
-    // useEffect(() => {
-    //     console.log(checkEducation)
-    //     if(checkEducation > 0){
-    //         try {
-    //             if(education_level.length <= 0){
-    //                 console.log("education level invalid")
-    //             }
-    //             else{
-    //                 console.log("education level complete")
-    //                 console.log(education_level)
-                    
-                    
-    //             }
-    //         } catch (error) {
-    //             console.log("education level invalid fail")
-    //         }
-    //     }  
-    // }, [checkEducation])
-
-    
+    }, [context.stateUser.isAuthenticated])
 
     const userInformation = () =>
     Alert.alert(
@@ -185,6 +102,9 @@ const SettingPersonaScreen = () => {
                <ScrollView style={styles.scrollView}>
             
                 <View style={styles.HeadSearchPage}>
+                    <Text>
+                        {userProfile ? userProfile.name : ""}
+                    </Text>
                 <Text style={styles.textSearchPage}>แก้ไขโปรไฟส์</Text>
 
                 </View>
@@ -192,7 +112,7 @@ const SettingPersonaScreen = () => {
                 <View style={styles.pageTopBox}>
                     <View style={styles.imageUserBox}>
                     
-                    <Image style={styles.imageUser} source={require('../Photo/admin.png') } />
+                    <Image style={styles.imageUser} source={require('../Picture/admin.png') } />
                     <TouchableOpacity >
                         <Text style={{color:'#08A6FF',fontWeight:'400',fontSize:16,marginTop:10,textDecorationLine:'underline'}}>แก้ไขรูปโปรไฟล์</Text>
                     </TouchableOpacity>

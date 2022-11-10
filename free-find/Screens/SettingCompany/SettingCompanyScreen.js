@@ -1,8 +1,19 @@
-import React,{ useState, useEffect } from 'react';
+import React,{ useState, useEffect, useContext } from 'react';
 import { View, Text, ScrollView, Button, StyleSheet, FlatList , SafeAreaView ,container,Image, TouchableOpacity,Alert,TextInput} from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
 
-const SettingCompanyScreen = () => {
+import AuthGlobal from '../../Context/store/AuthGlobal';
+
+const SettingCompanyScreen = (props) => {
+
+    const context = useContext(AuthGlobal);
+    const [ userProfile, setUserProfile] = useState();
+
+    const { _id } = context.stateUser.user.compdata
+
+    console.log(context.stateUser.user);
+    console.log(_id);
+
     const companynameSet = "โอมมีเดีย จำกัด"
     const phoneSet = "081-180-0081"
     const emailSet = "ABCD@gmail.com"
@@ -20,93 +31,6 @@ const SettingCompanyScreen = () => {
     const [checkAddress,setCheckAddress] = useState(0)
     const [checkCity, setCheckCity] = useState(0)
 
-    // const checkData = () => {
-    //     try {
-    //         if(username.length <= 0){
-    //             console.log("username invalid")
-    //         }
-    //         else{
-    //             console.log("username complete")
-    //             console.log(username)
-    //             setCheckEmail(checkEmail + 1)
-    //         }
-    //     } catch (error) {
-    //         console.log("username invalid fail")
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     console.log(checkEmail)
-    //     if(checkEmail > 0){
-    //         try {
-    //             if(email.length <= 0){
-    //                 console.log("email invalid")
-    //             }
-    //             else{
-    //                 console.log("email complete")
-    //                 console.log(email)
-    //                 setCheckPhone(checkPhone + 1)
-    //             }
-    //         } catch (error) {
-    //             console.log("email invalid fail")
-    //         }
-    //     }  
-    // }, [checkEmail])
-
-    // useEffect(() => {
-    //     console.log(checkPhone)
-    //     if(checkPhone > 0){
-    //         try {
-    //             if(phone.length <= 0){
-    //                 console.log("phone invalid")
-    //             }
-    //             else{
-    //                 console.log("phone complete")
-    //                 console.log(phone)
-    //                 setCheckAddress(checkAddress + 1)
-    //             }
-    //         } catch (error) {
-    //             console.log("phone invalid fail")
-    //         }
-    //     }  
-    // }, [checkPhone])
-
-    // useEffect(() => {
-    //     console.log(checkAddress)
-    //     if(checkAddress > 0){
-    //         try {
-    //             if(address.length <= 0){
-    //                 console.log("address invalid")
-    //             }
-    //             else{
-    //                 console.log("address complete")
-    //                 console.log(address)
-    //                 setCheckCity(checkCity + 1)
-    //             }
-    //         } catch (error) {
-    //             console.log("address invalid fail")
-    //         }
-    //     }  
-    // }, [checkAddress])
-
-    // useEffect(() => {
-    //     console.log(checkCity)
-    //     if(checkCity > 0){
-    //         try {
-    //             if(city.length <= 0){
-    //                 console.log("city invalid")
-    //             }
-    //             else{
-    //                 console.log("city complete")
-    //                 console.log(city)
-                    
-    //             }
-    //         } catch (error) {
-    //             console.log("city invalid fail")
-    //         }
-    //     }  
-    // }, [checkCity])
-
     return (
         <View style={styles.container}>
              <SafeAreaView style={styles.container}>
@@ -119,11 +43,11 @@ const SettingCompanyScreen = () => {
 
                 <View style={styles.pageTopBox}>
                     <View style={styles.imageUserBox}>
-                    <Image style={{height:90,width:90,borderRadius:50,marginBottom:10}} source={require('../Photo/Logocom.jpg') } />
+                    <Image style={{height:90,width:90,borderRadius:50,marginBottom:10}} source={require('../Picture/Logocom.jpg') } />
                     <TouchableOpacity >
                         <Text style={{color:'#95FCFF',fontWeight:'400',fontSize:16,marginBottom:9,textDecorationLine:'underline'}}>แก้ไขLogo</Text>
                     </TouchableOpacity>
-                    <Image style={styles.imageUser} source={require('../Photo/Companypic.png') } />
+                    <Image style={styles.imageUser} source={require('../Picture/Companypic.png') } />
                     <TouchableOpacity >
                         <Text style={{color:'#95FCFF',fontWeight:'400',fontSize:16,marginTop:10,textDecorationLine:'underline'}}>แก้ไขรูปโปรไฟล์</Text>
                     </TouchableOpacity>
