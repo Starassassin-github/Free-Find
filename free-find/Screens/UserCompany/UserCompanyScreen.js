@@ -38,7 +38,7 @@ const UserCompanyScreen = (props) => {
             username,
             "ที่อยู่ : " + address + "/" + city + "\n" + "ประเภทธุรกิจ : " + type + "\n" + "เจ้าของ : " + owner + "\n" + "วันก่อตั้ง : " + date + "\n" + "เว็บไซต์ : " + website,
             [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
+                { text: "OK" }
             ]
         );
 
@@ -47,7 +47,7 @@ const UserCompanyScreen = (props) => {
             username,
             "โทรศัพท์ : " + phone + "\n" + "อีเมล : " + email,
             [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
+                { text: "OK" }
             ]
         );
 

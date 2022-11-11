@@ -83,7 +83,7 @@ const UserPersonaScreen = (props) => {
             username,
             "ที่อยู่ : " + address + "/" + city + "\n" + "เพศ : " + sex + "\n" + "วันเกิด : " + birthdate + "\n" + "สัญชาติ : " + nationality + "\n" + "การศึกษา : " + education_level + "\n" + "ความสามารถ : " + ability,
             [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
+                { text: "OK" }
             ]
         );
 
@@ -92,7 +92,7 @@ const UserPersonaScreen = (props) => {
             username,
             "โทรศัพท์ : " + phone + "\n" + "อีเมล : " + email,
             [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
+                { text: "OK" }
             ]
         );
 

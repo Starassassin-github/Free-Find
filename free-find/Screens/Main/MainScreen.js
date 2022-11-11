@@ -30,7 +30,7 @@ const MainPage = (props) => {
 
   const isComp = context.stateUser.user.isComp
 
-  
+
 
   const [worked, setWorked] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -113,33 +113,37 @@ const MainPage = (props) => {
       {loading == false ? (
         <SafeAreaView style={styles.container}>
           <StatusBar
-        animated={true}
-        backgroundColor="#61dafb"
-        // barStyle={statusBarStyle}
-        // showHideTransition={statusBarTransition}
-        // hidden={hidden}
-        />
+            animated={true}
+            backgroundColor="#61dafb"
+          // barStyle={statusBarStyle}
+          // showHideTransition={statusBarTransition}
+          // hidden={hidden}
+          />
           <ScrollView style={styles.scrollView}>
             <View style={styles.HeadMainPage}>
               <Text style={styles.textHeadMainPage}>freelance app</Text>
               <TouchableOpacity
-                onPress={() =>  props.navigation.navigate("Search", {})}
+                onPress={() => props.navigation.navigate("Search", {})}
               >
                 <Ionicons style={styles.stretchSearch} name="search-circle-sharp" size={50} color="#D7E7EB" />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => isComp ? props.navigation.navigate("UserCompany", { item: context.stateUser.user.compId }) 
-                : props.navigation.navigate("UserPersona", { item: context.stateUser.user.userId})}
+                onPress={() => isComp ? props.navigation.navigate("UserCompany", { item: context.stateUser.user.compId })
+                  : props.navigation.navigate("UserPersona", { item: context.stateUser.user.userId })}
               >
-                <FontAwesome style={{marginTop:20,marginLeft:10}} name="user" size={35} color="#D7E7EB" />
+                <FontAwesome style={{ marginTop: 20, marginLeft: 10 }} name="user" size={35} color="#D7E7EB" />
               </TouchableOpacity>
 
             </View>
 
             <View style={styles.newPostBox}>
-              <View style={styles.ButtonNewPost}>
-                <Text style={styles.ButtonNewPostText}>สร้างโพสต์</Text>
-              </View>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("Post")}
+              >
+                <View style={styles.ButtonNewPost}>
+                  <Text style={styles.ButtonNewPostText}>สร้างโพสต์</Text>
+                </View>
+              </TouchableOpacity>
             </View>
 
 
@@ -230,7 +234,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   stretchSearch: {
-   
+
     marginLeft: 115,
     marginTop: 10,
     marginBottom: 10,

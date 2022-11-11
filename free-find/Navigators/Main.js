@@ -21,6 +21,7 @@ import SettingPersonaScreen from "../Screens/SettingPersona/SettingPersonaScreen
 import SettingCompanyScreen from "../Screens/SettingCompany/SettingCompanyScreen";
 import UserPersonaScreen from '../Screens/UserPersona/UserPersonaScreen';
 import UserCompanyScreen from "../Screens/UserCompany/UserCompanyScreen";
+import Postscreen from '../Screens/Post/PostScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,7 @@ function Main() {
                     <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
                     <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
                     <Stack.Screen name="Contract" component={ContractScreen} />
+                    <Stack.Screen name="Post" component={Postscreen} />
                     <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
                     <Stack.Screen
                         name="Management"
