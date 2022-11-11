@@ -15,6 +15,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { AppStateService } from "../../AppStateService";
 import PostListMain from "./PostListMain";
 import { Container, NativeBaseProvider } from "native-base";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 // context
 import AuthGlobal from '../../Context/store/AuthGlobal';
@@ -123,19 +125,13 @@ const MainPage = (props) => {
               <TouchableOpacity
                 onPress={() =>  props.navigation.navigate("Search", {})}
               >
-                <Image
-                  style={styles.stretchSearch}
-                  source={require("../Picture/Search.png")}
-                />
+                <Ionicons style={styles.stretchSearch} name="search-circle-sharp" size={50} color="#D7E7EB" />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => isComp ? props.navigation.navigate("UserCompany", { item: context.stateUser.user.compId }) 
                 : props.navigation.navigate("UserPersona", { item: context.stateUser.user.userId})}
               >
-                <Image
-                  style={styles.stretchIcon}
-                  source={require("../Picture/UserIconGroup.png")}
-                />
+                <FontAwesome style={{marginTop:20,marginLeft:10}} name="user" size={35} color="#D7E7EB" />
               </TouchableOpacity>
 
             </View>
@@ -234,8 +230,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   stretchSearch: {
-    width: 35,
-    height: 35,
+   
     marginLeft: 115,
     marginTop: 10,
     marginBottom: 10,
