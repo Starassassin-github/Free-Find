@@ -2,9 +2,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from "react";
 import { LogBox, AppState } from "react-native";
-
-// app state
-import { AppStateService } from './AppStateService';
+import Toast from "react-native-toast-message";
 
 // Context API
 import Auth from './Context/store/Auth';
@@ -27,6 +25,7 @@ export default function App() {
     // <WorkHistoryScreen />
     <Auth>
       <Main />
+      <Toast  />
     </Auth>
 
   );

@@ -70,32 +70,24 @@ router.get(`/:id`, async (req, res) => {
 
 
 
-router.post(`/`, uploadOptions.array('images', 15), async (req, res) => {
+router.post(`/`, uploadOptions.single('image', 15), async (req, res) => {
 
-    const files = req.files;
-    let imagePahts = [];
+    const file = req.file;
+    const fileName = file.filename;
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
-    if (files) {
-        files.map(file => {
-            imagePahts.push(`${basePath}${file.filename}`)
-        })
-    }
     
 
-    if (!files) { 
+    if (!file) { 
         console.log('No image in the request'); 
 
         let post = new Post({
-            name: req.body.name,
             title: req.body.title,
             type_of_work: req.body.type_of_work,
             description: req.body.description,
             image: req.body.image,
             company: req.body.company,
             user: req.body.user,
-            jobs: req.body.jobs,
-            keyword: req.body.keyword,
             name_who_post: req.body.name_who_post,
             image_who_post: req.body.image_who_post,
             count_recruit: req.body.count_recruit,
@@ -110,15 +102,14 @@ router.post(`/`, uploadOptions.array('images', 15), async (req, res) => {
     
     }
 
-    if (files) {
+    if (file) {
 
         let post = new Post({
             name: req.body.name,
             title: req.body.title,
             type_of_work: req.body.type_of_work,
             description: req.body.description,
-            image: req.body.image,
-            images: imagePahts,
+            image: `${basePath}${fileName}`,
             company: req.body.company,
             user: req.body.user,
             jobs: req.body.jobs,

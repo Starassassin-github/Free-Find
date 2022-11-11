@@ -90,15 +90,22 @@ const styles = StyleSheet.create({
     paddingRight: 100,
     paddingTop: 10
   },
-  jobTitleBox: {
-    marginTop: 15,
-    marginLeft: 30,
-    marginRight: 30,
-    flexDirection: "row"
+  jobTitleBox:{
+    marginTop:15,
+    flexDirection: "row",
+    backgroundColor:'#9FAAFF',
+    marginLeft:30,
+    marginRight:40,
+    borderRadius:30
   },
-  jobTitleBoxtext: {
-    fontSize: 25,
-    fontWeight: '400'
+  jobTitleBoxtext:{
+    fontSize:20,
+    fontWeight:'700',
+    paddingLeft:30,
+    paddingRight:30,
+    paddingTop:5,
+    paddingBottom:5,
+    color:'#262D62'
   },
   contextDisplayPostBox: {
     marginTop: 25,

@@ -90,7 +90,6 @@ useEffect(() => {
 useEffect(()=>{
   if(postSearch.length>=0){
     setWorked(postSearch)
-    console.log(postSearch)
    }
 }, [postSearch])
 
@@ -177,16 +176,6 @@ const styles = StyleSheet.create({
         fontSize:20,
         fontWeight:'400',
     },
-    // searchInput: {
-    //     height: 40,
-        
-    //     // borderWidth: 1,
-    //     // borderColor:'#ffffff',
-    //     // padding: 10,
-    //     backgroundColor:'#ffffff',
-    //     borderRadius:30,
-    //   },
-      
       containerSearchBar: {
         margin: 15,
         justifyContent: "flex-start",
@@ -203,6 +192,7 @@ const styles = StyleSheet.create({
         marginTop:2,
         marginBottom:2,
         borderRadius:35,
+        textAlignVertical: 'center'
       },
       searchBox : {
         flexDirection: "row",

@@ -114,10 +114,6 @@ const MainPage = (props) => {
         <SafeAreaView style={styles.container}>
           <StatusBar
             animated={true}
-            backgroundColor="#61dafb"
-          // barStyle={statusBarStyle}
-          // showHideTransition={statusBarTransition}
-          // hidden={hidden}
           />
           <ScrollView style={styles.scrollView}>
             <View style={styles.HeadMainPage}>
