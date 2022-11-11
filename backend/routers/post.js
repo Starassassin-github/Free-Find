@@ -40,6 +40,24 @@ router.get(`/`, async (req, res) => {
     res.status(200).send(postList);
 });
 
+router.get(`/getall`, async (req, res) => {
+    const sortby = req.query.sortby || "_id" ;
+    const order = req.query.order || "desc";
+    const limit = req.query.limit || 20;
+    
+    const postList = await Post
+    .find()
+    .sort([
+        [sortby, order]
+    ])
+    .limit(parseInt(limit))
+
+    if (!postList) {
+        res.status(500).json({ message: 'The post with the given ID was not found.' })
+    }
+    res.status(200).send(postList);
+})
+
 router.get(`/:id`, async (req, res) => {
     const post = await Post.findById(req.params.id)
 
@@ -48,6 +66,9 @@ router.get(`/:id`, async (req, res) => {
     }
     res.status(200).send(post);
 })
+
+
+
 
 router.post(`/`, uploadOptions.array('images', 15), async (req, res) => {
 

@@ -58,7 +58,7 @@ const MainPage = (props) => {
 
   useEffect(() => {
 
-    const url = `${config.REACT_APP_API_URL}/posts`;
+    const url = `${config.REACT_APP_API_URL}/posts/getall?sortby=_id&order=desc&limit=20`;
 
     const fetchWorkStatus = async () => {
       try {
