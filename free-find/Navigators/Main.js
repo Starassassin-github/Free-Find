@@ -41,53 +41,187 @@ function Main() {
                             headerShown: false
                         }}
                     />
-                    <Stack.Screen name="Main" component={MainPage} options={{headerShown: false}} />
-                    <Stack.Screen name="Search" component={SearchPage} />
-                    <Stack.Screen name="SettingPersona" component={SettingPersonaScreen} />
-                    <Stack.Screen name="SettingCompany" component={SettingCompanyScreen} />
-                    <Stack.Screen name="UserPersona" component={UserPersonaScreen} />
-                    <Stack.Screen name="UserCompany" component={UserCompanyScreen} />
-                    <Stack.Screen name="PostHistory" component={PostHistoryScreen} />
-                    <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} />
+                    <Stack.Screen name="Main" component={MainPage} options={{ headerShown: false }} />
+                    <Stack.Screen name="Search" component={SearchPage} 
+                    options={{
+                        title: 'ค้นหา',
+                        headerStyle: {
+                            backgroundColor: '#DAE9FE',
+                        },
+                        headerTintColor: '#305D9A',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }}/>
+                    <Stack.Screen name="SettingPersona" component={SettingPersonaScreen} 
+                        options={{
+                            title: 'ตั้งค่าโปรไฟล์',
+                            headerStyle: {
+                                backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                            },
+                        }}
+                    />
+                    <Stack.Screen name="SettingCompany" component={SettingCompanyScreen} 
+                        options={{
+                            title: 'ตั้งค่าโปรไฟล์',
+                            headerStyle: {
+                                backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                            },
+                        }}
+                    />
+                    <Stack.Screen name="UserPersona" component={UserPersonaScreen}
+                        options={{
+                            title: 'โปรไฟล์',
+                            headerStyle: {
+                                backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                            },
+                        }}
+                    />
+                    <Stack.Screen name="UserCompany" component={UserCompanyScreen} 
+                        options={{
+                            title: 'โปรไฟล์',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
+                    />
+                    <Stack.Screen name="PostHistory" component={PostHistoryScreen} 
+                        options={{
+                            title: 'ประวัติการโพสต์',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
+                    />
+                    <Stack.Screen name="WorkHistory" component={WorkHistoryScreen} 
+                        options={{
+                            title: 'ประวัติการโพสต์',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
+                    />
                     <Stack.Screen name="Contract" component={ContractScreen} />
-                    <Stack.Screen name="Post" component={Postscreen} />
-                    <Stack.Screen name="WorkStatus" component={WorkStatusScreen} />
+                    <Stack.Screen name="Post" component={Postscreen} 
+                        options={{
+                            title: 'โพสต์',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
+                    />
+                    <Stack.Screen name="WorkStatus" component={WorkStatusScreen} 
+                        options={{
+                            title: 'สถานะงาน',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
+                    />
                     <Stack.Screen
                         name="Management"
                         component={ManagementScreen}
+                        options={{
+                            title: 'การจัดการ',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
                     />
                     <Stack.Screen
                         name="DisplayPost"
                         component={DisplayPostScreen}
-                        options={{ title: 'Post' }}
+                        options={{
+                            title: 'ข้อมูลโพสต์',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
                     />
                     <Stack.Screen name="Loading" component={LoadingScreen} />
                     <Stack.Screen
                         name="Register"
                         component={RegisterScreen}
-
+                        options={{
+                            title: 'ลงทะเบียน',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
                     />
                     <Stack.Screen
                         name="ValidationBusiness"
                         component={ValidationBusinessScreen}
-
+                        options={{
+                            title: 'กรอกข้อมูล',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
                     />
                     <Stack.Screen
                         name="ValidationPersona"
                         component={ValidationPersonaScreen}
-
+                        options={{
+                            title: 'กรอกข้อมูลส่วนตัว',
+                            headerStyle: {
+                              backgroundColor: '#DAE9FE',
+                            },
+                            headerTintColor: '#305D9A',
+                            headerTitleStyle: {
+                              fontWeight: 'bold',
+                            },
+                          }}
                     />
                 </Stack.Group>
-
-
-
-                {/* ) : ( */}
-
-
-
-
-                {/* )} */}
-
             </Stack.Navigator>
         </NavigationContainer>
     );

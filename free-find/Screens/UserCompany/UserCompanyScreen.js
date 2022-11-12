@@ -145,13 +145,15 @@ const UserCompanyScreen = (props) => {
 
                     <View style={styles.ButtomBox}>
 
-                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginBottom: 40, marginTop: 20 }]}>
+                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginBottom: 40, marginTop: 20 }]}
+                            onPress={() => props.navigation.navigate("PostHistory")}
+                        >
                             <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการโพสต์</Text>
                         </TouchableOpacity>
 
                         {item == idAuth ?
                                 <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 20, marginBottom: 40, marginTop: 20 }]}
-                                    onPress={() => props.navigation.navigate("SettingCompany", { item: {} })}>
+                                    onPress={() => props.navigation.navigate("SettingCompany")}>
                                     <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>แก้ไขข้อมูล</Text>
                                 </TouchableOpacity>
                             :

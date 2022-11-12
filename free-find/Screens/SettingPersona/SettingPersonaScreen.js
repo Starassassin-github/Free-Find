@@ -1,31 +1,130 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { StackActions } from "@react-navigation/native";
 import { View, Text, ScrollView, Button, StyleSheet, FlatList, SafeAreaView, container, Image, TouchableOpacity, Alert, TextInput } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list';
-import { useFocusEffect } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
+import Toast from 'react-native-toast-message';
+import mime from "mime";
 
+import axios from "axios";
+import config from "../../config";
+
+
+// context
 import AuthGlobal from '../../Context/store/AuthGlobal';
 
 
 const SettingPersonaScreen = (props) => {
 
     const context = useContext(AuthGlobal);
+    const idAuth = context.stateUser.user.userId;
 
     const [username, setUsername] = useState(context.stateUser.user.userdata.name)
     const [phone, setPhone] = useState(context.stateUser.user.userdata.phone)
     const [email, setEmail] = useState(context.stateUser.user.userdata.email)
-    const [image, setImage] = useState(context.stateUser.user.userdata.image)
+    const [image, setImage] = useState()
+    const [mainImage, setMainImage] = useState(context.stateUser.user.userdata.image);
     const [address, setAddress] = useState(context.stateUser.user.userdata.address)
     const [city, setCity] = useState(context.stateUser.user.userdata.city)
     const [education_level, setEducation_level] = useState(context.stateUser.user.userdata.education_level)
     const [ability, setAbility] = useState(context.stateUser.user.userdata.ability)
 
 
-    const [checkEmail, setCheckEmail] = useState(0)
-    const [checkPhone, setCheckPhone] = useState(0)
-    const [checkAddress, setCheckAddress] = useState(0)
-    const [checkCity, setCheckCity] = useState(0)
-    const [checkEducation, setCheckEducation] = useState(0)
-    const [checkAbility, setCheckAbility] = useState(0)
+    const pickImages = async () => {
+        // No permissions request is necessary for launching the image library
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsMultipleSelection: false,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+        if (!result.cancelled) {
+            setMainImage(result.uri);
+            setImage(result.uri)
+        }
+    };
+
+    const editProfile = () => {
+        if (
+            username.trim() == "" ||
+            phone.trim() == "" ||
+            email.trim() == "" ||
+            address.trim() == "" ||
+            city.trim() == "" ||
+            education_level.trim() == "" ||
+            ability.trim() == "" ||
+            image == ""
+        ) {
+            Toast.show({
+                topOffset: 80,
+                type: "error",
+                text1: "มีบางอย่างผิดพลาด!",
+                text2: "โปรดลองอีกครั้ง หรือ กรอกข้อมูลให้ถูกต้อง"
+            })
+        } else {
+
+            let formData = new FormData();
+
+            if (image) {
+                const newImagesUri = "file:///" + image.split("file:/").join("");
+                formData.append("image", {
+                    uri: newImagesUri,
+                    type: mime.getType(newImagesUri),
+                    name: newImagesUri.split("/").pop()
+                });
+            }
+
+            const configHeaders = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            }
+
+
+            formData.append("name", username.trim())
+            formData.append("email", email.trim())
+            formData.append("address", address.trim())
+            formData.append("city", city.trim())
+            formData.append("phone", phone.trim())
+            formData.append("ability", ability.trim())
+            formData.append("education_level", education_level.trim())
+
+
+            const editHandlerUser = async () => {
+
+                await axios.put(`${config.REACT_APP_API_URL}/users/${idAuth}`, formData, configHeaders)
+                    .then((res) => {
+                        if (res.status == 200 || res.status == 201) {
+                            Toast.show({
+                                topOffset: 60,
+                                type: "info",
+                                text1: "สำเร็จ แก้ไขโปรไฟล์เรียบร้อยแล้ว!!!",
+                                text2: ""
+                            });
+                            setTimeout(() => {
+                                props.navigation.dispatch(
+                                    StackActions.replace('Main')
+                                );
+                            }, 500)
+                        }
+                    })
+                    .catch((error) => {
+                        Toast.show({
+                            topOffset: 60,
+                            type: "error",
+                            text1: "มีบางอย่างผิดพลาด!",
+                            text2: "โปรดลองอีกครั้ง"
+                        })
+                    })
+
+            }
+
+            editHandlerUser()
+        }
+    }
 
 
     useEffect(() => {
@@ -53,23 +152,22 @@ const SettingPersonaScreen = (props) => {
 
     }, [context.stateUser.isAuthenticated])
 
-    const userInformation = () =>
-        Alert.alert(
-            username,
-            "ที่อยู่ : " + address + "/" + city + "\n" + "ประเภทธุรกิจ : " + type + "\n" + "เจ้าของ : " + ower + "\n" + "วันก่อตั้ง : " + date + "\n" + "เว็บไซต์ : " + website,
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        );
 
-    const userContract = () =>
-        Alert.alert(
-            username,
-            "โทรศัพท์ : " + phone + "\n" + "อีเมล : " + email,
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        );
+    useEffect(() => {
+
+        // Image Picker
+        (async () => {
+            if (Platform.OS !== "web") {
+                const {
+                    status,
+                } = await ImagePicker.requestCameraPermissionsAsync();
+                if (status !== "granted") {
+                    alert("Sorry, we need camera roll permissions to make this work!")
+                }
+            }
+        })();
+
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -77,7 +175,7 @@ const SettingPersonaScreen = (props) => {
                 <ScrollView style={styles.scrollView}>
 
                     <View style={styles.HeadSearchPage}>
-                        
+
                         <Text style={styles.textSearchPage}>แก้ไขโปรไฟล์</Text>
 
                     </View>
@@ -85,8 +183,10 @@ const SettingPersonaScreen = (props) => {
                     <View style={styles.pageTopBox}>
                         <View style={styles.imageUserBox}>
 
-                            <Image style={styles.imageUser} source={{ uri : image ? image : "https://reactnative.dev/img/tiny_logo.png"}} />
-                            <TouchableOpacity >
+                            <Image style={styles.imageUser} source={{ uri: mainImage ? mainImage : "https://reactnative.dev/img/tiny_logo.png" }} />
+                            <TouchableOpacity
+                                onPress={pickImages}
+                            >
                                 <Text style={{ color: '#08A6FF', fontWeight: '400', fontSize: 16, marginTop: 10, textDecorationLine: 'underline' }}>แก้ไขรูปโปรไฟล์</Text>
                             </TouchableOpacity>
                         </View>
@@ -103,48 +203,37 @@ const SettingPersonaScreen = (props) => {
                             <Text style={styles.TextOne}>ชื่อ</Text>
                             <TextInput
                                 style={[styles.input, { width: 318 }]}
-                                // placeholder={usernameSet}
-                                // onChangeText={(text) => setUsername(text)}
                                 onChangeText={setUsername}
                                 value={username}
                             />
-                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
                         </View>
 
                         <View style={styles.NameBox}>
                             <Text style={styles.TextOne}>อีเมล</Text>
                             <TextInput
                                 style={[styles.input, { width: 300 }]}
-                                // placeholder={emailSet}
-                                // onChangeText={(text) => setEmail(text)}
                                 onChangeText={setEmail}
                                 value={email}
                             />
-                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
+
                         </View>
 
                         <View style={styles.NameBox}>
                             <Text style={styles.TextOne}>เบอร์มือถือ</Text>
                             <TextInput
                                 style={[styles.input, { width: 251 }]}
-                                // placeholder={phoneSet}
-                                // onChangeText={(text) => setPhone(text)}
                                 onChangeText={setPhone}
                                 value={phone}
                             />
-                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
                         </View>
 
                         <View style={styles.NameBox}>
                             <Text style={styles.TextOne}>ที่อยู่</Text>
                             <TextInput
                                 style={[styles.input, { width: 305 }]}
-                                // placeholder={addressSet}
-                                // onChangeText={(text) => setAddress(text)}
                                 onChangeText={setAddress}
                                 value={address}
                             />
-                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
                         </View>
 
                         <View style={{ flexDirection: "row", marginBottom: 18, alignItems: 'center' }}>
@@ -159,29 +248,25 @@ const SettingPersonaScreen = (props) => {
                             <Text style={styles.TextOne}>ความสามารถ</Text>
                             <TextInput
                                 style={[styles.input, { width: 226 }]}
-                                // placeholder={abilitySet}
-                                // onChangeText={(text) => setAbility(text)}
                                 onChangeText={setAbility}
                                 value={ability}
                             />
-                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
                         </View>
                         <View style={styles.NameBox}>
                             <Text style={styles.TextOne}>การศึกษา</Text>
                             <TextInput
                                 style={[styles.input, { width: 258 }]}
-                                // placeholder={education_levelSet}
-                                // onChangeText={(text) => setEducation_level(text)}
                                 onChangeText={setEducation_level}
                                 value={education_level}
                             />
-                            {/* <Image style={{height:20,width:20}} source={require('../Photo/pen.png') } /> */}
                         </View>
                     </View>
 
                     <View style={styles.ButtomBox}>
                         <TouchableOpacity
-                            style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 123, marginBottom: 40, marginTop: 20 }]}>
+                            style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 123, marginBottom: 40, marginTop: 20 }]}
+                            onPress={() => editProfile()}
+                        >
                             <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ยืนยัน</Text>
                         </TouchableOpacity>
                     </View>

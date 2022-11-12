@@ -86,7 +86,7 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
         const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
         imagepath = `${basePath}${fileName}`
     } else {
-        imagepath = userQuery.image;
+        imagepath = companyQuery.image;
     }
 
     const company = await Company.findByIdAndUpdate(

@@ -143,26 +143,33 @@ const UserPersonaScreen = (props) => {
                         </View></View>
 
                     <View style={styles.ButtomBox}>
-                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15 }]}
+                        
+                        {/* <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15 }]}
                             onPress={() => props.navigation.navigate("PostHistory")}
                         >
                             <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการโพสต์</Text>
+                        </TouchableOpacity> */}
+                        
+                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15, }]}
+                            onPress={() => props.navigation.navigate("WorkStatus")}
+                        >
+                            <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>สถาณะงาน</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15 }]}>
+                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 50 }]}
+                            onPress={() => props.navigation.navigate("WorkHistory")}
+                        >
                             <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการทำงาน</Text>
                         </TouchableOpacity>
 
                     </View>
                     <View style={styles.ButtomBox}>
-                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15, marginTop: 16 }]}>
-                            <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>สถาณะงาน</Text>
-                        </TouchableOpacity>
+                        
 
                         { item == idAuth ?
-                                <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15, marginTop: 16 }]}
+                                <TouchableOpacity style={[styles.button, { backgroundColor: '#305D9A', marginLeft: 105, marginTop: 16, }]}
                                     onPress={() => props.navigation.navigate("SettingPersona", { item: {} })}>
-                                    <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>แก้ไขข้อมูล</Text>
+                                    <Text style={{ color: '#B4D4FF', fontWeight: 'bold', fontSize: 16 }}>แก้ไขข้อมูล</Text>
                                 </TouchableOpacity>
                             : 
                                 null
@@ -252,7 +259,7 @@ const styles = StyleSheet.create({
     ButtomBox: {
         flexDirection: "row",
         marginLeft: 20,
-        marginBottom: 5
+        marginBottom: 5,
     },
     button: {
         height: 40,

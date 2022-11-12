@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState, Dimensions } from 'react-native';
 import { Container, NativeBaseProvider } from 'native-base';
 import PostWorkList from './PostWorkList';
@@ -6,7 +6,14 @@ import { AppStateService } from "../../AppStateService";
 import axios from 'axios';
 import config from '../../config';
 
+// context
+import AuthGlobal from '../../Context/store/AuthGlobal';
+
 const WorkHistoryScreen = (props) => {
+
+    const context = useContext(AuthGlobal);
+
+    const isComp = context.stateUser.user.isComp
 
 
     const [arrayPostData, setArrayPostData] = useState([])
@@ -19,32 +26,35 @@ const WorkHistoryScreen = (props) => {
 
     useEffect(() => {
 
-        const url = `${config.REACT_APP_API_URL}/users/work_history/635bada594fd32514b9c60be`
-        const fetchDataUser = async () => {
-            try {
-                setLoading(true)
-                const response = await axios.get(url);
-                for (let index = 0; index < response.data.length; index++) {
-                    if (response.data[index].type_resolve == "o") {
-                        const element = response.data[index].postid;
-                        console.log(element);
-                        let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
-                        setArrayPostData(arrayPostData => [...arrayPostData, resdata.data])
+        if (!isComp) {
+            const url = `${config.REACT_APP_API_URL}/users/work_history/${context.stateUser.user.userId}`
+            const fetchDataUser = async () => {
+                try {
+                    setLoading(true)
+                    const response = await axios.get(url);
+                    for (let index = 0; index < response.data.length; index++) {
+                        if (response.data[index].type_resolve == "o") {
+                            const element = response.data[index].postid;
+                            console.log(element);
+                            let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
+                            setArrayPostData(arrayPostData => [...arrayPostData, resdata.data])
+                        }
+
                     }
 
+                    setLoading(false);
+                    return;
+
+                } catch (error) {
+                    console.log(error);
                 }
-
-                setLoading(false);
-                return;
-
-            } catch (error) {
-                console.log(error);
             }
+
+
+
+            fetchDataUser();
         }
 
-
-
-        fetchDataUser();
 
 
         AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
@@ -74,7 +84,7 @@ const WorkHistoryScreen = (props) => {
                                 </View>
                             ) : (
                                 <View style={[styles.center, { height: deviceHeight / 2 }]}>
-                                    <Text>No Post found</Text>
+                                    <Text>คุณยังไม่มีรายการอนุมัติ</Text>
                                 </View>
                             )}
 

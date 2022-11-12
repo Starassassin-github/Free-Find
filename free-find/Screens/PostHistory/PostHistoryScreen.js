@@ -68,6 +68,7 @@ const PostHistoryScreen = (props) => {
                 try {
                     setLoading(true)
                     const response = await axios.get(url)
+
                     if (response.status === 200) {
 
                         for (let index = 0; index < response.data.length; index++) {
@@ -118,7 +119,7 @@ const PostHistoryScreen = (props) => {
                                 </View>
                             ) : (
                                 <View style={[styles.center, { height: deviceHeight / 2 }]}>
-                                    <Text>No Post found</Text>
+                                    <Text>คุณยังไม่มีการโพสต์</Text>
                                 </View>
                             )}
 

@@ -1,7 +1,7 @@
 // import
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView, ActivityIndicator, AppState, TouchableOpacity } from 'react-native';
-import { Divider, NativeBaseProvider, Container,  } from 'native-base';
+import { Divider, NativeBaseProvider, Container, } from 'native-base';
 import axios from 'axios';
 import config from '../../config';
 
@@ -12,9 +12,14 @@ import ResolveList from './ResolveList';
 // app state
 import { AppStateService } from "../../AppStateService";
 
-
+// context
+import AuthGlobal from '../../Context/store/AuthGlobal';
 
 const WorkStatusScreen = (props) => {
+
+    const context = useContext(AuthGlobal);
+
+    const isComp = context.stateUser.user.isComp
 
     const [arrayPendingData, setArrayPendingData] = useState([])
     const [arrayResolveData, setArrayResolveData] = useState([])
@@ -25,36 +30,40 @@ const WorkStatusScreen = (props) => {
 
     useEffect(() => {
 
-        const url = `${config.REACT_APP_API_URL}/users/work_status/635bada594fd32514b9c60be`
-        const fetchWorkStatus = async () => {
-            try {
-                setLoading(true)
-                const response = await axios.get(url)
-                if (response.status === 200) {
-                    for (let index = 0; index < response.data.work_pending.length; index++) {
-                        const element = response.data.work_pending[index];
-                        let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
-                        setArrayPendingData( arrayPendingData =>  [...arrayPendingData, resdata.data])
-                    }
-                    for (let index = 0; index < response.data.work_resolve.length; index++) {
-                        const element = response.data.work_resolve[index].postid;
-                        let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
-                        setArrayResolveData( arrayResolveData =>  [...arrayResolveData, { data: resdata.data, type_resolve: response.data.work_resolve[index].type_resolve}])
+        if (!isComp) {
+            const url = `${config.REACT_APP_API_URL}/users/work_status/${context.stateUser.user.userId}`
+            const fetchWorkStatus = async () => {
+                try {
+                    setLoading(true)
+                    const response = await axios.get(url)
+                    if (response.status === 200) {
+                        for (let index = 0; index < response.data.work_pending.length; index++) {
+                            const element = response.data.work_pending[index];
+                            let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
+                            setArrayPendingData(arrayPendingData => [...arrayPendingData, resdata.data])
+                        }
+                        for (let index = 0; index < response.data.work_resolve.length; index++) {
+                            const element = response.data.work_resolve[index].postid;
+                            let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
+                            setArrayResolveData(arrayResolveData => [...arrayResolveData, { data: resdata.data, type_resolve: response.data.work_resolve[index].type_resolve }])
 
+                        }
+
+                        setLoading(false);
+                        return;
                     }
 
-                    setLoading(false);
-                    return;
+                } catch (error) {
+                    console.log(error);
                 }
-                       
-            } catch (error) {
-                console.log(error);
             }
+
+
+
+            fetchWorkStatus();
         }
 
-        
 
-        fetchWorkStatus();
 
         AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
         return () => {
@@ -86,8 +95,8 @@ const WorkStatusScreen = (props) => {
                                 />
                             </SafeAreaView>
                         ) : (
-                            <View style={[styles.center, { height: deviceHeight / 2 }]}>
-                                <Text>No Work found</Text>
+                            <View style={[styles.center]}>
+                                <Text>ไม่มีคำขอการดำเนินการ</Text>
                             </View>
                         )
                     }
@@ -123,8 +132,8 @@ const WorkStatusScreen = (props) => {
                                 />
                             </SafeAreaView>
                         ) : (
-                            <View style={[styles.center, { height: deviceHeight / 2 }]}>
-                                <Text>No Resolve found</Text>
+                            <View style={[styles.center,]}>
+                                <Text>ไม่มีคำขอที่ได้รับการดำเนินการ</Text>
                             </View>
                         )
                     }
@@ -134,7 +143,7 @@ const WorkStatusScreen = (props) => {
             ) : (
                 // Loading
                 <NativeBaseProvider>
-                    <Container style={[styles.center, { backgroundColor: "#f2f2f2" }]}>
+                    <Container style={[styles.centerResolve, { backgroundColor: "#f2f2f2" }]}>
                         <ActivityIndicator size="large" color="red" />
                     </Container>
                 </NativeBaseProvider>
@@ -157,7 +166,7 @@ const styles = StyleSheet.create({
         color: '#9BB4D7',
     },
     center: {
-        marginTop: deviceHeight / 2 - 100,
+        marginVertical: (deviceHeight / 5),
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: "center"
@@ -191,6 +200,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         marginTop: 10,
+    },
+    centerResolve: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: "center"
     }
 });
 
