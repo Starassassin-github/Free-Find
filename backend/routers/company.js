@@ -134,4 +134,13 @@ router.patch('/posts/:id/:postid', async (req, res) => {
     res.status(200).json({ message: "Company has been Added!" })
 });
 
+router.get(`/post_history/:id`, async (req, res) => {
+    const company = await Company.findById(req.params.id)
+    
+    if (!company)
+        return res.status(400).send('the company not founded!')
+
+    res.status(200).send(company.posts)
+})
+
 module.exports = router;

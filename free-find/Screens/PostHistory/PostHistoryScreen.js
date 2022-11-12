@@ -1,8 +1,11 @@
 // import
-import React, { useRef, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, ActivityIndicator, SafeAreaView, AppState, Dimensions } from 'react-native';
 import axios from 'axios';
 import config from "../../config";
+
+// context
+import AuthGlobal from '../../Context/store/AuthGlobal';
 
 // UI
 import { Container, NativeBaseProvider } from 'native-base';
@@ -18,6 +21,9 @@ import { AppStateService } from "../../AppStateService";
 
 const PostHistoryScreen = (props) => {
 
+    const context = useContext(AuthGlobal);
+
+    const isComp = context.stateUser.user.isComp
 
     const [arrayPostsData, setArrayPostsData] = useState([])
 
@@ -27,32 +33,62 @@ const PostHistoryScreen = (props) => {
 
     useEffect(() => {
 
-        const url = `${config.REACT_APP_API_URL}/users/post_history/635bada594fd32514b9c60be`
+        if (!isComp) {
 
-        const fetchPostHistory = async () => {
-            try {
-                setLoading(true)
-                const response = await axios.get(url)
-                if (response.status === 200) {
+            const url = `${config.REACT_APP_API_URL}/users/post_history/${context.stateUser.user.userId}`
 
-                    for (let index = 0; index < response.data.length; index++) {
-                        const element = response.data[index];
-                        let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
-                        setArrayPostsData( arrayPostsData  => [...arrayPostsData, resdata.data])
+            const fetchPostHistory = async () => {
+                try {
+                    setLoading(true)
+                    const response = await axios.get(url)
+                    if (response.status === 200) {
+
+                        for (let index = 0; index < response.data.length; index++) {
+                            const element = response.data[index];
+                            let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
+                            setArrayPostsData(arrayPostsData => [...arrayPostsData, resdata.data])
+                        }
+
+                        setLoading(false);
+                        return;
                     }
 
-                    setLoading(false);
-                    return;
+                } catch (error) {
+                    console.log(error);
                 }
-
-            } catch (error) {
-                console.log(error);
             }
+
+
+
+            fetchPostHistory();
+        } else {
+            const url = `${config.REACT_APP_API_URL}/companies/post_history/${context.stateUser.user.compId}`
+
+            const fetchPostHistory = async () => {
+                try {
+                    setLoading(true)
+                    const response = await axios.get(url)
+                    if (response.status === 200) {
+
+                        for (let index = 0; index < response.data.length; index++) {
+                            const element = response.data[index];
+                            let resdata = await axios.get(`${config.REACT_APP_API_URL}/posts/${element}`)
+                            setArrayPostsData(arrayPostsData => [...arrayPostsData, resdata.data])
+                        }
+
+                        setLoading(false);
+                        return;
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+
+
+            fetchPostHistory();
         }
-
-
-
-        fetchPostHistory();
 
 
         AppState.addEventListener('change', AppStateService.getInstance().handleAppStateChange);
@@ -93,7 +129,7 @@ const PostHistoryScreen = (props) => {
                 // Loading
                 <NativeBaseProvider>
                     <Container style={[styles.center, { backgroundColor: "#f2f2f2" }]}>
-                        <ActivityIndicator size="large" color="red"  />
+                        <ActivityIndicator size="large" color="red" />
                     </Container>
                 </NativeBaseProvider>
             )}

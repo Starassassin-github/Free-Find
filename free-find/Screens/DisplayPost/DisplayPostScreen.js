@@ -1,10 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, ScrollView, SafeAreaView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import EmployerContact from '../../Shared/employerContact';
 
+// context
+import AuthGlobal from '../../Context/store/AuthGlobal';
+
 const DisplayPostScreen = (props) => {
 
+  const context = useContext(AuthGlobal);
+
+  const isComp = context.stateUser.user.isComp
+
   const [item, setItem] = useState(props.route.params.item);
+
+  const [nameCheck, setNameCheck] = useState("")
+
+  useEffect(() => {
+    if (isComp) {
+      setNameCheck(context.stateUser.user.compdata.name)
+    } else {
+      setNameCheck(context.stateUser.user.userdata.name)
+    }
+    return () => {
+      setNameCheck("")
+    }
+  }, [])
+
 
   return (
     <View>
@@ -25,7 +46,7 @@ const DisplayPostScreen = (props) => {
           <View>
             <Image
               style={styles.imageStyle}
-              source={{ uri: item.image ? item.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+              source={{ uri: item.image ? item.image : "https://reactnative.dev/img/tiny_logo.png" }}
             />
           </View>
 
@@ -57,13 +78,23 @@ const DisplayPostScreen = (props) => {
             </Text>
           </View>
 
-          <View style={{ alignItems: "center", marginBottom: 30 }}>
-            <TouchableOpacity style={styles.ApplyButtonContainer}>
-              <View>
-                <Text style={styles.textButton}>สมัคร</Text>
+          {
+            item.name_who_post == nameCheck
+              ?
+              <View style={{marginBottom: 30}}>
+
               </View>
-            </TouchableOpacity>
-          </View>
+              :
+              <View style={{ alignItems: "center", marginBottom: 30 }}>
+                <TouchableOpacity style={styles.ApplyButtonContainer}>
+                  <View>
+                    <Text style={styles.textButton}>สมัคร</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+          }
+
+
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -90,22 +121,22 @@ const styles = StyleSheet.create({
     paddingRight: 100,
     paddingTop: 10
   },
-  jobTitleBox:{
-    marginTop:15,
+  jobTitleBox: {
+    marginTop: 15,
     flexDirection: "row",
-    backgroundColor:'#9FAAFF',
-    marginLeft:30,
-    marginRight:40,
-    borderRadius:30
+    backgroundColor: '#9FAAFF',
+    marginLeft: 30,
+    marginRight: 40,
+    borderRadius: 30
   },
-  jobTitleBoxtext:{
-    fontSize:20,
-    fontWeight:'700',
-    paddingLeft:30,
-    paddingRight:30,
-    paddingTop:5,
-    paddingBottom:5,
-    color:'#262D62'
+  jobTitleBoxtext: {
+    fontSize: 20,
+    fontWeight: '700',
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 5,
+    paddingBottom: 5,
+    color: '#262D62'
   },
   contextDisplayPostBox: {
     marginTop: 25,

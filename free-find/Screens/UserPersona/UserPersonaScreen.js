@@ -143,7 +143,9 @@ const UserPersonaScreen = (props) => {
                         </View></View>
 
                     <View style={styles.ButtomBox}>
-                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15 }]}>
+                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15 }]}
+                            onPress={() => props.navigation.navigate("PostHistory")}
+                        >
                             <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการโพสต์</Text>
                         </TouchableOpacity>
 
