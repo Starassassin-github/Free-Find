@@ -2,6 +2,12 @@ import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, ScrollView, SafeAreaView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import EmployerContact from '../../Shared/employerContact';
 
+import axios from 'axios'
+import { StackActions } from "@react-navigation/native";
+
+import Toast from 'react-native-toast-message';
+import config from "../../config";
+
 // context
 import AuthGlobal from '../../Context/store/AuthGlobal';
 
@@ -14,6 +20,37 @@ const DisplayPostScreen = (props) => {
   const [item, setItem] = useState(props.route.params.item);
 
   const [nameCheck, setNameCheck] = useState("")
+  
+
+  const postHandlerUser = async () => {
+
+    let work_pending = await axios.patch(`${config.REACT_APP_API_URL}/users/work_pending/${context.stateUser.user.userId}/${item._id}`)
+    let apply_user = await axios.put(`${config.REACT_APP_API_URL}/posts/apply/${item._id}/${context.stateUser.user.userId}`)
+      .then((res) => {
+        if (res.status == 200 || res.status == 201) {
+          Toast.show({
+            topOffset: 60,
+            type: "success",
+            text1: "สำเร็จ ทำการสมัครเรียบร้อย!!!",
+            text2: "กรุณาตรวจสอบภายหลังในสถานะงาน"
+          });
+          setTimeout(() => {
+            props.navigation.dispatch(
+              StackActions.replace('Main')
+            );
+          }, 500)
+        }
+      })
+      .catch((error) => {
+        Toast.show({
+          topOffset: 60,
+          type: "error",
+          text1: "มีบางอย่างผิดพลาด!",
+          text2: "โปรดลองอีกครั้ง"
+        })
+      })
+
+  }
 
   useEffect(() => {
     if (isComp) {
@@ -31,8 +68,8 @@ const DisplayPostScreen = (props) => {
     <View>
       <SafeAreaView style={{ backgroundColor: "#C5CFE3", }}>
         <ScrollView >
-
-          <View style={styles.typeOfWork}><Text style={styles.typeOfWorkText}>{item.type_of_work}</Text></View>
+        
+          <View style={item.type_of_work == "parttime" ? styles.typeOfWork : styles.typeOfWorkFull}><Text style={styles.typeOfWorkText}>{item.type_of_work == "parttime" ? "Part-Time" : "Full-Time"}</Text></View>
 
           <View style={styles.EmployerContact}>
             <EmployerContact image={item.image_who_post} name={item.name_who_post} />
@@ -51,15 +88,15 @@ const DisplayPostScreen = (props) => {
           </View>
 
           <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 20 }}>
-            <View style={{}}>
-              <Text style={{ fontSize: 18 }}>
-                จำนวน  {item.count_recruit}
+            <View style={{ backgroundColor: "#305D9A", borderRadius: 30, width: 140}}>
+              <Text style={{ fontSize: 18, color: "#fff" }}>
+                <Text>  </Text>จำนวน  {item.count_recruit}
               </Text>
             </View>
 
-            <View style={{}}>
-              <Text style={{ fontSize: 18 }}>
-                สมัครแล้ว  {item._id_apply.length}
+            <View style={{backgroundColor: "#75A9EE", borderRadius: 30, width: 140}}>
+              <Text style={{ fontSize: 18,color: "#fff" }}>
+                   <Text>  </Text>สมัครแล้ว  {item._id_apply.length}
               </Text>
             </View>
           </View>
@@ -72,21 +109,28 @@ const DisplayPostScreen = (props) => {
             <Text>&nbsp; </Text>
           </View>
 
-          <View style={{ marginLeft: 30, marginBottom: 15 }}>
-            <Text style={{ fontSize: 18 }}>
-              ผู้ว่าจ้าง  {item.name_who_post}
+          <View style={{ marginLeft: 30, marginBottom: 15, flexDirection: "row"  }}>
+            <Text style={{ fontSize: 18,backgroundColor: "#305D9A", borderRadius: 30, width: 80, color: "#fff"  }}>
+              <Text>  </Text>ผู้ว่าจ้าง  
+              
             </Text>
+            <View style={{marginLeft: 30}}>
+                <Text style={{fontSize: 18, backgroundColor: "#fff", borderRadius: 7, color: "#525354"}}>{item.name_who_post}</Text>
+
+              </View>
           </View>
 
           {
-            item.name_who_post == nameCheck
+            ((item.name_who_post == nameCheck) || (isComp))
               ?
-              <View style={{marginBottom: 30}}>
+              <View style={{ marginBottom: 30 }}>
 
               </View>
               :
-              <View style={{ alignItems: "center", marginBottom: 30 }}>
-                <TouchableOpacity style={styles.ApplyButtonContainer}>
+              <View style={{ alignItems: "center", marginBottom: 30, marginTop: 20 }}>
+                <TouchableOpacity style={styles.ApplyButtonContainer}
+                  onPress={() => postHandlerUser()}
+                >
                   <View>
                     <Text style={styles.textButton}>สมัคร</Text>
                   </View>
@@ -139,6 +183,9 @@ const styles = StyleSheet.create({
     color: '#262D62'
   },
   contextDisplayPostBox: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#525354",
     marginTop: 25,
     marginLeft: 30,
     marginRight: 30,
@@ -146,7 +193,8 @@ const styles = StyleSheet.create({
   },
   contextDisplaytext: {
     fontSize: 20,
-    fontWeight: '400'
+    fontWeight: '400',
+    color: "#43494c"
   },
   contactOwnerPostBox: {
     marginTop: 15,
@@ -168,9 +216,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '400'
   },
-
   typeOfWork: {
-    backgroundColor: '#9DAFF1',
+    backgroundColor: '#EC8484',
+    marginLeft: 250,
+    marginRight: 30,
+    borderRadius: 40,
+    marginTop: 15
+  },
+  typeOfWorkFull: {
+    backgroundColor: '#80E1D0',
     marginLeft: 250,
     marginRight: 30,
     borderRadius: 40,
@@ -181,7 +235,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     paddingBottom: 5,
     paddingTop: 5,
-    marginLeft: 28,
+    marginLeft: 23,
     color: '#ffffff',
   },
   imageStyle: {

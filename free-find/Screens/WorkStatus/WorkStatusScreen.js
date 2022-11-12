@@ -2,6 +2,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Dimensions, FlatList, StyleSheet, SafeAreaView, ActivityIndicator, AppState, TouchableOpacity } from 'react-native';
 import { Divider, NativeBaseProvider, Container, } from 'native-base';
+import Toast from 'react-native-toast-message';
+
 import axios from 'axios';
 import config from '../../config';
 
@@ -27,6 +29,29 @@ const WorkStatusScreen = (props) => {
     const [loading, setLoading] = useState(false)
 
     AppStateService.init();
+
+    const clearResolveHandler = async () => {
+        await axios.put(`${config.REACT_APP_API_URL}/users/work_status/clear/${context.stateUser.user.userId}`)
+        .then((res) => {
+            if (res.status == 200 || res.status == 201) {
+                setArrayResolveData([])
+                Toast.show({
+                    topOffset: 60,
+                    type: "info",
+                    text1: "เคลียร์รายการเรียบร้อย!!!",
+                    text2: ""
+                });
+            }
+        })
+        .catch((error) => {
+            Toast.show({
+                topOffset: 60,
+                type: "error",
+                text1: "มีบางอย่างผิดพลาด!",
+                text2: "โปรดลองอีกครั้ง หรือ ไม่มีรายการดำเนินการ"
+            })
+        })
+    }
 
     useEffect(() => {
 
@@ -107,7 +132,7 @@ const WorkStatusScreen = (props) => {
                         </NativeBaseProvider>
                     </View>
                     <TouchableOpacity
-
+                        onPress={() => clearResolveHandler()}
                     >
                         <View style={styles.clearButton}>
                             <Text style={styles.textClearButton}>ล้าง</Text>
