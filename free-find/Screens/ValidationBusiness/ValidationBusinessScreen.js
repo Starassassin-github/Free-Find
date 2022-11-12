@@ -36,50 +36,49 @@ const ValidationBusiness = (props) => {
         setFoundingDate(useDay + "/" + useMonth + "/" + useYear);
     }
     const addCompanyData = async () => {
-        const responseToCompany = await axios.post('http://localhost:3333/api/v1/companies', {
+
+        let responseToCompany = await axios.post(`${config.REACT_APP_API_URL}/companies`, {
             name_comp: name_comp,
             email_comp: email_comp,
             phone_comp: phone_comp,
             address: address,
             city: city,
-            owner: owner,
+            owner: owner, 
             website: website,
             bussiness_type: business_type,
             founding_date: founding_date
         })
-        if (responseToCompany.status === 200 || responseToCompany === 201) {
-            console.log(responseToCompany.data)
-            setCompany(responseToCompany.data._id)
-        } else if (responseToCompany.status === 400) {
-            console.log("fail login")
-        }
-    }
-
-
-    useEffect(() => {
-        const addCompanyAccount = async (event) => {
-            const responseToAccount = await axios.post('http://localhost:3333/api/v1/userscompanies', {
-                name: name,
-                email: email,
-                password: password,
-                phone: phone,
-                company: company
-            })
-        }
-        if (company === "") {
-            console.log("1234")
-        } else {
-            addCompanyAccount().then(() => {
+        let responseToAccount = await axios.post(`${config.REACT_APP_API_URL}/userscompanies/register`, {
+        name: name,
+        email: email,
+        password: password,
+        phone: phone,
+        company: responseToCompany.data._id
+        })
+        .then((res) => {
+            if (res.status == 200 || res.status == 201) {
+                Toast.show({
+                    topOffset: 60,
+                    type: "success",
+                    text1: "สร้างบัญชีสำเร็จ!!!",
+                    text2: ""
+                });
                 setTimeout(() => {
-                    props.navigation.navigate("Login")
-                })
+                    props.navigation.dispatch(
+                        StackActions.replace('Login')
+                    );
+                }, 500)
+            }
+        })
+        .catch((error) => {
+            Toast.show({
+                topOffset: 60,
+                type: "error",
+                text1: "มีบางอย่างผิดพลาด!",
+                text2: "โปรดลองอีกครั้ง"
             })
-            console.log("5678")
-        }
-
-    }, [company])
-
-
+        })
+    }
 
 
     return (
@@ -213,7 +212,7 @@ const ValidationBusiness = (props) => {
                         if ((name_comp !== "") && (address !== "") && (city !== "") && (business_type.trim() !== "") && (owner.trim() !== "") && (founding_date.trim() !== "")
                             && (website.trim() !== "") && (phone_comp.trim() !== "") && (useDay.trim() !== "") && (useMonth.trim() !== "")
                             && (useYear.trim() !== "") && (email_comp.trim() !== "")) {
-                            console.log("ok")
+                            addCompanyData()
                         }
                     }
                     }

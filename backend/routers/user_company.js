@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
 
 })
 
-router.post(`/`, async (req, res) => {
+router.post(`/register`, async (req, res) => {
 
     let userCompany = new UserCompany({
         name: req.body.name,
