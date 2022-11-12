@@ -115,4 +115,23 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
     res.send(company);
 });
 
+router.patch('/posts/:id/:postid', async (req, res) => {
+
+    const company = await Company.findOneAndUpdate(
+        {
+            _id: req.params.id,
+        },
+        {
+            $push: {
+                posts: req.params.postid
+            }
+        }
+    )
+
+    if (!company)
+        return res.status(400).send('the company cannot be created!')
+
+    res.status(200).json({ message: "Company has been Added!" })
+});
+
 module.exports = router;

@@ -36,7 +36,7 @@ const PendingList = (props) => {
                 <View style={styles.containerName}>
                     <Image
                         style={styles.imageStyle}
-                        source={{ uri: item.image ? item.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                        source={{ uri: item.image ? item.image : "https://reactnative.dev/img/tiny_logo.png" }}
                     />
                     {
                         item.title.length > 20 ?

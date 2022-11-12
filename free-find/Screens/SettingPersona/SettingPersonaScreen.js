@@ -85,7 +85,7 @@ const SettingPersonaScreen = (props) => {
                     <View style={styles.pageTopBox}>
                         <View style={styles.imageUserBox}>
 
-                            <Image style={styles.imageUser} source={{ uri : image ? image :require('../Picture/admin.png')}} />
+                            <Image style={styles.imageUser} source={{ uri : image ? image : "https://reactnative.dev/img/tiny_logo.png"}} />
                             <TouchableOpacity >
                                 <Text style={{ color: '#08A6FF', fontWeight: '400', fontSize: 16, marginTop: 10, textDecorationLine: 'underline' }}>แก้ไขรูปโปรไฟล์</Text>
                             </TouchableOpacity>

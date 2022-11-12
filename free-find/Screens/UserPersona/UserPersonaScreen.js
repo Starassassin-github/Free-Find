@@ -108,7 +108,7 @@ const UserPersonaScreen = (props) => {
                     <View style={styles.pageTopBox}>
                         <Text style={styles.textHeadPerson}>ข้อมูลส่วนตัว</Text>
                         <View style={styles.imageUserBox}>
-                            <Image style={styles.imageUser} source={{ uri: image ? image : "some_url" }} />
+                            <Image style={styles.imageUser} source={{ uri: image ? image : "https://reactnative.dev/img/tiny_logo.png" }} />
                         </View>
                     </View>
 

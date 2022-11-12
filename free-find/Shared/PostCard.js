@@ -41,7 +41,7 @@ const PostCard = (props) => {
                     <View style={styles.blockImage}>
                         <Image
                             style={styles.imageStyle}
-                            source={{ uri: image ? image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                            source={{ uri: image ? image : "https://reactnative.dev/img/tiny_logo.png" }}
                         />
                     </View>
                     <View style={styles.infoStyle}>
@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
     descriptionStyle: {
         fontSize: 16,
         marginLeft: 5,
-        color: '#4F6C93'
+        color: '#4F6C93',
+        height: 100
     },
     infoStyle: {
         height: 130,

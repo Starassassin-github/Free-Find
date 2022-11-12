@@ -13,7 +13,6 @@ import * as ImagePicker from 'expo-image-picker';
 import Icon from '@expo/vector-icons/Ionicons';
 import Checkbox from 'expo-checkbox';
 import Toast from 'react-native-toast-message';
-import Error from "../../Shared/Error";
 import mime from "mime";
 
 // context
@@ -108,44 +107,83 @@ const Postscreen = (props) => {
             });
             formData.append("count_recruit", count)
 
+            const postHandlerComp = async () => {
+
+                    let post = await axios.post(`${config.REACT_APP_API_URL}/posts`, formData, configHeaders)
+                    let add_company_post = await axios.patch(`${config.REACT_APP_API_URL}/companies/posts/${context.stateUser.user.compId}/${post.data._id}`)
+                    .then((res) => {
+                        if (res.status == 200 || res.status == 201) {
+                            Toast.show({
+                                topOffset: 60,
+                                type: "success",
+                                text1: "สำเร็จ โพสต์ถูกเพิ่มแล้ว!!!",
+                                text2: ""
+                            });
+                            setTimeout(() => {
+                                props.navigation.dispatch(
+                                    StackActions.replace('Main')
+                                );
+                            }, 500)
+                        }
+                    })
+                    .catch((error) => {
+                        Toast.show({
+                            topOffset: 60,
+                            type: "error",
+                            text1: "มีบางอย่างผิดพลาด!",
+                            text2: "โปรดลองอีกครั้ง"
+                        })
+                    })
+
+            }
+
+            const postHandlerUser = async () => {
+
+                    let post = await axios.post(`${config.REACT_APP_API_URL}/posts`, formData, configHeaders)
+                    let add_user_post = await axios.patch(`${config.REACT_APP_API_URL}/users/posts/${context.stateUser.user.userId}/${post.data._id}`)
+                    .then((res) => {
+                        if (res.status == 200 || res.status == 201) {
+                            Toast.show({
+                                topOffset: 60,
+                                type: "success",
+                                text1: "สำเร็จ โพสต์ถูกเพิ่มแล้ว!!!",
+                                text2: ""
+                            });
+                            setTimeout(() => {
+                                props.navigation.dispatch(
+                                    StackActions.replace('Main')
+                                );
+                            }, 500)
+                        }
+                    })
+                    .catch((error) => {
+                        Toast.show({
+                            topOffset: 60,
+                            type: "error",
+                            text1: "มีบางอย่างผิดพลาด!",
+                            text2: "โปรดลองอีกครั้ง"
+                        })
+                    })
+
+            }
+            
             if (isComp) {
                 formData.append("company", context.stateUser.user.compId)
                 //
                 formData.append("name_who_post", context.stateUser.user.compdata.name)
                 formData.append("image_who_post", context.stateUser.user.compdata.image)
+
+                postHandlerComp();
+
+                
             } else {
                 formData.append("user", context.stateUser.user.userId)
                 //
                 formData.append("name_who_post", context.stateUser.user.userdata.name)
                 formData.append("image_who_post", context.stateUser.user.userdata.image)
+
+                postHandlerUser();
             }
-
-            axios
-                .post(`${config.REACT_APP_API_URL}/posts`, formData, configHeaders)
-                .then((res) => {
-                    if (res.status == 200 || res.status == 201) {
-                        Toast.show({
-                            topOffset: 60,
-                            type: "success",
-                            text1: "สำเร็จ โพสต์ถูกเพิ่มแล้ว!!!",
-                            text2: ""
-                        });
-                        setTimeout(() => {
-                            props.navigation.dispatch(
-                                StackActions.replace('Main')
-                            );
-                        }, 500)
-                    }
-                })
-                .catch((error) => {
-                    Toast.show({
-                        topOffset: 60,
-                        type: "error",
-                        text1: "มีบางอย่างผิดพลาด!",
-                        text2: "โปรดลองอีกครั้ง"
-                    })
-                })
-
         }
 
     }

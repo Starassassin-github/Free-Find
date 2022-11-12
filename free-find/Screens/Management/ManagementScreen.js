@@ -133,7 +133,7 @@ const ManagementScreen = (props) => {
                     <View style={styles.containerName}>
                         <Image
                             style={styles.img}
-                            source={{ uri: image ? image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                            source={{ uri: image ? image : "https://reactnative.dev/img/tiny_logo.png" }}
                         />
                         {
                             name.length > 25 ?
@@ -181,7 +181,7 @@ const ManagementScreen = (props) => {
                     <View style={styles.containerName}>
                         <Image
                             style={styles.img}
-                            source={{ uri: item.user_data.image ? item.user_data.image : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==' }}
+                            source={{ uri: item.user_data.image ? item.user_data.image : "https://reactnative.dev/img/tiny_logo.png" }}
                         />
                         {
                             item.user_data.name.length > 23 ?

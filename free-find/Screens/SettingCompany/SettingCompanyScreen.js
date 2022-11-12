@@ -58,7 +58,7 @@ const SettingCompanyScreen = (props) => {
 
                 <View style={styles.pageTopBox}>
                     <View style={styles.imageUserBox}>
-                    <Image style={styles.imageUser} source={{ uri: image ? image : require('../Picture/Companypic.png') }} />
+                    <Image style={styles.imageUser} source={{ uri: image ? image : "https://reactnative.dev/img/tiny_logo.png" }} />
                     <TouchableOpacity >
                         <Text style={{color:'#95FCFF',fontWeight:'400',fontSize:16,marginTop:10,textDecorationLine:'underline'}}>แก้ไขรูปโปรไฟล์</Text>
                     </TouchableOpacity>

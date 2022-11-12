@@ -9,7 +9,7 @@ const EmployerContact = (props) => {
   return (
     <View style={styles.container}>
       <Image style={styles.img}
-        source={{ uri: image ? image : require('../Screens/Picture/userIcon.png') }} />
+        source={{ uri: image ? image : "https://reactnative.dev/img/tiny_logo.png" }} />
       <View style={styles.employerContactBox}>
         <Text style={styles.employerContactText}>{name}</Text>
       </View>
