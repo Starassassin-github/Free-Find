@@ -109,7 +109,7 @@ const DisplayPostScreen = (props) => {
             <Text>&nbsp; </Text>
           </View>
 
-          <View style={{ marginLeft: 30, marginBottom: 15, flexDirection: "row"  }}>
+          <View style={{ marginLeft: 30, marginBottom: 15, flexDirection: "row",   }}>
             <Text style={{ fontSize: 18,backgroundColor: "#305D9A", borderRadius: 30, width: 80, color: "#fff"  }}>
               <Text>  </Text>ผู้ว่าจ้าง  
               

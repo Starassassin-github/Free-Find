@@ -132,16 +132,19 @@ const MainPage = (props) => {
 
             </View>
 
-            <View style={styles.newPostBox}>
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate("Post")}
-              >
-                <View style={styles.ButtonNewPost}>
-                  <Text style={styles.ButtonNewPostText}>สร้างโพสต์</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
 
+            {
+              isComp ? <View style={styles.newPostBox}>
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate("Post")}
+                >
+                  <View style={styles.ButtonNewPost}>
+                    <Text style={styles.ButtonNewPostText}>สร้างโพสต์</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              : null
+            }
 
             <SafeAreaView>
               <ScrollView>

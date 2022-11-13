@@ -39,10 +39,6 @@ const postSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
     },
-    jobs: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'jobs'
-    },
     keyword: [{
         type: String,
     }],

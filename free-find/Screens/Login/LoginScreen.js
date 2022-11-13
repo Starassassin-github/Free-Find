@@ -228,12 +228,8 @@ const LoginScreen = (props) => {
               justifyContent: "center",
               borderRadius: 6,
             }}
-            // onPress={changeUserID} disabled={isLoading}
             onPress={() =>
-              // console.log(emailInput + "/" + passwordInput);
               handleSubmit()
-
-              // console.log(userID);
             }
           >
             <Text style={{ color: "#FFFFFF", fontWeight: "bold", fontSize: 30 }}>

@@ -1,10 +1,14 @@
 // import
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, ScrollView, AppState, StyleSheet, FlatList, SafeAreaView, container, Image, TouchableOpacity, Alert } from 'react-native';
+import { StackActions } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import axios from 'axios';
 
 // context
 import AuthGlobal from '../../Context/store/AuthGlobal';
+import { logoutUser } from '../../Context/actions/Auth.actions';
 
 // app state
 import { AppStateService } from "../../AppStateService";
@@ -96,6 +100,14 @@ const UserPersonaScreen = (props) => {
             ]
         );
 
+    useEffect(() => {
+        if (context.stateUser.isAuthenticated === false) {
+            props.navigation.dispatch(
+                StackActions.replace('Login')
+            );
+        }
+    }, [context.stateUser.isAuthenticated])
+
     return (
         <View style={styles.container}>
             <SafeAreaView style={styles.container}>
@@ -143,13 +155,13 @@ const UserPersonaScreen = (props) => {
                         </View></View>
 
                     <View style={styles.ButtomBox}>
-                        
+
                         {/* <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15 }]}
                             onPress={() => props.navigation.navigate("PostHistory")}
                         >
                             <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการโพสต์</Text>
                         </TouchableOpacity> */}
-                        
+
                         <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15, }]}
                             onPress={() => props.navigation.navigate("WorkStatus")}
                         >
@@ -164,15 +176,27 @@ const UserPersonaScreen = (props) => {
 
                     </View>
                     <View style={styles.ButtomBox}>
-                        
 
-                        { item == idAuth ?
-                                <TouchableOpacity style={[styles.button, { backgroundColor: '#305D9A', marginLeft: 105, marginTop: 16, }]}
-                                    onPress={() => props.navigation.navigate("SettingPersona", { item: {} })}>
-                                    <Text style={{ color: '#B4D4FF', fontWeight: 'bold', fontSize: 16 }}>แก้ไขข้อมูล</Text>
-                                </TouchableOpacity>
-                            : 
-                                null
+
+                        {item == idAuth ?
+                            <TouchableOpacity style={[styles.button, { backgroundColor: '#305D9A', marginLeft: 15, marginTop: 16, }]}
+                                onPress={() => props.navigation.navigate("SettingPersona", { item: {} })}>
+                                <Text style={{ color: '#B4D4FF', fontWeight: 'bold', fontSize: 16 }}>แก้ไขข้อมูล</Text>
+                            </TouchableOpacity>
+                            :
+                            null
+                        }
+
+                        {item == idAuth ?
+                            <TouchableOpacity style={[styles.button, { backgroundColor: '#CE4343', marginLeft: 50, marginTop: 16, }]}
+                                onPress={() => [
+                                    AsyncStorage.removeItem("jwt"),
+                                    logoutUser(context.dispatch)
+                                ]}>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>ออกจากระบบ</Text>
+                            </TouchableOpacity>
+                            :
+                            null
                         }
 
                     </View>

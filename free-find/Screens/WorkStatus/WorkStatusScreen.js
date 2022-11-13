@@ -31,7 +31,7 @@ const WorkStatusScreen = (props) => {
     AppStateService.init();
 
     const clearResolveHandler = async () => {
-        await axios.put(`${config.REACT_APP_API_URL}/users/work_status/clear/${context.stateUser.user.userId}`)
+        await axios.put(`${config.REACT_APP_API_URL}/users/work_resolve/clear/${context.stateUser.user.userId}`)
         .then((res) => {
             if (res.status == 200 || res.status == 201) {
                 setArrayResolveData([])
