@@ -73,7 +73,6 @@ export const loginUserCompany = (user, dispatch) => {
 export const getUserProfile = (id) => {
     fetch(`${config.REACT_APP_API_URL}/users/${id}`, {
         method: "GET",
-        body: JSON.stringify(user),
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
