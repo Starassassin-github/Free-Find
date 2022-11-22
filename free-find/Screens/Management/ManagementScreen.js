@@ -97,7 +97,7 @@ const ManagementScreen = (props) => {
                 offer_id: offerdata._id,
                 apply_name: name,
                 offer_name: offerdata.name,
-                image_offer: offerdata.images[0],
+                image_offer: offerdata.image,
                 post: _id_post
             });
             let postOffer = await axios.put(`${config.REACT_APP_API_URL}/posts/offer/${_id_post}/${_id_user}?contract_id=${createContract.data._id}`)
