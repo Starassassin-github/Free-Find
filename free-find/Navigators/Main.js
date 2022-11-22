@@ -112,7 +112,7 @@ function Main() {
           />
           <Stack.Screen name="WorkHistory" component={WorkHistoryScreen}
             options={{
-              title: 'ประวัติการโพสต์',
+              title: 'ประวัติการทำงาน',
               headerStyle: {
                 backgroundColor: '#DAE9FE',
               },
