@@ -22,7 +22,7 @@ const ContractScreen = (props) => {
                     <View style={styles.employerBox}>
                         <Text style={styles.employertext}>ผู้ว่าจ้าง</Text>
                         <View >
-                            <EmployerContact name={item.offer_name} image={(item.image_offer == "") || (item.image_offer == undefined) ? "https://reactnative.dev/img/tiny_logo.png" : image_offer }/>
+                            <EmployerContact name={item.offer_name} image={(item.image_offer == "") || (item.image_offer == undefined) ? "https://reactnative.dev/img/tiny_logo.png" : item.image_offer }/>
                         </View>
                     </View>
 
@@ -43,7 +43,7 @@ const ContractScreen = (props) => {
 
                     <View style={styles.employeeBox}>
                         <Text style={styles.employeetext}>ผู้ถูกจ้าง  </Text>
-                        <EmployerContact name={item.apply_name} image={(item.image_apply == "") || (item.image_apply == undefined) ? "https://reactnative.dev/img/tiny_logo.png" : image_apply } />
+                        <EmployerContact name={item.apply_name} image={(item.image_apply == "") || (item.image_apply == undefined) ? "https://reactnative.dev/img/tiny_logo.png" : item.image_apply } />
                     </View>
                 </ScrollView>
             </SafeAreaView>

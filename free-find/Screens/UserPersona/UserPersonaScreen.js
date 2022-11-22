@@ -153,28 +153,32 @@ const UserPersonaScreen = (props) => {
                             <Text style={styles.TextOne}>ความสามารถ</Text>
                             <Text style={styles.TextTwo}>{ability}</Text>
                         </View></View>
+                    {item == idAuth ?
+                        <View style={styles.ButtomBox}>
 
-                    <View style={styles.ButtomBox}>
-
-                        {/* <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15 }]}
+                            {/* <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15 }]}
                             onPress={() => props.navigation.navigate("PostHistory")}
                         >
                             <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการโพสต์</Text>
                         </TouchableOpacity> */}
 
-                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15, }]}
-                            onPress={() => props.navigation.navigate("WorkStatus")}
-                        >
-                            <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>สถาณะงาน</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 15, }]}
+                                onPress={() => props.navigation.navigate("WorkStatus")}
+                            >
+                                <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>สถาณะงาน</Text>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 50 }]}
-                            onPress={() => props.navigation.navigate("WorkHistory")}
-                        >
-                            <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการทำงาน</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 50 }]}
+                                onPress={() => props.navigation.navigate("WorkHistory")}
+                            >
+                                <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการทำงาน</Text>
+                            </TouchableOpacity>
 
-                    </View>
+                        </View>
+                        :
+                        null
+                    }
+
                     <View style={styles.ButtomBox}>
 
 

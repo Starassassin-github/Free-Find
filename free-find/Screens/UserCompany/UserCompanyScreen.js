@@ -156,12 +156,15 @@ const UserCompanyScreen = (props) => {
                     </View>
 
                     <View style={styles.ButtomBox}>
-
-                        <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginBottom: 0, marginTop: 20 }]}
-                            onPress={() => props.navigation.navigate("PostHistory")}
-                        >
-                            <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการโพสต์</Text>
-                        </TouchableOpacity>
+                        {item == idAuth ?
+                            <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginBottom: 0, marginTop: 20 }]}
+                                onPress={() => props.navigation.navigate("PostHistory")}
+                            >
+                                <Text style={{ color: '#4F6C93', fontWeight: 'bold', fontSize: 16 }}>ประวัติการโพสต์</Text>
+                            </TouchableOpacity>
+                            :
+                            null
+                        }
 
                         {item == idAuth ?
                             <TouchableOpacity style={[styles.button, { backgroundColor: '#B4D4FF', marginLeft: 20, marginBottom: 0, marginTop: 20 }]}
@@ -170,11 +173,11 @@ const UserCompanyScreen = (props) => {
                             </TouchableOpacity>
                             :
                             null
-                        }      
+                        }
 
                     </View>
                     <View style={styles.ButtomBox}>
-                    {item == idAuth ?
+                        {item == idAuth ?
                             <TouchableOpacity style={[styles.button, { backgroundColor: '#CE4343', marginLeft: 0, marginTop: 10, marginBottom: 10 }]}
                                 onPress={() => [
                                     AsyncStorage.removeItem("jwt"),
