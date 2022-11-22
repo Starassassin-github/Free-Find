@@ -58,6 +58,7 @@ router.post(`/`, async (req, res) => {
         city: req.body.city,
         phone: req.body.phone_comp,
         owner: req.body.owner,
+        image: req.body.image,
         images: req.body.images,
         posts: req.body.posts,
         website: req.body.website,

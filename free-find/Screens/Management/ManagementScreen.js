@@ -1,5 +1,5 @@
 // import
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { 
     View, 
     Text, 
@@ -17,6 +17,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import config from '../../config';
 
+// context
+import AuthGlobal from '../../Context/store/AuthGlobal';
+
 
 // app state
 import { AppStateService } from "../../AppStateService";
@@ -25,6 +28,11 @@ import { AppStateService } from "../../AppStateService";
 const ManagementScreen = (props) => {
 
     const [itemList] = useState(props.route.params.item);
+
+    const context = useContext(AuthGlobal);
+
+    // next release should change to user data for use 2 multi management
+    const offerdata = context.stateUser.user.compdata
 
     const [arrayUserApplyData, setArrayUserApplyData] = useState([])
     const [arrayOfferData, setArrayOfferData] = useState([])
@@ -86,10 +94,10 @@ const ManagementScreen = (props) => {
                 apply_id: _id_user,
                 image_apply: image,
                 // offer id, name, image is for test
-                offer_id: "6361511a20ee94c958f9ce27",
+                offer_id: offerdata._id,
                 apply_name: name,
-                offer_name: "test for redux",
-                image_offer: "someurl for need to fetch from redux",
+                offer_name: offerdata.name,
+                image_offer: offerdata.images[0],
                 post: _id_post
             });
             let postOffer = await axios.put(`${config.REACT_APP_API_URL}/posts/offer/${_id_post}/${_id_user}?contract_id=${createContract.data._id}`)

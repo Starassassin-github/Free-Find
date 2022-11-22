@@ -21,8 +21,6 @@ export default function App() {
 
 
   return (
-    // <UserPersonaScreen />
-    // <WorkHistoryScreen />
     <Auth>
       <Main />
       <Toast  />
